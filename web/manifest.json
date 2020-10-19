@@ -1,6 +1,6 @@
 {
-    "name": "qlzbed",
-    "short_name": "qlzbed",
+    "name": "education",
+    "short_name": "education",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

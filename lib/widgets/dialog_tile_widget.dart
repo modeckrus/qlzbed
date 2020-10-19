@@ -16,6 +16,10 @@ class _DialogTileWidgetState extends State<DialogTileWidget> {
   MDialog get dialog => widget.dialog;
   @override
   Widget build(BuildContext context) {
+    var isLastMessageDialog = false;
+    if (dialog.lastMessage.contains(':')) {
+      isLastMessageDialog = true;
+    }
     return ListTile(
         onTap: () {
           Navigator.pushNamed(context, '/dialogRoom', arguments: dialog);
@@ -23,17 +27,33 @@ class _DialogTileWidgetState extends State<DialogTileWidget> {
         onLongPress: () {
           print('Dialog: ' + dialog.toString() + ' selected');
         },
-        title: Container(child: Text(dialog.name + ' ' + dialog.surname)),
+        // contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        title: Container(
+            padding: EdgeInsets.only(top: 10),
+            child: Text(dialog.name + ' ' + dialog.surname)),
         subtitle: Container(
             height: 50,
-            child: Text(
-              dialog.lastMessage,
-              // textWidthBasis: TextWidthBasis.longestLine,
-              overflow: TextOverflow.clip,
-            )),
+            child: isLastMessageDialog
+                ? RichText(
+                    overflow: TextOverflow.ellipsis,
+                    text: TextSpan(
+                      // text: 'Hello ',
+                      style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: dialog.lastMessage.split(':')[0] + ': ',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        TextSpan(text: dialog.lastMessage.split(':')[1]),
+                      ],
+                    ),
+                  )
+                : Text(
+                    dialog.lastMessage,
+                    overflow: TextOverflow.ellipsis,
+                  )),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(40),
-          child: Container(
+          child: SizedBox(
             // color: Colors.black45,
             width: 40,
             height: 40,

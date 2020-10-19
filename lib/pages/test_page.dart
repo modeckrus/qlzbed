@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qlzbed/entities/message.dart';
+import 'package:qlzbed/widgets/my_image.dart';
 
 import '../widgets/tags_editor_widget.dart';
 
@@ -35,6 +36,11 @@ class _TestPageState extends State<TestPage> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.max,
         children: [
+          Container(
+            width: 400,
+            height: 400,
+            child: MyImage(path: 'avatar.gif'),
+          ),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
               child: RaisedButton(
