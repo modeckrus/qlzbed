@@ -22,12 +22,13 @@
 </head>
 
 <body>
-  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-messaging.js"></script>
-  <script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-storage.js"></script>
+  <script defer>
     // Your web app's Firebase configuration
     var firebaseConfig = {
       apiKey: "AIzaSyCzUq2mq1xT71LDQcWZeQmV3XofVDHG8i4",
@@ -41,7 +42,9 @@
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
+    let analytics = firebase.analytics();
+    // let storage = firebase.storgae();
+    
     function messageInit() {
       const messaging = firebase.messaging();
       messaging.usePublicVapidKey('BI8477Xauy7pEzRpsVrs_kO0DCw6JU8L-F4qX4vTBh7s2b4aVpRRJT3dg0aN4qs5PvY-JSeUzy5F0W9EMnOzyNw');
@@ -72,7 +75,9 @@
       });
     }
   </script>
-  <script src="main.dart.js" type="application/javascript"></script>
+  <script src="./context-functions.js" defer></script>
+  <script src="main.dart.js" type="application/javascript" defer></script>
+  
 </body>
 
 </html>
