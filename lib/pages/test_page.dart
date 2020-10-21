@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:js' as js;
+// import 'dart:js' as js;
 // import 'dart:html' as html;
 
 class TestPage extends StatefulWidget {
@@ -39,14 +39,14 @@ class _TestPageState extends State<TestPage> {
             onPressed: () async {
               // js.context.callMethod('testJs', ['huis']);
 
-              js.context['updateImage'] = (dynamic link) {
-                print(link);
-                setState(() {
-                  url = link;
-                });
-                // print(link as String);
-              };
-              js.context.callMethod('firestoreTest', ['avatar.jpg']);
+              // js.context['updateImage'] = (dynamic link) {
+              //   print(link);
+              //   setState(() {
+              //     url = link;
+              //   });
+              //   // print(link as String);
+              // };
+              // js.context.callMethod('firestoreTest', ['avatar.jpg']);
             },
           ),
           TestImage(path: 'avatar.jpg'),
@@ -133,12 +133,12 @@ class _TestImageState extends State<TestImage> {
     super.initState();
     final funcname = 'updateImage' + widget.path.split('.')[0];
     print(funcname);
-    js.context[funcname] = (surl) {
-      setState(() {
-        url = surl;
-      });
-    };
-    js.context.callMethod('firestoreTest', [widget.path]);
+    // js.context[funcname] = (surl) {
+    //   setState(() {
+    //     url = surl;
+    //   });
+    // };
+    // js.context.callMethod('firestoreTest', [widget.path]);
   }
 
   @override
