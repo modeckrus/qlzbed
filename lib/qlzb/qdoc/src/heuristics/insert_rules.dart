@@ -163,11 +163,19 @@ class PreserveInlineStylesRule extends InsertRule {
         ..retain(index)
         ..insert(text, attributes);
     }
+    final hasMiss =
+        (attributes != null && attributes.containsKey(QDocAttribute.miss.key));
+    if (hasMiss) {
+      return Delta()
+        ..retain(index)
+        ..insert(text, attributes);
+    }
     // Special handling needed for inserts inside fragments with link attribute.
     // Link style should only be preserved if insert occurs inside the fragment.
     // Link style should NOT be preserved on the boundaries.
     var noLinkAttributes = previous.attributes;
     noLinkAttributes.remove(QDocAttribute.link.key);
+    noLinkAttributes.remove(QDocAttribute.miss.key);
     final noLinkResult = Delta()
       ..retain(index)
       ..insert(text, noLinkAttributes.isEmpty ? null : noLinkAttributes);
@@ -181,8 +189,18 @@ class PreserveInlineStylesRule extends InsertRule {
       // Next fragment is not styled as link.
       return noLinkResult;
     }
+    if (!nextAttributes.containsKey(QDocAttribute.miss.key)) {
+      // Next fragment is not styled as link.
+      return noLinkResult;
+    }
     // We must make sure links are identical in previous and next operations.
     if (attributes[QDocAttribute.link.key] ==
+        nextAttributes[QDocAttribute.link.key]) {
+      return Delta()
+        ..retain(index)
+        ..insert(text, attributes);
+    } // We must make sure links are identical in previous and next operations.
+    if (attributes[QDocAttribute.miss.key] ==
         nextAttributes[QDocAttribute.link.key]) {
       return Delta()
         ..retain(index)

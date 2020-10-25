@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qlzbed/qlzb/qlzb/src/widgets/__theme.dart';
 
 /// Applies a Qlzb editor theme to descendant widgets.
 ///
@@ -311,19 +312,24 @@ class AttributeTheme {
   /// Style theme used to render code blocks.
   final BlockTheme code;
 
+  final FontTheme fontTheme;
+
+  final ColorTheme colorTheme;
+
   /// Creates a [AttributeTheme] given a set of exact values.
-  AttributeTheme({
-    this.bold,
-    this.italic,
-    this.link,
-    this.heading1,
-    this.heading2,
-    this.heading3,
-    this.bulletList,
-    this.numberList,
-    this.quote,
-    this.code,
-  });
+  AttributeTheme(
+      {this.bold,
+      this.italic,
+      this.link,
+      this.heading1,
+      this.heading2,
+      this.heading3,
+      this.bulletList,
+      this.numberList,
+      this.quote,
+      this.code,
+      this.colorTheme,
+      this.fontTheme});
 
   /// The default attribute theme.
   factory AttributeTheme.fallback(
@@ -338,6 +344,8 @@ class AttributeTheme {
         break;
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
+      case TargetPlatform.windows:
+      case TargetPlatform.linux:
         monospaceFontFamily = 'Roboto Mono';
         break;
       default:
@@ -396,43 +404,47 @@ class AttributeTheme {
       code: BlockTheme(
         padding: EdgeInsets.symmetric(vertical: 8.0),
         textStyle: TextStyle(
-          fontFamily: monospaceFontFamily,
-          fontSize: 14.0,
-          color: defaultLineTheme.textStyle.color.withOpacity(0.8),
-          height: 1.25,
-        ),
-        inheritLineTextStyle: false,
-        linePadding: EdgeInsets.zero,
+            // fontFamily: monospaceFontFamily,
+            // fontSize: 14.0,
+            // color: defaultLineTheme.textStyle.color.withOpacity(0.8),
+            // height: 1.25,
+            ),
+        inheritLineTextStyle: true,
+        // linePadding: EdgeInsets.zero,
       ),
+      fontTheme: FontTheme.fallback(context),
+      colorTheme: ColorTheme.fallback(context),
     );
   }
 
   /// Creates a new [AttributeTheme] where each property from this object has
   /// been merged with the matching property from the `other` object.
-  AttributeTheme copyWith({
-    TextStyle bold,
-    TextStyle italic,
-    TextStyle link,
-    LineTheme heading1,
-    LineTheme heading2,
-    LineTheme heading3,
-    BlockTheme bulletList,
-    BlockTheme numberList,
-    BlockTheme quote,
-    BlockTheme code,
-  }) {
+  AttributeTheme copyWith(
+      {TextStyle bold,
+      TextStyle italic,
+      TextStyle link,
+      LineTheme heading1,
+      LineTheme heading2,
+      LineTheme heading3,
+      BlockTheme bulletList,
+      BlockTheme numberList,
+      BlockTheme quote,
+      BlockTheme code,
+      FontTheme fontTheme,
+      ColorTheme colorTheme}) {
     return AttributeTheme(
-      bold: bold ?? this.bold,
-      italic: italic ?? this.italic,
-      link: link ?? this.link,
-      heading1: heading1 ?? this.heading1,
-      heading2: heading2 ?? this.heading2,
-      heading3: heading3 ?? this.heading3,
-      bulletList: bulletList ?? this.bulletList,
-      numberList: numberList ?? this.numberList,
-      quote: quote ?? this.quote,
-      code: code ?? this.code,
-    );
+        bold: bold ?? this.bold,
+        italic: italic ?? this.italic,
+        link: link ?? this.link,
+        heading1: heading1 ?? this.heading1,
+        heading2: heading2 ?? this.heading2,
+        heading3: heading3 ?? this.heading3,
+        bulletList: bulletList ?? this.bulletList,
+        numberList: numberList ?? this.numberList,
+        quote: quote ?? this.quote,
+        code: code ?? this.code,
+        fontTheme: fontTheme ?? this.fontTheme,
+        colorTheme: colorTheme ?? this.colorTheme);
   }
 
   /// Creates a new [AttributeTheme] where each property from this object has
@@ -450,6 +462,8 @@ class AttributeTheme {
       numberList: numberList?.merge(other.numberList) ?? other.numberList,
       quote: quote?.merge(other.quote) ?? other.quote,
       code: code?.merge(other.code) ?? other.code,
+      fontTheme: fontTheme?.merge(other.fontTheme) ?? other.fontTheme,
+      colorTheme: colorTheme?.merge(other.colorTheme) ?? colorTheme,
     );
   }
 
@@ -466,7 +480,9 @@ class AttributeTheme {
         (otherTheme.bulletList == bulletList) &&
         (otherTheme.numberList == numberList) &&
         (otherTheme.quote == quote) &&
-        (otherTheme.code == code);
+        (otherTheme.code == code) &&
+        (otherTheme.fontTheme == fontTheme) &&
+        (otherTheme.colorTheme == colorTheme);
   }
 
   @override
@@ -482,6 +498,8 @@ class AttributeTheme {
       numberList,
       quote,
       code,
+      fontTheme,
+      colorTheme
     ]);
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class TagsEditor extends StatefulWidget {
   final Function onAddTag;
   final Function onRemoveTag;
-
   const TagsEditor(
       {Key key, @required this.onAddTag, @required this.onRemoveTag})
       : super(key: key);

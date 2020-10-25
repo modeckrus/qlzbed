@@ -15,42 +15,41 @@ class _LibraryPageState extends State<LibraryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).library),
-      ),
-      body: StreamBuilder(
-          stream: Firestore.instance
-              .collection('routes')
-              .document(Localizations.localeOf(context).languageCode)
-              .collection('mainRoutes')
-              .snapshots(),
-          builder: (context, snap) {
-            if (!snap.hasData) {
-              return LoadingWidget();
-            }
-            if (snap.hasError) {
-              return FErrorWidget(error: snap.error.toString());
-            }
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).library),
+        ),
+        body: StreamBuilder(
+            stream: Firestore.instance
+                .collection('routes')
+                .document(Localizations.localeOf(context).languageCode)
+                .collection('mainRoutes')
+                .snapshots(),
+            builder: (context, snap) {
+              if (!snap.hasData) {
+                return LoadingWidget();
+              }
+              if (snap.hasError) {
+                return FErrorWidget(error: snap.error.toString());
+              }
 
-            var countryCode = Localizations.localeOf(context).languageCode;
-            print({'Locale: ': countryCode});
-            // QuerySnapshot querySnap = snap.data;
-            // print(querySnap.documents);
-            //print(snap.data.documents['Title'].data['title']);
-            return CustomScrollView(
-              slivers: [
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final doc = snap.data.documents[index];
-                      return SliverListTile(doc: doc);
-                    },
-                    childCount: snap.data.documents.length,
+              var countryCode = Localizations.localeOf(context).languageCode;
+              print({'Locale: ': countryCode});
+              // QuerySnapshot querySnap = snap.data;
+              // print(querySnap.documents);
+              //print(snap.data.documents['Title'].data['title']);
+              return CustomScrollView(
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final doc = snap.data.documents[index];
+                        return SliverListTile(doc: doc);
+                      },
+                      childCount: snap.data.documents.length,
+                    ),
                   ),
-                ),
-              ],
-            );
-          }),
-    );
+                ],
+              );
+            }));
   }
 }

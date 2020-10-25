@@ -27,6 +27,9 @@ class _MyImageState extends State<MyImage> {
           if (!snapshot.hasData) {
             return CircularProgressIndicator();
           }
+          if (snapshot.data == '' || snapshot.data == ' ') {
+            return CircularProgressIndicator();
+          }
           return Image.file(
             snapshot.data,
             filterQuality: FilterQuality.low,

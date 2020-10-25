@@ -20,26 +20,34 @@ class _FeedPageState extends State<FeedPage> {
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).feed),
         ),
-        body: StreamBuilder(
-          stream: Firestore.instance
-              .collection('user')
-              .document(GetIt.I.get<FirebaseUser>().uid)
-              .collection('feed')
-              .snapshots(),
+        body: FutureBuilder(
+          future: Future.delayed(Duration(milliseconds: 500)),
           builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return FErrorWidget(error: snapshot.error);
-            }
             if (!snapshot.hasData) {
-              return LoadingWidget();
+              return Container();
             }
+            return StreamBuilder(
+              stream: Firestore.instance
+                  .collection('user')
+                  .document(GetIt.I.get<FirebaseUser>().uid)
+                  .collection('feed')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return FErrorWidget(error: snapshot.error);
+                }
+                if (!snapshot.hasData) {
+                  return LoadingWidget();
+                }
 
-            QuerySnapshot data = snapshot.data;
-            return ListView.builder(
-                itemCount: data.documents.length,
-                itemBuilder: (context, index) {
-                  return FListTile(doc: data.documents[index]);
-                });
+                QuerySnapshot data = snapshot.data;
+                return ListView.builder(
+                    itemCount: data.documents.length,
+                    itemBuilder: (context, index) {
+                      return FListTile(doc: data.documents[index]);
+                    });
+              },
+            );
           },
         ));
   }

@@ -74,9 +74,12 @@ class QDocAttribute<T> implements QDocAttributeBuilder<T> {
     QDocAttribute.bold.key: QDocAttribute.bold,
     QDocAttribute.italic.key: QDocAttribute.italic,
     QDocAttribute.link.key: QDocAttribute.link,
+    QDocAttribute.miss.key: QDocAttribute.miss,
     QDocAttribute.heading.key: QDocAttribute.heading,
     QDocAttribute.block.key: QDocAttribute.block,
     QDocAttribute.embed.key: QDocAttribute.embed,
+    QDocAttribute.font.key: QDocAttribute.font,
+    QDocAttribute.color.key: QDocAttribute.color
   };
 
   // Inline attributes
@@ -90,6 +93,8 @@ class QDocAttribute<T> implements QDocAttributeBuilder<T> {
   /// Link style attribute.
   // ignore: const_eval_throws_exception
   static const link = LinkAttributeBuilder._();
+
+  static const miss = MissAttributeBuilder._();
 
   // Line attributes
 
@@ -105,6 +110,32 @@ class QDocAttribute<T> implements QDocAttributeBuilder<T> {
 
   /// Alias for [QDocAttribute.heading.level3].
   static QDocAttribute<int> get h3 => heading.level3;
+
+  static const font = FontAttributeBuilder._();
+  static QDocAttribute<int> get mainFont => font.mainFont;
+  static QDocAttribute<int> get font1 => font.font1;
+  static QDocAttribute<int> get font2 => font.font2;
+  static QDocAttribute<int> get font3 => font.font3;
+  static QDocAttribute<int> get font4 => font.font4;
+  static QDocAttribute<int> get font5 => font.font5;
+  static QDocAttribute<int> get font6 => font.font6;
+  static QDocAttribute<int> get font7 => font.font7;
+  static QDocAttribute<int> get font8 => font.font8;
+
+  static const color = ColorAttributeBuilder._();
+  static QDocAttribute<int> get mainColor => color.mainColor;
+  static QDocAttribute<int> get color1 => color.color1;
+  static QDocAttribute<int> get color2 => color.color2;
+  static QDocAttribute<int> get color3 => color.color3;
+  static QDocAttribute<int> get color4 => color.color4;
+  static QDocAttribute<int> get color5 => color.color5;
+  static QDocAttribute<int> get color6 => color.color6;
+  static QDocAttribute<int> get color7 => color.color7;
+  static QDocAttribute<int> get color8 => color.color8;
+  static QDocAttribute<int> get color9 => color.color9;
+  static QDocAttribute<int> get color10 => color.color10;
+  static QDocAttribute<int> get color11 => color.color11;
+  static QDocAttribute<int> get color12 => color.color12;
 
   /// Block attribute
   // ignore: const_eval_throws_exception
@@ -341,6 +372,89 @@ class LinkAttributeBuilder extends QDocAttributeBuilder<String> {
   /// Creates a link attribute with specified link [value].
   QDocAttribute<String> fromString(String value) =>
       QDocAttribute<String>._(key, scope, value);
+}
+
+class MissAttributeBuilder extends QDocAttributeBuilder<List<String>> {
+  static const _kMiss = 'miss';
+  const MissAttributeBuilder._() : super._(_kMiss, QDocAttributeScope.inline);
+
+  QDocAttribute<List<String>> fromString(List<String> value) {
+    return QDocAttribute._(key, scope, value);
+  }
+}
+
+class FontAttributeBuilder extends QDocAttributeBuilder<int> {
+  static const _kFont = 'font';
+  const FontAttributeBuilder._() : super._(_kFont, QDocAttributeScope.inline);
+
+  /// Level 1 heading, equivalent of `H1` in HTML.
+  QDocAttribute<int> get font1 => QDocAttribute<int>._(key, scope, 1);
+
+  /// Level 2 heading, equivalent of `H2` in HTML.
+  QDocAttribute<int> get font2 => QDocAttribute<int>._(key, scope, 2);
+
+  /// font 3 heading, equivalent of `H3` in HTML.
+  QDocAttribute<int> get font3 => QDocAttribute<int>._(key, scope, 3);
+
+  /// Level 1 heading, equivalent of `H1` in HTML.
+  QDocAttribute<int> get font4 => QDocAttribute<int>._(key, scope, 4);
+
+  /// Level 2 heading, equivalent of `H2` in HTML.
+  QDocAttribute<int> get font5 => QDocAttribute<int>._(key, scope, 5);
+
+  /// font 3 heading, equivalent of `H3` in HTML.
+  QDocAttribute<int> get font6 => QDocAttribute<int>._(key, scope, 6);
+
+  /// Level 1 heading, equivalent of `H1` in HTML.
+  QDocAttribute<int> get font7 => QDocAttribute<int>._(key, scope, 7);
+
+  /// Level 2 heading, equivalent of `H2` in HTML.
+  QDocAttribute<int> get font8 => QDocAttribute<int>._(key, scope, 8);
+
+  /// font 3 heading, equivalent of `H3` in HTML.
+  QDocAttribute<int> get mainFont => QDocAttribute<int>._(key, scope, 0);
+}
+
+class ColorAttributeBuilder extends QDocAttributeBuilder<int> {
+  static const _kColor = 'color';
+  const ColorAttributeBuilder._() : super._(_kColor, QDocAttributeScope.inline);
+
+  /// Level 1 heading, equivalent of `H1` in HTML.
+  QDocAttribute<int> get color1 => QDocAttribute<int>._(key, scope, 1);
+
+  /// Level 2 heading, equivalent of `H2` in HTML.
+  QDocAttribute<int> get color2 => QDocAttribute<int>._(key, scope, 2);
+
+  /// color 3 heading, equivalent of `H3` in HTML.
+  QDocAttribute<int> get color3 => QDocAttribute<int>._(key, scope, 3);
+
+  /// Level 1 heading, equivalent of `H1` in HTML.
+  QDocAttribute<int> get color4 => QDocAttribute<int>._(key, scope, 4);
+
+  /// Level 2 heading, equivalent of `H2` in HTML.
+  QDocAttribute<int> get color5 => QDocAttribute<int>._(key, scope, 5);
+
+  /// color 3 heading, equivalent of `H3` in HTML.
+  QDocAttribute<int> get color6 => QDocAttribute<int>._(key, scope, 6);
+
+  /// Level 1 heading, equivalent of `H1` in HTML.
+  QDocAttribute<int> get color7 => QDocAttribute<int>._(key, scope, 7);
+
+  /// Level 2 heading, equivalent of `H2` in HTML.
+  QDocAttribute<int> get color8 => QDocAttribute<int>._(key, scope, 8);
+
+  /// color 3 heading, equivalent of `H3` in HTML.
+  QDocAttribute<int> get color9 => QDocAttribute<int>._(key, scope, 9);
+
+  /// Level 1 heading, equivalent of `H1` in HTML.
+  QDocAttribute<int> get color10 => QDocAttribute<int>._(key, scope, 10);
+
+  /// Level 2 heading, equivalent of `H2` in HTML.
+  QDocAttribute<int> get color11 => QDocAttribute<int>._(key, scope, 11);
+
+  /// color 3 heading, equivalent of `H3` in HTML.
+  QDocAttribute<int> get color12 => QDocAttribute<int>._(key, scope, 12);
+  QDocAttribute<int> get mainColor => QDocAttribute<int>._(key, scope, 0);
 }
 
 /// Builder for heading attribute styles.

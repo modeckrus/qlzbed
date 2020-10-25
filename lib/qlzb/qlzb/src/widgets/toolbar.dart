@@ -23,6 +23,30 @@ enum QlzbToolbarAction {
   headingLevel1,
   headingLevel2,
   headingLevel3,
+  color,
+  font,
+  mainColor,
+  color1,
+  color2,
+  color3,
+  color4,
+  color5,
+  color6,
+  color7,
+  color8,
+  color9,
+  color10,
+  color11,
+  color12,
+  mainFont,
+  font1,
+  font2,
+  font3,
+  font4,
+  font5,
+  font6,
+  font7,
+  font8,
   bulletList,
   numberList,
   code,
@@ -44,6 +68,30 @@ final kQlzbToolbarAttributeActions = <QlzbToolbarAction, QDocAttributeKey>{
   QlzbToolbarAction.headingLevel1: QDocAttribute.heading.level1,
   QlzbToolbarAction.headingLevel2: QDocAttribute.heading.level2,
   QlzbToolbarAction.headingLevel3: QDocAttribute.heading.level3,
+  QlzbToolbarAction.color: QDocAttribute.color,
+  QlzbToolbarAction.mainColor: QDocAttribute.mainColor,
+  QlzbToolbarAction.color1: QDocAttribute.color1,
+  QlzbToolbarAction.color2: QDocAttribute.color2,
+  QlzbToolbarAction.color3: QDocAttribute.color3,
+  QlzbToolbarAction.color4: QDocAttribute.color4,
+  QlzbToolbarAction.color5: QDocAttribute.color5,
+  QlzbToolbarAction.color6: QDocAttribute.color6,
+  QlzbToolbarAction.color7: QDocAttribute.color7,
+  QlzbToolbarAction.color8: QDocAttribute.color8,
+  QlzbToolbarAction.color9: QDocAttribute.color9,
+  QlzbToolbarAction.color10: QDocAttribute.color10,
+  QlzbToolbarAction.color11: QDocAttribute.color11,
+  QlzbToolbarAction.color12: QDocAttribute.color12,
+  QlzbToolbarAction.font: QDocAttribute.font,
+  QlzbToolbarAction.mainFont: QDocAttribute.mainFont,
+  QlzbToolbarAction.font1: QDocAttribute.font1,
+  QlzbToolbarAction.font2: QDocAttribute.font2,
+  QlzbToolbarAction.font3: QDocAttribute.font3,
+  QlzbToolbarAction.font4: QDocAttribute.font4,
+  QlzbToolbarAction.font5: QDocAttribute.font5,
+  QlzbToolbarAction.font6: QDocAttribute.font6,
+  QlzbToolbarAction.font7: QDocAttribute.font7,
+  QlzbToolbarAction.font8: QDocAttribute.font8,
   QlzbToolbarAction.bulletList: QDocAttribute.block.bulletList,
   QlzbToolbarAction.numberList: QDocAttribute.block.numberList,
   QlzbToolbarAction.code: QDocAttribute.block.code,
@@ -252,6 +300,8 @@ class QlzbToolbarState extends State<QlzbToolbar>
     final buttons = <Widget>[
       buildButton(context, QlzbToolbarAction.bold),
       buildButton(context, QlzbToolbarAction.italic),
+      ColorButton(),
+      FontButton(),
       LinkButton(),
       HeadingButton(),
       buildButton(context, QlzbToolbarAction.bulletList),
@@ -353,6 +403,8 @@ class _DefaultQlzbToolbarDelegate implements QlzbToolbarDelegate {
     QlzbToolbarAction.hideKeyboard: Icons.keyboard_hide,
     QlzbToolbarAction.close: Icons.close,
     QlzbToolbarAction.confirm: Icons.check,
+    QlzbToolbarAction.color: Icons.color_lens,
+    QlzbToolbarAction.font: Icons.font_download,
   };
 
   static const kSpecialIconSizes = {
@@ -369,10 +421,120 @@ class _DefaultQlzbToolbarDelegate implements QlzbToolbarDelegate {
     QlzbToolbarAction.headingLevel3: 'H3',
   };
 
+  static const List<QlzbToolbarAction> colorButtons = [
+    QlzbToolbarAction.color1,
+    QlzbToolbarAction.color2,
+    QlzbToolbarAction.color3,
+    QlzbToolbarAction.color4,
+    QlzbToolbarAction.color5,
+    QlzbToolbarAction.color6,
+    QlzbToolbarAction.color7,
+    QlzbToolbarAction.color8,
+    QlzbToolbarAction.color9,
+    QlzbToolbarAction.color10,
+    QlzbToolbarAction.color11,
+    QlzbToolbarAction.color12,
+    QlzbToolbarAction.mainColor,
+  ];
+  static const List<QlzbToolbarAction> fontButtons = [
+    QlzbToolbarAction.font1,
+    QlzbToolbarAction.font2,
+    QlzbToolbarAction.font3,
+    QlzbToolbarAction.font4,
+    QlzbToolbarAction.font5,
+    QlzbToolbarAction.font6,
+    QlzbToolbarAction.font7,
+    QlzbToolbarAction.font8,
+    QlzbToolbarAction.mainFont,
+  ];
+
   @override
   Widget buildButton(BuildContext context, QlzbToolbarAction action,
       {VoidCallback onPressed}) {
     final theme = Theme.of(context);
+    final atr = QlzbTheme.of(context).attributeTheme;
+    if (colorButtons.contains(action)) {
+      Color color;
+      if (action == QlzbToolbarAction.color1) {
+        color = atr.colorTheme.color1;
+      }
+      if (action == QlzbToolbarAction.color2) {
+        color = atr.colorTheme.color2;
+      }
+      if (action == QlzbToolbarAction.color3) {
+        color = atr.colorTheme.color3;
+      }
+      if (action == QlzbToolbarAction.color4) {
+        color = atr.colorTheme.color4;
+      }
+      if (action == QlzbToolbarAction.color5) {
+        color = atr.colorTheme.color5;
+      }
+      if (action == QlzbToolbarAction.color6) {
+        color = atr.colorTheme.color6;
+      }
+      if (action == QlzbToolbarAction.color7) {
+        color = atr.colorTheme.color7;
+      }
+      if (action == QlzbToolbarAction.color8) {
+        color = atr.colorTheme.color8;
+      }
+      if (action == QlzbToolbarAction.color9) {
+        color = atr.colorTheme.color9;
+      }
+      if (action == QlzbToolbarAction.color10) {
+        color = atr.colorTheme.color10;
+      }
+      if (action == QlzbToolbarAction.color11) {
+        color = atr.colorTheme.color11;
+      }
+      if (action == QlzbToolbarAction.color12) {
+        color = atr.colorTheme.color12;
+      }
+      if (action == QlzbToolbarAction.mainColor) {
+        color = atr.colorTheme.mainColor;
+      }
+      return QlzbButton.color(
+        action: action,
+        color: color,
+        onPressed: onPressed,
+      );
+    }
+    if (fontButtons.contains(action)) {
+      String font;
+      if (action == QlzbToolbarAction.font1) {
+        font = atr.fontTheme.font1;
+      }
+      if (action == QlzbToolbarAction.font2) {
+        font = atr.fontTheme.font2;
+      }
+      if (action == QlzbToolbarAction.font3) {
+        font = atr.fontTheme.font3;
+      }
+      if (action == QlzbToolbarAction.font4) {
+        font = atr.fontTheme.font4;
+      }
+      if (action == QlzbToolbarAction.font5) {
+        font = atr.fontTheme.font5;
+      }
+      if (action == QlzbToolbarAction.font6) {
+        font = atr.fontTheme.font6;
+      }
+      if (action == QlzbToolbarAction.font7) {
+        font = atr.fontTheme.font7;
+      }
+      if (action == QlzbToolbarAction.font8) {
+        font = atr.fontTheme.font8;
+      }
+      if (action == QlzbToolbarAction.mainFont) {
+        font = atr.fontTheme.mainFont;
+      }
+      return QlzbButton.font(
+        action: action,
+        font: font,
+        onPressed: onPressed,
+      );
+    }
     if (kDefaultButtonIcons.containsKey(action)) {
       final icon = kDefaultButtonIcons[action];
       final size = kSpecialIconSizes[action];

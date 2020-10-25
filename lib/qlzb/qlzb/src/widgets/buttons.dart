@@ -29,6 +29,22 @@ class QlzbButton extends StatelessWidget {
         _iconSize = iconSize,
         _text = null,
         _textStyle = null,
+        _color = null,
+        _font = null,
+        super();
+
+  QlzbButton.color({
+    @required this.action,
+    @required Color color,
+    this.onPressed,
+  })  : assert(action != null),
+        assert(color != null),
+        _icon = null,
+        _iconSize = null,
+        _text = null,
+        _textStyle = null,
+        _color = color,
+        _font = null,
         super();
 
   /// Creates a toolbar button containing text.
@@ -46,6 +62,22 @@ class QlzbButton extends StatelessWidget {
         _iconSize = null,
         _text = text,
         _textStyle = style,
+        _color = null,
+        _font = null,
+        super();
+  QlzbButton.font({
+    @required this.action,
+    @required String font,
+    TextStyle style,
+    this.onPressed,
+  })  : assert(action != null),
+        assert(font != null),
+        _icon = null,
+        _iconSize = null,
+        _text = null,
+        _textStyle = style,
+        _color = null,
+        _font = font,
         super();
 
   /// Toolbar action associated with this button.
@@ -54,6 +86,8 @@ class QlzbButton extends StatelessWidget {
   final double _iconSize;
   final String _text;
   final TextStyle _textStyle;
+  final Color _color;
+  final String _font;
 
   /// Callback to trigger when this button is tapped.
   final VoidCallback onPressed;
@@ -71,6 +105,47 @@ class QlzbButton extends StatelessWidget {
     final iconColor = (pressedHandler == null)
         ? toolbarTheme.disabledIconColor
         : toolbarTheme.iconColor;
+    if (_color != null) {
+      final theme = Theme.of(context);
+      final width = theme.buttonTheme.constraints.minHeight + 4.0;
+      final constraints = theme.buttonTheme.constraints.copyWith(
+          minWidth: width, maxHeight: theme.buttonTheme.constraints.minHeight);
+      final radius = BorderRadius.all(Radius.circular(3.0));
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 6.0),
+        child: RawMaterialButton(
+          shape: RoundedRectangleBorder(borderRadius: radius),
+          elevation: 0.0,
+          fillColor: _color,
+          constraints: constraints,
+          onPressed: _getPressedHandler(editor, toolbar),
+          // child: child,
+        ),
+      );
+    }
+    if (_font != null) {
+      final theme = Theme.of(context);
+      final width = theme.buttonTheme.constraints.minHeight + 4.0;
+      final constraints = theme.buttonTheme.constraints.copyWith(
+          minWidth: width, maxHeight: theme.buttonTheme.constraints.minHeight);
+      final radius = BorderRadius.all(Radius.circular(3.0));
+      var style = _textStyle ?? TextStyle();
+      style = style.copyWith(color: iconColor, fontFamily: _font);
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 6.0),
+        child: RawMaterialButton(
+          shape: RoundedRectangleBorder(borderRadius: radius),
+          elevation: 0.0,
+          fillColor: _getColor(editor, toolbarTheme),
+          constraints: constraints,
+          onPressed: _getPressedHandler(editor, toolbar),
+          child: Text(
+            _font,
+            style: style,
+          ),
+        ),
+      );
+    }
     if (_icon != null) {
       return RawQlzbButton.icon(
         action: action,
@@ -228,6 +303,99 @@ class _HeadingButtonState extends State<HeadingButton> {
         toolbar.buildButton(context, QlzbToolbarAction.headingLevel1),
         toolbar.buildButton(context, QlzbToolbarAction.headingLevel2),
         toolbar.buildButton(context, QlzbToolbarAction.headingLevel3),
+      ],
+    );
+    return QlzbToolbarScaffold(body: buttons);
+  }
+}
+
+class ColorButton extends StatefulWidget {
+  const ColorButton({Key key}) : super(key: key);
+
+  @override
+  _ColorButtonState createState() => _ColorButtonState();
+}
+
+class _ColorButtonState extends State<ColorButton> {
+  @override
+  Widget build(BuildContext context) {
+    final toolbar = QlzbToolbar.of(context);
+    return toolbar.buildButton(
+      context,
+      QlzbToolbarAction.color,
+      onPressed: showOverlay,
+    );
+  }
+
+  void showOverlay() {
+    final toolbar = QlzbToolbar.of(context);
+    toolbar.showOverlay(buildOverlay);
+  }
+
+  Widget buildOverlay(BuildContext context) {
+    final toolbar = QlzbToolbar.of(context);
+    final buttons = ListView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        SizedBox(width: 8.0),
+        toolbar.buildButton(context, QlzbToolbarAction.mainColor),
+        toolbar.buildButton(context, QlzbToolbarAction.color1),
+        toolbar.buildButton(context, QlzbToolbarAction.color2),
+        toolbar.buildButton(context, QlzbToolbarAction.color3),
+        toolbar.buildButton(context, QlzbToolbarAction.color4),
+        toolbar.buildButton(context, QlzbToolbarAction.color5),
+        toolbar.buildButton(context, QlzbToolbarAction.color6),
+        toolbar.buildButton(context, QlzbToolbarAction.color7),
+        toolbar.buildButton(context, QlzbToolbarAction.color8),
+        toolbar.buildButton(context, QlzbToolbarAction.color9),
+        toolbar.buildButton(context, QlzbToolbarAction.color10),
+        toolbar.buildButton(context, QlzbToolbarAction.color11),
+        toolbar.buildButton(context, QlzbToolbarAction.color12),
+      ],
+    );
+
+    return QlzbToolbarScaffold(body: buttons);
+  }
+}
+
+class FontButton extends StatefulWidget {
+  const FontButton({Key key}) : super(key: key);
+
+  @override
+  _FontButtonState createState() => _FontButtonState();
+}
+
+class _FontButtonState extends State<FontButton> {
+  @override
+  Widget build(BuildContext context) {
+    final toolbar = QlzbToolbar.of(context);
+    return toolbar.buildButton(
+      context,
+      QlzbToolbarAction.font,
+      onPressed: showOverlay,
+    );
+  }
+
+  void showOverlay() {
+    final toolbar = QlzbToolbar.of(context);
+    toolbar.showOverlay(buildOverlay);
+  }
+
+  Widget buildOverlay(BuildContext context) {
+    final toolbar = QlzbToolbar.of(context);
+    final buttons = ListView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        SizedBox(width: 8.0),
+        toolbar.buildButton(context, QlzbToolbarAction.mainFont),
+        toolbar.buildButton(context, QlzbToolbarAction.font1),
+        toolbar.buildButton(context, QlzbToolbarAction.font2),
+        toolbar.buildButton(context, QlzbToolbarAction.font3),
+        toolbar.buildButton(context, QlzbToolbarAction.font4),
+        toolbar.buildButton(context, QlzbToolbarAction.font5),
+        toolbar.buildButton(context, QlzbToolbarAction.font6),
+        toolbar.buildButton(context, QlzbToolbarAction.font7),
+        toolbar.buildButton(context, QlzbToolbarAction.font8)
       ],
     );
     return QlzbToolbarScaffold(body: buttons);

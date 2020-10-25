@@ -9,9 +9,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import '../../qlzb.dart';
-import 'package:zefyr/util.dart';
 
+import '../../qlzb.dart';
+import '../fast_diff.dart';
 import 'controller.dart';
 import 'editable_box.dart';
 import 'scope.dart';

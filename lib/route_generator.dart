@@ -1,7 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qlzbed/entities/dialog.dart';
+import 'package:qlzbed/pages/add_article_page.dart';
+import 'package:qlzbed/pages/add_checktest_page.dart';
+import 'package:qlzbed/pages/add_formula_page.dart';
+import 'package:qlzbed/pages/add_group_page.dart';
+import 'package:qlzbed/pages/add_state_page.dart';
+import 'package:qlzbed/pages/add_texttest_page.dart';
 import 'package:qlzbed/pages/dialog_page.dart';
+import 'package:qlzbed/pages/text_test_page.dart';
 import 'package:route_transitions/route_transitions.dart';
 
 import 'pages/error_page.dart';
@@ -10,7 +17,6 @@ import 'pages/list_page.dart';
 import 'pages/settings_page.dart';
 import 'pages/test_page.dart';
 import 'user_repository.dart';
-import 'zefyr/reading_page.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(
@@ -30,24 +36,6 @@ class RouteGenerator {
             builder: (_) => FListPage(doc: doc),
             animationType: AnimationType.slide_right,
             curves: Curves.easeInOut);
-      // case '/home':
-      //   return PageRouteTransition(
-      //       animationType: AnimationType.fade,
-      //       curves: Curves.easeInOut,
-      //       builder: (_) => HomePage());
-      //   break;
-      // case '/login':
-      //   return PageRouteTransition(
-      //       animationType: AnimationType.slide_right,
-      //       curves: Curves.easeInOut,
-      //       builder: (_) => LoginPage());
-      //   break;
-      // case '/settinguser':
-      //   return PageRouteTransition(
-      //       animationType: AnimationType.fade,
-      //       curves: Curves.easeInOut,
-      //       builder: (_) => SettingUserPage());
-      //   break;
       case '/settings':
         return PageRouteTransition(
           animationType: AnimationType.slide_right,
@@ -62,17 +50,78 @@ class RouteGenerator {
           builder: (context) => TestPage(),
         );
         break;
-      case '/readingPage':
-      case '/article':
+      case '/addState':
         final DocumentSnapshot doc = args;
         return PageRouteTransition(
           animationType: AnimationType.slide_right,
           curves: Curves.easeInOut,
-          builder: (context) => ReadingPage(
+          builder: (context) => AddStatePage(
             doc: doc,
           ),
         );
-        break;
+      case '/addGroup':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => AddGroupPage(
+            doc: doc,
+          ),
+        );
+      case '/addArticle':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => AddArticlePage(
+            doc: doc,
+          ),
+        );
+      case '/addTextTest':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => AddTextTestPage(
+            doc: doc,
+          ),
+        );
+      case '/addCheckTest':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => AddCheckTestPage(
+            doc: doc,
+          ),
+        );
+      case '/addFormula':
+        // final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => AddFormulaPage(),
+        );
+      case '/textTest':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => TextTestPage(
+            doc: doc,
+          ),
+        );
+      // case '/readingPage':
+      // case '/article':
+      //   final DocumentSnapshot doc = args;
+      //   return PageRouteTransition(
+      //     animationType: AnimationType.slide_right,
+      //     curves: Curves.easeInOut,
+      //     builder: (context) => ReadingPage(
+      //       doc: doc,
+      //     ),
+      //   );
+      //   break;
       case '/dialogPage':
       case '/dialogRoom':
         final MDialog dialog = args;
@@ -83,22 +132,6 @@ class RouteGenerator {
             dialog: dialog,
           ),
         );
-      // case '/testPhone':
-      //   return PageRouteTransition(
-      //       animationType: AnimationType.fade,
-      //       curves: Curves.easeInOut,
-      //       builder: (context) => TestPhone());
-      // case '/smscode':
-      //   final list = args as List;
-      //   final phoneNumber = list[0];
-      //   final verId = list[1];
-      //   return PageRouteTransition(
-      //       animationType: AnimationType.fade,
-      //       curves: Curves.ease,
-      //       builder: (_) => SmsCodePage(
-      //             phoneNumber: phoneNumber,
-      //             verificationId: verId,
-      //           ));
       default:
         return PageRouteTransition(
             animationType: AnimationType.fade,

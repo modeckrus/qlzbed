@@ -5,8 +5,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import '../../qlzb.dart';
 
+import '../../qlzb.dart';
 import 'caret.dart';
 import 'render_context.dart';
 import 'selection_utils.dart';

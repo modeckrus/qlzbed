@@ -148,6 +148,77 @@ class _QlzbLineState extends State<QlzbLine> {
     if (style.contains(QDocAttribute.link)) {
       result = result.merge(theme.attributeTheme.link);
     }
+    if (style.containsSame(QDocAttribute.color1)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color1);
+    }
+    if (style.containsSame(QDocAttribute.color2)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color2);
+    }
+    if (style.containsSame(QDocAttribute.color3)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color3);
+    }
+    if (style.containsSame(QDocAttribute.color4)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color4);
+    }
+    if (style.containsSame(QDocAttribute.color5)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color5);
+    }
+    if (style.containsSame(QDocAttribute.color6)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color7);
+    }
+    if (style.containsSame(QDocAttribute.color8)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color9);
+    }
+    if (style.containsSame(QDocAttribute.color10)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color10);
+    }
+    if (style.containsSame(QDocAttribute.color11)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color11);
+    }
+    if (style.containsSame(QDocAttribute.color12)) {
+      result = result.copyWith(color: theme.attributeTheme.colorTheme.color12);
+    }
+    if (style.containsSame(QDocAttribute.mainColor)) {
+      result =
+          result.copyWith(color: theme.attributeTheme.colorTheme.mainColor);
+    }
+    if (style.containsSame(QDocAttribute.font1)) {
+      result =
+          result.copyWith(fontFamily: theme.attributeTheme.fontTheme.font1);
+    }
+    if (style.containsSame(QDocAttribute.font2)) {
+      result =
+          result.copyWith(fontFamily: theme.attributeTheme.fontTheme.font2);
+    }
+    if (style.containsSame(QDocAttribute.font3)) {
+      result =
+          result.copyWith(fontFamily: theme.attributeTheme.fontTheme.font3);
+    }
+    if (style.containsSame(QDocAttribute.font4)) {
+      result =
+          result.copyWith(fontFamily: theme.attributeTheme.fontTheme.font4);
+    }
+    if (style.containsSame(QDocAttribute.font5)) {
+      result =
+          result.copyWith(fontFamily: theme.attributeTheme.fontTheme.font5);
+    }
+    if (style.containsSame(QDocAttribute.font6)) {
+      result =
+          result.copyWith(fontFamily: theme.attributeTheme.fontTheme.font6);
+    }
+    if (style.containsSame(QDocAttribute.font7)) {
+      result =
+          result.copyWith(fontFamily: theme.attributeTheme.fontTheme.font7);
+    }
+    if (style.containsSame(QDocAttribute.font8)) {
+      result =
+          result.copyWith(fontFamily: theme.attributeTheme.fontTheme.font8);
+    }
+    if (style.containsSame(QDocAttribute.mainFont)) {
+      result =
+          result.copyWith(fontFamily: theme.attributeTheme.fontTheme.mainFont);
+    }
+
     return result;
   }
 

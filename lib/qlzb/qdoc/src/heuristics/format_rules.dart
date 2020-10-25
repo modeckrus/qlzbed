@@ -145,6 +145,81 @@ class FormatLinkAtCaretPositionRule extends FormatRule {
   }
 }
 
+/// Allows updating Miss format with collapsed selection.
+class FormatMissAtCaretPositionRule extends FormatRule {
+  const FormatMissAtCaretPositionRule();
+
+  @override
+  Delta apply(Delta document, int index, int length, QDocAttribute attribute) {
+    if (attribute.key != QDocAttribute.miss.key) return null;
+    // If user selection is not collapsed we let it fallback to default rule
+    // which simply applies the attribute to selected range.
+    // This may still not be a bulletproof approach as selection can span
+    // multiple lines or be a subset of existing Miss-formatted text.
+    // So certain improvements can be made in the future to account for such
+    // edge cases.
+    if (length != 0) return null;
+
+    final result = Delta();
+    final iter = DeltaIterator(document);
+    final before = iter.skip(index);
+    final after = iter.next();
+    var startIndex = index;
+    var retain = 0;
+    if (before != null && before.hasAttribute(attribute.key)) {
+      startIndex -= before.length;
+      retain = before.length;
+    }
+    if (after != null && after.hasAttribute(attribute.key)) {
+      retain += after.length;
+    }
+    // There is no link-styled text around `index` position so it becomes a
+    // no-op action.
+    if (retain == 0) return null;
+
+    result..retain(startIndex)..retain(retain, attribute.toJson());
+
+    return result;
+  }
+}
+// /// Allows updating link format with collapsed selection.
+// class FormatFontandColorAtCaretPositionRule extends FormatRule {
+//   const FormatFontandColorAtCaretPositionRule();
+
+//   @override
+//   Delta apply(Delta document, int index, int length, QDocAttribute attribute) {
+//     if (attribute.key != QDocAttribute.font.key || attribute.key != QDocAttribute.color.key) return null;
+//     // If user selection is not collapsed we let it fallback to default rule
+//     // which simply applies the attribute to selected range.
+//     // This may still not be a bulletproof approach as selection can span
+//     // multiple lines or be a subset of existing link-formatted text.
+//     // So certain improvements can be made in the future to account for such
+//     // edge cases.
+//     if (length != 0) return null;
+
+//     final result = Delta();
+//     final iter = DeltaIterator(document);
+//     final before = iter.skip(index);
+//     final after = iter.next();
+//     var startIndex = index;
+//     var retain = 0;
+//     if (before != null && before.hasAttribute(attribute.key)) {
+//       startIndex -= before.length;
+//       retain = before.length;
+//     }
+//     if (after != null && after.hasAttribute(attribute.key)) {
+//       retain += after.length;
+//     }
+//     // There is no link-styled text around `index` position so it becomes a
+//     // no-op action.
+//     if (retain == 0) return null;
+
+//     result..retain(startIndex)..retain(retain, attribute.toJson());
+
+//     return result;
+//   }
+// }
+
 /// Handles all format operations which manipulate embeds.
 class FormatEmbedsRule extends FormatRule {
   const FormatEmbedsRule();

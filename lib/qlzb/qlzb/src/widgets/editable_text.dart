@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import '../../qlzb.dart';
 
+import '../../qlzb.dart';
 import 'code.dart';
 import 'common.dart';
 import 'controller.dart';

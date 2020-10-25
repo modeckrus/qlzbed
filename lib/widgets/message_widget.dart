@@ -1,6 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:qlzbed/l10n/messages_fr.dart';
 import 'package:qlzbed/widgets/my_image.dart';
 
 import '../entities/message.dart';
@@ -16,12 +18,60 @@ class MessageWidget extends StatefulWidget {
 class _MessageWidgetState extends State<MessageWidget> {
   @override
   Widget build(BuildContext context) {
-    final bool isMine = true;
-    // GetIt.I.get<FirebaseUser>().uid == widget.message.from.uid;
+    bool isMine = true;
+    isMine = GetIt.I.get<FirebaseUser>().uid == widget.message.from.uid;
+    bool readed = false;
+    if (widget.message.readed != null) {
+      readed = widget.message.readed;
+    }
     final jiff = Jiffy(widget.message.timestamp.toDate());
+    return ListTile(
+      // isThreeLine: true,
+      leading: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(25)),
+        child: Container(
+          width: 40,
+          height: 40,
+          child: MyImage(
+            path: 'avatar.jpg',
+          ),
+        ),
+      ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(widget.message.from.name + ' ' + widget.message.from.surname,
+                  style: Theme.of(context).textTheme.caption.copyWith(
+                        fontSize: 14,
+                        color: Colors.cyan,
+                      )),
+              Spacer(),
+              readed ? Icon(Icons.check) : SizedBox(),
+            ],
+          ),
+          Text(
+            widget.message.message,
+            style: TextStyle(
+              fontSize: 20,
+            ),
+          ),
+        ],
+      ),
+      subtitle: Row(
+        children: [
+          Container(
+              child: Text(
+            jiff.yMMMMEEEEdjm,
+            overflow: TextOverflow.clip,
+          )),
+        ],
+      ),
+    );
     return Row(
       children: [
-        MyImage(path: ''),
+        // MyImage(path: ''),
         Column(
           children: [
             Divider(),
@@ -55,7 +105,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                   ),
                   subtitle: Row(
                     children: [
-                      isMine ? Spacer() : Container(),
+                      // isMine ? Spacer() : Container(),
                       Text(jiff.yMMMMEEEEdjm
                           // widget.message.timestamp.toDate().day.toString() +
                           //   ' ' +
@@ -65,7 +115,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                           //   ':' +
                           //   widget.message.timestamp.toDate().minute.toString(),
                           ),
-                      isMine ? Container() : Spacer(),
+                      // isMine ? Container() : Spacer(),
                     ],
                   )),
             ),

@@ -21,7 +21,13 @@ class _FListPageState extends State<FListPage> {
               icon: Icon(Icons.home),
               onPressed: () {
                 Navigator.pushNamed(context, '/');
-              })
+              }),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.pushNamed(context, '/addState', arguments: widget.doc);
+            },
+          ),
         ],
       ),
       body: FListWidget(doc: widget.doc),

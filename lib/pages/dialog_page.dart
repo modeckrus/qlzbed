@@ -47,6 +47,7 @@ class _DialogPageState extends State<DialogPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false,
       child: Scaffold(
         appBar: AppBar(
           title: Row(
@@ -176,6 +177,7 @@ class _DialogPageState extends State<DialogPage> {
     return MessageWidget(
       message: message,
     );
+    // return Text(message.message);
   }
 }
 

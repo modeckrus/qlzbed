@@ -30,13 +30,18 @@ class FStoreCacheManager extends BaseCacheManager {
     final fileinfo = await getFileFromCache(childpath);
     print(fileinfo);
     if (fileinfo == null) {
-      final data = await FirebaseStorage.instance
-          .ref()
-          .child(childpath)
-          .getData(50 * 1024 * 1024);
+      try {
+        final data = await FirebaseStorage.instance
+            .ref()
+            .child(childpath)
+            .getData(50 * 1024 * 1024);
 
-      final file = await putFile(childpath, data);
-      return file;
+        final file = await putFile(childpath, data);
+        return file;
+      } catch (e) {
+        print('FStoreFile exeption: $e');
+        return null;
+      }
     }
     return fileinfo.file;
   }

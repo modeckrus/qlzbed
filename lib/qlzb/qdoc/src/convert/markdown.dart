@@ -164,6 +164,9 @@ class _QDocMarkdownEncoder extends Converter<Delta, String> {
       _writeItalicTag(buffer);
     } else if (attribute.key == QDocAttribute.link.key) {
       _writeLinkTag(buffer, attribute as QDocAttribute<String>, close: close);
+    } else if (attribute.key == QDocAttribute.link.key) {
+      _writeMissTag(buffer, attribute as QDocAttribute<List<String>>,
+          close: close);
     } else if (attribute.key == QDocAttribute.heading.key) {
       _writeHeadingTag(buffer, attribute as QDocAttribute<int>);
     } else if (attribute.key == QDocAttribute.block.key) {
@@ -185,6 +188,15 @@ class _QDocMarkdownEncoder extends Converter<Delta, String> {
       {bool close = false}) {
     if (close) {
       buffer.write('](${link.value})');
+    } else {
+      buffer.write('[');
+    }
+  }
+
+  void _writeMissTag(StringBuffer buffer, QDocAttribute<List<String>> miss,
+      {bool close = false}) {
+    if (close) {
+      buffer.write('](${miss.value})');
     } else {
       buffer.write('[');
     }

@@ -29,6 +29,26 @@ class AppLocalizations {
     );
   }
 
+  String get path {
+    return Intl.message('Path', name: 'path');
+  }
+
+  String get titleTextTest {
+    return Intl.message('Text Test', name: 'titleTextTest');
+  }
+
+  String get titleCheckTest {
+    return Intl.message('Check Test', name: 'titleCheckTest');
+  }
+
+  String get titleAddFormula {
+    return Intl.message('Math/Chemical formula', name: 'titleAddFormula');
+  }
+
+  String get titleAddArticle {
+    return Intl.message('Add Article', name: 'titleAddArticle');
+  }
+
   String get settings {
     return Intl.message('Settings', name: 'settings', desc: 'Settings button');
   }
@@ -197,7 +217,7 @@ class AppLocalizations {
 
   String get topTextforaddState {
     return Intl.message(
-        'Here you can add your state or create a new group for it',
+        'Here you can add your state or create a new group for it and many other',
         name: 'topTextforaddState');
   }
 

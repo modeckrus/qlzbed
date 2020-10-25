@@ -27,11 +27,13 @@ class _InitialPageState extends State<InitialPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-      return SafeArea(child: Scaffold(
-        body: Builder(builder: (context) {
-          return buildBody(state);
-        }),
-      ));
+      return SafeArea(
+          top: false,
+          child: Scaffold(
+            body: Builder(builder: (context) {
+              return buildBody(state);
+            }),
+          ));
     });
   }
 
