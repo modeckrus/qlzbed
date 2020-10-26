@@ -7,8 +7,10 @@ import 'package:qlzbed/pages/add_formula_page.dart';
 import 'package:qlzbed/pages/add_group_page.dart';
 import 'package:qlzbed/pages/add_state_page.dart';
 import 'package:qlzbed/pages/add_texttest_page.dart';
+import 'package:qlzbed/pages/article_page.dart';
 import 'package:qlzbed/pages/dialog_page.dart';
 import 'package:qlzbed/pages/text_test_page.dart';
+import 'package:qlzbed/pages/wrtie_article_page.dart';
 import 'package:route_transitions/route_transitions.dart';
 
 import 'pages/error_page.dart';
@@ -69,11 +71,23 @@ class RouteGenerator {
           ),
         );
       case '/addArticle':
-        final DocumentSnapshot doc = args;
+        List<dynamic> ars = args;
+        final DocumentSnapshot doc = ars[0];
+        final String filepath = ars[1];
         return PageRouteTransition(
           animationType: AnimationType.slide_right,
           curves: Curves.easeInOut,
           builder: (context) => AddArticlePage(
+            doc: doc,
+            filepath: filepath,
+          ),
+        );
+      case '/writeArticle':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => WriteArticlePage(
             doc: doc,
           ),
         );
@@ -111,17 +125,17 @@ class RouteGenerator {
             doc: doc,
           ),
         );
-      // case '/readingPage':
-      // case '/article':
-      //   final DocumentSnapshot doc = args;
-      //   return PageRouteTransition(
-      //     animationType: AnimationType.slide_right,
-      //     curves: Curves.easeInOut,
-      //     builder: (context) => ReadingPage(
-      //       doc: doc,
-      //     ),
-      //   );
-      //   break;
+      case '/readingPage':
+      case '/article':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ArticlePage(
+            doc: doc,
+          ),
+        );
+        break;
       case '/dialogPage':
       case '/dialogRoom':
         final MDialog dialog = args;

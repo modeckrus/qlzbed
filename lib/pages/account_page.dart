@@ -178,6 +178,15 @@ class _AccountPageState extends State<AccountPage> {
                 Divider(),
                 ListTile(
                   onTap: () {
+                    Navigator.pushNamed(context, '/moderation');
+                  },
+                  title: Text(AppLocalizations.of(context).moderationTitle),
+                  leading: Icon(Icons.text_fields_sharp),
+                  trailing: Icon(Icons.navigate_next),
+                ),
+                Divider(),
+                ListTile(
+                  onTap: () {
                     Navigator.pushNamed(context, '/settings');
                   },
                   title: Text(AppLocalizations.of(context).settings),

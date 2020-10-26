@@ -68,7 +68,7 @@ class _AddStatePageState extends State<AddStatePage> {
                       ),
                       trailing: MyIcons.nextRoute,
                       onTap: () {
-                        Navigator.pushNamed(context, '/addArticle',
+                        Navigator.pushNamed(context, '/writeArticle',
                             arguments: widget.doc);
                       },
                     ),

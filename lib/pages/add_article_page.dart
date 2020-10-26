@@ -1,16 +1,48 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:qlzbed/entities/article.dart';
+import 'package:qlzbed/entities/user.dart';
 import 'package:qlzbed/localization/localizations.dart';
+import 'package:qlzbed/service/get_moder_path.dart';
+import 'package:qlzbed/widgets/lang_drop_down_widget.dart';
+import 'package:qlzbed/widgets/tags_editor_widget.dart';
+import 'package:qlzbed/widgets/titleBloc/title_bloc.dart';
+import 'package:qlzbed/widgets/title_editor_widget.dart';
 
 class AddArticlePage extends StatefulWidget {
   final DocumentSnapshot doc;
-
-  const AddArticlePage({Key key, @required this.doc}) : super(key: key);
+  final String filepath;
+  const AddArticlePage({Key key, @required this.doc, @required this.filepath})
+      : super(key: key);
   @override
   _AddArticlePageState createState() => _AddArticlePageState();
 }
 
 class _AddArticlePageState extends State<AddArticlePage> {
+  Function onPressed;
+  void onlangchange(String nlang) {
+    lang = nlang;
+    print(lang);
+  }
+
+  List<String> tags = List<String>();
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
+
+  TextEditingController _titleController;
+
+  String lang;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,20 +59,178 @@ class _AddArticlePageState extends State<AddArticlePage> {
           ],
           title: Text(AppLocalizations.of(context).titleAddArticle),
         ),
-        body: Column(
-          children: [
-            Text(
-              AppLocalizations.of(context).path +
-                  ': \n' +
-                  widget.doc.reference.path,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
-              ),
-            )
-          ],
+        body: BlocProvider(
+          create: (context) =>
+              TitleBloc()..add(TitleChanged(_titleController.text)),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(context).path +
+                      ': ' +
+                      widget.doc.reference.path,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                Divider(),
+                Text(
+                  AppLocalizations.of(context).storagePath +
+                      ': ' +
+                      widget.filepath,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context).langof,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    LangDropDownButton(
+                      onlangchange: onlangchange,
+                      onStart: () {
+                        return Localizations.localeOf(context).languageCode;
+                      },
+                    ),
+                  ],
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 15),
+                    child: TitleEditor(
+                      controller: _titleController,
+                    )),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  child: TagsEditor(
+                    onAddTag: (tag) {
+                      tags.add(tag);
+                    },
+                    onRemoveTag: (tag) {
+                      tags.remove(tag);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                  child: BlocBuilder<TitleBloc, TitleState>(
+                      builder: (context, state) {
+                    if (state is TitleOkS) {
+                      return RaisedButton(
+                        color: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                        onPressed: () {
+                          _addArticle();
+                        },
+                        child: Container(
+                          // width: double.infinity,
+                          alignment: Alignment.center,
+                          child: Text(
+                            AppLocalizations.of(context).titleAddArticle,
+                            style: TextStyle(
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return RaisedButton(
+                        color: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                        onPressed: null,
+                        child: Container(
+                          // width: double.infinity,
+                          alignment: Alignment.center,
+                          child: Text(
+                            AppLocalizations.of(context).titleAddArticle,
+                            style: TextStyle(
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  }),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _addArticle() async {
+    try {
+      final path = widget.doc.reference.path;
+      final mpath = FService.getModerPath(path);
+      final docref = Firestore.instance.document(mpath);
+      final title = _titleController.text;
+      String l = lang;
+      if (l == null) {
+        l = Localizations.localeOf(context).languageCode;
+      }
+      title.split(' ').forEach((element) {
+        for (var i = 1; i < element.length; i++) {
+          final part = element.substring(0, i);
+          if (!tags.contains(part)) {
+            tags.add(part.toLowerCase());
+          }
+        }
+      });
+      final moderationPath = FService.getModerPath(path);
+      final article = Article(
+          path: widget.filepath,
+          uid: GetIt.I.get<User>().uid,
+          tags: tags,
+          title: title,
+          timestamp: Timestamp.now());
+      print(article.toJson());
+      print(moderationPath);
+      final ldocref = await Firestore.instance
+          .document(moderationPath)
+          .collection('moderationList')
+          .add(article.toJson());
+      final ldocsnap = await ldocref.get();
+      Navigator.pushNamed(context, '/article', arguments: ldocsnap);
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.error),
+                  Text(e.toString()),
+                  RaisedButton(
+                    child: Text(AppLocalizations.of(context).ok),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
+            );
+          });
+    }
   }
 }

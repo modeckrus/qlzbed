@@ -29,6 +29,22 @@ class AppLocalizations {
     );
   }
 
+  String get moderationTitle {
+    return Intl.message('Moderate', name: 'moderationTitle');
+  }
+
+  String get storagePath {
+    return Intl.message('Storage path', name: 'storagePath');
+  }
+
+  String get ok {
+    return Intl.message('Ok', name: 'ok');
+  }
+
+  String get writeArticleTitle {
+    return Intl.message('Write Article', name: 'writeArticleTitle');
+  }
+
   String get path {
     return Intl.message('Path', name: 'path');
   }

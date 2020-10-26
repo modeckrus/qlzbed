@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:qlzbed/entities/group.dart';
+import 'package:qlzbed/entities/user.dart';
 import 'package:qlzbed/localization/localizations.dart';
+import 'package:qlzbed/service/get_moder_path.dart';
 import 'package:qlzbed/widgets/lang_drop_down_widget.dart';
 import 'package:qlzbed/widgets/tags_editor_widget.dart';
 import 'package:qlzbed/widgets/titleBloc/title_bloc.dart';
@@ -25,7 +29,6 @@ class _AddGroupPageState extends State<AddGroupPage> {
   List<String> tags = List<String>();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _titleController = TextEditingController();
   }
@@ -56,7 +59,8 @@ class _AddGroupPageState extends State<AddGroupPage> {
           title: Text(AppLocalizations.of(context).titleAddGroup),
         ),
         body: BlocProvider(
-          create: (context) => TitleBloc(),
+          create: (context) =>
+              TitleBloc()..add(TitleChanged(_titleController.text)),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -118,7 +122,9 @@ class _AddGroupPageState extends State<AddGroupPage> {
                         ),
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                        onPressed: () {},
+                        onPressed: () {
+                          _addGroup();
+                        },
                         child: Container(
                           // width: double.infinity,
                           alignment: Alignment.center,
@@ -159,5 +165,60 @@ class _AddGroupPageState extends State<AddGroupPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _addGroup() async {
+    try {
+      final path = widget.doc.reference.path;
+      final mpath = FService.getModerPath(path);
+      final docref = Firestore.instance.document(mpath);
+      final title = _titleController.text;
+      String l = lang;
+      if (l == null) {
+        l = Localizations.localeOf(context).languageCode;
+      }
+      title.split(' ').forEach((element) {
+        for (var i = 1; i < element.length; i++) {
+          final part = element.substring(0, i);
+          if (!tags.contains(part)) {
+            tags.add(part.toLowerCase());
+          }
+        }
+      });
+
+      print(tags);
+      final addgroup = Group(
+        title: title,
+        tags: tags,
+        lang: l,
+        uid: GetIt.I.get<User>().uid,
+        timestamp: Timestamp.now(),
+      );
+      print(addgroup.toJson());
+      final ldocref =
+          await docref.collection('moderationList').add(addgroup.toJson());
+      final docsnap = await ldocref.get();
+      Navigator.pushNamed(context, '/addState', arguments: docsnap);
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.error),
+                  Text(e.toString()),
+                  RaisedButton(
+                    child: Text(AppLocalizations.of(context).ok),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
+            );
+          });
+    }
   }
 }

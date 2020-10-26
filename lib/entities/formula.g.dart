@@ -13,6 +13,8 @@ Formula _$FormulaFromJson(Map<String, dynamic> json) {
     tex: json['tex'] as String,
     tags: (json['tags'] as List)?.map((e) => e as String)?.toList(),
     title: json['title'] as String,
+    timestamp: Formula._timestamoFromJson(json['timestamp'] as Timestamp),
+    route: json['route'] as String,
   );
 }
 
@@ -21,5 +23,7 @@ Map<String, dynamic> _$FormulaToJson(Formula instance) => <String, dynamic>{
       'uid': instance.uid,
       'tex': instance.tex,
       'tags': instance.tags,
+      'timestamp': Formula._timestampToJson(instance.timestamp),
       'title': instance.title,
+      'route': instance.route,
     };
