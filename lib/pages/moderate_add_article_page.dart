@@ -2,26 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:qlzbed/entities/group.dart';
-import 'package:qlzbed/entities/moderationGroup.dart';
+import 'package:qlzbed/entities/article.dart';
+import 'package:qlzbed/entities/moderationArticle.dart';
 import 'package:qlzbed/entities/user.dart';
 import 'package:qlzbed/localization/localizations.dart';
+import 'package:qlzbed/my_icons.dart';
 import 'package:qlzbed/service/fservice.dart';
 import 'package:qlzbed/widgets/lang_drop_down_widget.dart';
 import 'package:qlzbed/widgets/tags_editor_widget.dart';
 import 'package:qlzbed/widgets/titleBloc/title_bloc.dart';
 import 'package:qlzbed/widgets/title_editor_widget.dart';
 
-class AddGroupPage extends StatefulWidget {
+class ModerateAddArticlePage extends StatefulWidget {
   final DocumentSnapshot doc;
-
-  const AddGroupPage({Key key, @required this.doc}) : super(key: key);
+  final String filepath;
+  const ModerateAddArticlePage(
+      {Key key, @required this.doc, @required this.filepath})
+      : super(key: key);
   @override
-  _AddGroupPageState createState() => _AddGroupPageState();
+  _ModerateAddArticlePageState createState() => _ModerateAddArticlePageState();
 }
 
-class _AddGroupPageState extends State<AddGroupPage> {
+class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
   Function onPressed;
+  ModerationArticle article;
   void onlangchange(String nlang) {
     lang = nlang;
     print(lang);
@@ -32,6 +36,10 @@ class _AddGroupPageState extends State<AddGroupPage> {
   void initState() {
     super.initState();
     _titleController = TextEditingController();
+    article = ModerationArticle.fromJson(widget.doc.data);
+    _titleController.text = article.title;
+    lang = article.lang;
+    tags = article.tags;
   }
 
   @override
@@ -57,7 +65,12 @@ class _AddGroupPageState extends State<AddGroupPage> {
               },
             ),
           ],
-          title: Text(AppLocalizations.of(context).titleAddGroup),
+          title: Row(
+            children: [
+              MyIcons.moderation,
+              Text(AppLocalizations.of(context).titleModerateAddArticle),
+            ],
+          ),
         ),
         body: BlocProvider(
           create: (context) =>
@@ -69,11 +82,31 @@ class _AddGroupPageState extends State<AddGroupPage> {
               children: [
                 Text(
                   AppLocalizations.of(context).path +
-                      ': \n' +
+                      ': ' +
                       widget.doc.reference.path,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 16,
+                  ),
+                ),
+                Divider(),
+                Text(
+                  AppLocalizations.of(context).storagePath +
+                      ': ' +
+                      widget.filepath,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                Divider(),
+                Text(
+                  AppLocalizations.of(context).humanPath +
+                      ': ' +
+                      article.humanPath,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
                   ),
                 ),
                 Row(
@@ -87,7 +120,11 @@ class _AddGroupPageState extends State<AddGroupPage> {
                     LangDropDownButton(
                       onlangchange: onlangchange,
                       onStart: () {
-                        return FService.getLang(context);
+                        if (article.lang == null) {
+                          return FService.getLang(context);
+                        } else {
+                          return article.lang;
+                        }
                       },
                     ),
                   ],
@@ -108,6 +145,9 @@ class _AddGroupPageState extends State<AddGroupPage> {
                     onRemoveTag: (tag) {
                       tags.remove(tag);
                     },
+                    onStart: () {
+                      return tags;
+                    },
                   ),
                 ),
                 Padding(
@@ -124,13 +164,13 @@ class _AddGroupPageState extends State<AddGroupPage> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                         onPressed: () {
-                          _addGroup();
+                          _addArticle();
                         },
                         child: Container(
                           // width: double.infinity,
                           alignment: Alignment.center,
                           child: Text(
-                            AppLocalizations.of(context).titleAddGroup,
+                            AppLocalizations.of(context).titleAddArticle,
                             style: TextStyle(
                               fontSize: 30,
                             ),
@@ -150,7 +190,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
                           // width: double.infinity,
                           alignment: Alignment.center,
                           child: Text(
-                            AppLocalizations.of(context).titleAddGroup,
+                            AppLocalizations.of(context).titleAddArticle,
                             style: TextStyle(
                               fontSize: 30,
                             ),
@@ -168,37 +208,41 @@ class _AddGroupPageState extends State<AddGroupPage> {
     );
   }
 
-  Future<void> _addGroup() async {
+  Future<void> _addArticle() async {
     try {
-      final path = widget.doc.reference.path;
-      final mpath = FService.getModerPath(path);
-      final docref = Firestore.instance.document(mpath);
       final title = _titleController.text;
       String l = lang;
       if (l == null) {
         l = FService.getLang(context);
       }
       tags.addAll(FService.getTags(title));
-      final mpathlast =
-          mpath.split('moderation/${FService.getLang(context)}/mainRoutes')[1];
-      String humanPath = await FService.getHumanPath(widget.doc.reference);
-
-      print(humanPath);
-      print(tags);
-      final addgroup = ModerationGroup(
-        title: title,
+      // final humanPath = await FService.getHumanPath(widget.doc.reference);
+      final narticle = ModerationArticle(
+        path: widget.filepath,
+        uid: article.uid,
         tags: tags,
         lang: l,
-        uid: GetIt.I.get<User>().uid,
+        title: title,
         timestamp: Timestamp.now(),
-        isModerating: true,
-        humanPath: humanPath,
+        humanPath: article.humanPath,
+        isModerating: false,
+        moderator: GetIt.I.get<User>().uid,
       );
-      print(addgroup.toJson());
-      final ldocref =
-          await docref.collection('moderationList').add(addgroup.toJson());
-      final docsnap = await ldocref.get();
-      Navigator.pushNamed(context, '/addState', arguments: docsnap);
+      print(narticle.toJson());
+      widget.doc.reference.setData(narticle.toJson(), merge: true);
+      final pubarticle = Article(
+          path: narticle.path,
+          uid: narticle.uid,
+          tags: narticle.tags,
+          title: narticle.title,
+          timestamp: article.timestamp,
+          lang: narticle.lang);
+      final pubpath = FService.getPubPath(widget.doc.reference.path);
+      print(pubpath);
+      final pubdocref = Firestore.instance.document(pubpath);
+      pubdocref.setData(pubarticle.toJson());
+      final pubdocsnap = await pubdocref.get();
+      Navigator.pushNamed(context, '/article', arguments: pubdocsnap);
     } catch (e) {
       showDialog(
           context: context,

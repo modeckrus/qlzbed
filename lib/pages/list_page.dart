@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qlzbed/my_icons.dart';
 import '../widgets/list_widget.dart';
 
 class FListPage extends StatefulWidget {
@@ -23,9 +24,10 @@ class _FListPageState extends State<FListPage> {
                 Navigator.pushNamed(context, '/');
               }),
           IconButton(
-            icon: Icon(Icons.add),
+            icon: MyIcons.moderation,
             onPressed: () {
-              Navigator.pushNamed(context, '/addState', arguments: widget.doc);
+              Navigator.pushNamed(context, '/moderateGroup',
+                  arguments: widget.doc);
             },
           ),
         ],

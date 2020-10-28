@@ -29,6 +29,30 @@ class AppLocalizations {
     );
   }
 
+  String get humanPath {
+    return Intl.message('Path readable', name: 'humanPath');
+  }
+
+  String get moderateArticleTitle {
+    return Intl.message('Moderate Article', name: 'moderateArticleTitle');
+  }
+
+  String get titleModerateAddArticle {
+    return Intl.message('Publish Article', name: 'titleModerateAddArticle');
+  }
+
+  String get moderateGroupTitle {
+    return Intl.message('Moderate Group', name: 'moderateGroupTitle');
+  }
+
+  String get moderateTextTestTitle {
+    return Intl.message('Moderate Text Test', name: 'moderateTextTestTitle');
+  }
+
+  String get moderateCheckTestTitle {
+    return Intl.message('Moderate Check Test', name: 'moderateCheckTestTitle');
+  }
+
   String get moderationTitle {
     return Intl.message('Moderate', name: 'moderationTitle');
   }

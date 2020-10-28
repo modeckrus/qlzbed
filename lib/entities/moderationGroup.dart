@@ -3,17 +3,20 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'article.g.dart';
+part 'moderationGroup.g.dart';
 
 @JsonSerializable()
-class Article extends Equatable {
-  final String path;
+class ModerationGroup extends Equatable {
   final String uid;
-  final List<String> tags;
-  final String title;
-  final String lang;
   @JsonKey(fromJson: _timestamoFromJson, toJson: _timestampToJson)
   final Timestamp timestamp;
+  final String lang;
+  final String title;
+  final List<String> tags;
+  final bool isModerating;
+  @JsonKey(includeIfNull: false)
+  final String moderator;
+  final String humanPath;
   @JsonKey(
     toJson: _routeToJson,
     fromJson: _routeFromJson,
@@ -21,22 +24,23 @@ class Article extends Equatable {
     includeIfNull: true,
   )
   final String route;
-  Article(
-      {@required this.path,
-      @required this.uid,
-      @required this.tags,
+  ModerationGroup(
+      {@required this.lang,
       @required this.title,
+      @required this.tags,
+      @required this.uid,
       @required this.timestamp,
-      @required this.lang,
+      @required this.humanPath,
+      @required this.isModerating,
+      this.moderator,
       this.route});
-
   @override
-  List<Object> get props => [path, uid, tags, title];
+  List<Object> get props => [lang, title, tags, uid, timestamp];
 
-  Map<String, dynamic> toJson() => _$ArticleToJson(this);
+  Map<String, dynamic> toJson() => _$ModerationGroupToJson(this);
 
-  factory Article.fromJson(Map<String, dynamic> json) =>
-      _$ArticleFromJson(json);
+  factory ModerationGroup.fromJson(Map<String, dynamic> json) =>
+      _$ModerationGroupFromJson(json);
 
   static Timestamp _timestamoFromJson(Timestamp json) {
     return json;
@@ -47,10 +51,10 @@ class Article extends Equatable {
   }
 
   static String _routeToJson(String route) {
-    return '/article';
+    return '/list';
   }
 
   static String _routeFromJson(String json) {
-    return '/article';
+    return '/list';
   }
 }

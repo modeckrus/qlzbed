@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qlzbed/my_icons.dart';
 import 'package:qlzbed/settingUser/settinguserbloc/settinguser_bloc.dart';
 import 'package:qlzbed/widgets/settings_user_widget.dart';
 
@@ -181,7 +182,7 @@ class _AccountPageState extends State<AccountPage> {
                     Navigator.pushNamed(context, '/moderation');
                   },
                   title: Text(AppLocalizations.of(context).moderationTitle),
-                  leading: Icon(Icons.text_fields_sharp),
+                  leading: MyIcons.moderation,
                   trailing: Icon(Icons.navigate_next),
                 ),
                 Divider(),

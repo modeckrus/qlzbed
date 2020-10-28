@@ -12,6 +12,7 @@ class TextTest extends Equatable {
   final List<String> answers;
   final List<String> tags;
   final String title;
+  final String lang;
   @JsonKey(fromJson: _timestamoFromJson, toJson: _timestampToJson)
   final Timestamp timestamp;
   @JsonKey(
@@ -28,6 +29,7 @@ class TextTest extends Equatable {
       @required this.tags,
       @required this.title,
       @required this.timestamp,
+      @required this.lang,
       this.route});
 
   @override

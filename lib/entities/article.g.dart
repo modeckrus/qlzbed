@@ -13,6 +13,7 @@ Article _$ArticleFromJson(Map<String, dynamic> json) {
     tags: (json['tags'] as List)?.map((e) => e as String)?.toList(),
     title: json['title'] as String,
     timestamp: Article._timestamoFromJson(json['timestamp'] as Timestamp),
+    lang: json['lang'] as String,
     route: Article._routeFromJson(json['route'] as String),
   );
 }
@@ -22,6 +23,7 @@ Map<String, dynamic> _$ArticleToJson(Article instance) => <String, dynamic>{
       'uid': instance.uid,
       'tags': instance.tags,
       'title': instance.title,
+      'lang': instance.lang,
       'timestamp': Article._timestampToJson(instance.timestamp),
       'route': Article._routeToJson(instance.route),
     };

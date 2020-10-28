@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qlzbed/service/fservice.dart';
 
 import '../localization/localizations.dart';
 import '../widgets/error_widget.dart';
@@ -21,7 +22,7 @@ class _LibraryPageState extends State<LibraryPage> {
         body: StreamBuilder(
             stream: Firestore.instance
                 .collection('routes')
-                .document(Localizations.localeOf(context).languageCode)
+                .document(FService.getLang(context))
                 .collection('mainRoutes')
                 .snapshots(),
             builder: (context, snap) {
@@ -32,7 +33,7 @@ class _LibraryPageState extends State<LibraryPage> {
                 return FErrorWidget(error: snap.error.toString());
               }
 
-              var countryCode = Localizations.localeOf(context).languageCode;
+              var countryCode = FService.getLang(context);
               print({'Locale: ': countryCode});
               // QuerySnapshot querySnap = snap.data;
               // print(querySnap.documents);

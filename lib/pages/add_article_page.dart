@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:qlzbed/entities/article.dart';
+import 'package:qlzbed/entities/moderationArticle.dart';
 import 'package:qlzbed/entities/user.dart';
 import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/service/get_moder_path.dart';
+import 'package:qlzbed/service/fservice.dart';
 import 'package:qlzbed/widgets/lang_drop_down_widget.dart';
 import 'package:qlzbed/widgets/tags_editor_widget.dart';
 import 'package:qlzbed/widgets/titleBloc/title_bloc.dart';
@@ -97,7 +98,7 @@ class _AddArticlePageState extends State<AddArticlePage> {
                     LangDropDownButton(
                       onlangchange: onlangchange,
                       onStart: () {
-                        return Localizations.localeOf(context).languageCode;
+                        return FService.getLang(context);
                       },
                     ),
                   ],
@@ -182,33 +183,29 @@ class _AddArticlePageState extends State<AddArticlePage> {
     try {
       final path = widget.doc.reference.path;
       final mpath = FService.getModerPath(path);
-      final docref = Firestore.instance.document(mpath);
+      final mdocref = Firestore.instance.document(mpath);
       final title = _titleController.text;
       String l = lang;
       if (l == null) {
-        l = Localizations.localeOf(context).languageCode;
+        l = FService.getLang(context);
       }
-      title.split(' ').forEach((element) {
-        for (var i = 1; i < element.length; i++) {
-          final part = element.substring(0, i);
-          if (!tags.contains(part)) {
-            tags.add(part.toLowerCase());
-          }
-        }
-      });
-      final moderationPath = FService.getModerPath(path);
-      final article = Article(
-          path: widget.filepath,
-          uid: GetIt.I.get<User>().uid,
-          tags: tags,
-          title: title,
-          timestamp: Timestamp.now());
+      tags.addAll(FService.getTags(title));
+      // final moderationPath = FService.getModerPath(path);
+      final humanPath = await FService.getHumanPath(widget.doc.reference);
+      final article = ModerationArticle(
+        path: widget.filepath,
+        uid: GetIt.I.get<User>().uid,
+        tags: tags,
+        lang: l,
+        title: title,
+        timestamp: Timestamp.now(),
+        humanPath: humanPath,
+        isModerating: true,
+      );
       print(article.toJson());
-      print(moderationPath);
-      final ldocref = await Firestore.instance
-          .document(moderationPath)
-          .collection('moderationList')
-          .add(article.toJson());
+      print(mpath);
+      final ldocref =
+          await mdocref.collection('moderationList').add(article.toJson());
       final ldocsnap = await ldocref.get();
       Navigator.pushNamed(context, '/article', arguments: ldocsnap);
     } catch (e) {

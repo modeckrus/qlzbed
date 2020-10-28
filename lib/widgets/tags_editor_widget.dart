@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 class TagsEditor extends StatefulWidget {
   final Function onAddTag;
   final Function onRemoveTag;
+  final Function onStart;
   const TagsEditor(
-      {Key key, @required this.onAddTag, @required this.onRemoveTag})
+      {Key key,
+      @required this.onAddTag,
+      @required this.onRemoveTag,
+      this.onStart})
       : super(key: key);
   @override
   _TagsEditorState createState() => _TagsEditorState();
@@ -18,6 +22,10 @@ class _TagsEditorState extends State<TagsEditor> {
   void initState() {
     tags = List();
     _controller = TextEditingController();
+    if (widget.onStart != null) {
+      tags.addAll(widget.onStart());
+    }
+
     super.initState();
   }
 

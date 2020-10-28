@@ -12,26 +12,32 @@ import 'package:qlzbed/widgets/tags_editor_widget.dart';
 import 'package:qlzbed/widgets/titleBloc/title_bloc.dart';
 import 'package:qlzbed/widgets/title_editor_widget.dart';
 
-class AddGroupPage extends StatefulWidget {
+class ModerateAddGroupPage extends StatefulWidget {
   final DocumentSnapshot doc;
 
-  const AddGroupPage({Key key, @required this.doc}) : super(key: key);
+  const ModerateAddGroupPage({Key key, @required this.doc}) : super(key: key);
   @override
-  _AddGroupPageState createState() => _AddGroupPageState();
+  _ModerateAddGroupPageState createState() => _ModerateAddGroupPageState();
 }
 
-class _AddGroupPageState extends State<AddGroupPage> {
+class _ModerateAddGroupPageState extends State<ModerateAddGroupPage> {
   Function onPressed;
   void onlangchange(String nlang) {
     lang = nlang;
     print(lang);
   }
 
+  ModerationGroup oldGroup;
   List<String> tags = List<String>();
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController();
+    oldGroup = ModerationGroup.fromJson(widget.doc.data);
+    // article = ModerationArticle.fromJson(widget.doc.data);
+    _titleController.text = oldGroup.title;
+    lang = oldGroup.lang;
+    tags = oldGroup.tags;
   }
 
   @override
@@ -41,7 +47,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
   }
 
   TextEditingController _titleController;
-
+  String get title => _titleController.text;
   String lang;
   @override
   Widget build(BuildContext context) {
@@ -87,7 +93,11 @@ class _AddGroupPageState extends State<AddGroupPage> {
                     LangDropDownButton(
                       onlangchange: onlangchange,
                       onStart: () {
-                        return FService.getLang(context);
+                        if (oldGroup.lang == null) {
+                          return FService.getLang(context);
+                        } else {
+                          return oldGroup.lang;
+                        }
                       },
                     ),
                   ],
@@ -107,6 +117,9 @@ class _AddGroupPageState extends State<AddGroupPage> {
                     },
                     onRemoveTag: (tag) {
                       tags.remove(tag);
+                    },
+                    onStart: () {
+                      return oldGroup.tags;
                     },
                   ),
                 ),
@@ -171,34 +184,37 @@ class _AddGroupPageState extends State<AddGroupPage> {
   Future<void> _addGroup() async {
     try {
       final path = widget.doc.reference.path;
-      final mpath = FService.getModerPath(path);
-      final docref = Firestore.instance.document(mpath);
-      final title = _titleController.text;
-      String l = lang;
-      if (l == null) {
-        l = FService.getLang(context);
-      }
-      tags.addAll(FService.getTags(title));
-      final mpathlast =
-          mpath.split('moderation/${FService.getLang(context)}/mainRoutes')[1];
-      String humanPath = await FService.getHumanPath(widget.doc.reference);
 
-      print(humanPath);
-      print(tags);
-      final addgroup = ModerationGroup(
+      String l;
+      if (lang == null) {
+        l = FService.getLang(context);
+      } else {
+        l = lang;
+      }
+
+      final moderateGroup = ModerationGroup(
         title: title,
         tags: tags,
         lang: l,
-        uid: GetIt.I.get<User>().uid,
+        uid: oldGroup.uid,
         timestamp: Timestamp.now(),
-        isModerating: true,
-        humanPath: humanPath,
+        isModerating: false,
+        humanPath: oldGroup.humanPath,
+        moderator: GetIt.I.get<User>().uid,
       );
-      print(addgroup.toJson());
-      final ldocref =
-          await docref.collection('moderationList').add(addgroup.toJson());
-      final docsnap = await ldocref.get();
-      Navigator.pushNamed(context, '/addState', arguments: docsnap);
+      final pubGroup = Group(
+          lang: l,
+          title: title,
+          tags: tags,
+          uid: oldGroup.uid,
+          timestamp: oldGroup.timestamp);
+      await widget.doc.reference.setData(moderateGroup.toJson(), merge: true);
+      final pubpath = FService.getPubPath(widget.doc.reference.path);
+      print(pubpath);
+      final pubdocref = Firestore.instance.document(pubpath);
+      pubdocref.setData(pubGroup.toJson());
+      await pubdocref.get();
+      Navigator.pushNamed(context, '/moderation');
     } catch (e) {
       showDialog(
           context: context,

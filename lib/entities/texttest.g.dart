@@ -14,6 +14,7 @@ TextTest _$TextTestFromJson(Map<String, dynamic> json) {
     tags: (json['tags'] as List)?.map((e) => e as String)?.toList(),
     title: json['title'] as String,
     timestamp: TextTest._timestamoFromJson(json['timestamp'] as Timestamp),
+    lang: json['lang'] as String,
     route: TextTest._routeFromJson(json['route'] as String),
   );
 }
@@ -24,6 +25,7 @@ Map<String, dynamic> _$TextTestToJson(TextTest instance) => <String, dynamic>{
       'answers': instance.answers,
       'tags': instance.tags,
       'title': instance.title,
+      'lang': instance.lang,
       'timestamp': TextTest._timestampToJson(instance.timestamp),
       'route': TextTest._routeToJson(instance.route),
     };

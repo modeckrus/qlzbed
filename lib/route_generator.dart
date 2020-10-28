@@ -9,6 +9,10 @@ import 'package:qlzbed/pages/add_state_page.dart';
 import 'package:qlzbed/pages/add_texttest_page.dart';
 import 'package:qlzbed/pages/article_page.dart';
 import 'package:qlzbed/pages/dialog_page.dart';
+import 'package:qlzbed/pages/moderate_add_group_page.dart';
+import 'package:qlzbed/pages/moderate_article_page.dart';
+import 'package:qlzbed/pages/moderate_group_page.dart';
+import 'package:qlzbed/pages/moderate_page.dart';
 import 'package:qlzbed/pages/text_test_page.dart';
 import 'package:qlzbed/pages/wrtie_article_page.dart';
 import 'package:route_transitions/route_transitions.dart';
@@ -16,6 +20,7 @@ import 'package:route_transitions/route_transitions.dart';
 import 'pages/error_page.dart';
 import 'pages/initial_page.dart';
 import 'pages/list_page.dart';
+import 'pages/moderate_add_article_page.dart';
 import 'pages/settings_page.dart';
 import 'pages/test_page.dart';
 import 'user_repository.dart';
@@ -136,6 +141,52 @@ class RouteGenerator {
           ),
         );
         break;
+      case '/moderation':
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ModeratePage(),
+        );
+      case '/moderateArticle':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ModerateArticlePage(
+            doc: doc,
+          ),
+        );
+      case '/moderateGroup':
+      case '/moderateList':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ModerateGroupPage(
+            doc: doc,
+          ),
+        );
+      case '/moderateAddGroup':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ModerateAddGroupPage(
+            doc: doc,
+          ),
+        );
+      case '/moderateAddArticle':
+        List<dynamic> ars = args;
+        final DocumentSnapshot doc = ars[0];
+        final String filepath = ars[1];
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ModerateAddArticlePage(
+            doc: doc,
+            filepath: filepath,
+          ),
+        );
       case '/dialogPage':
       case '/dialogRoom':
         final MDialog dialog = args;

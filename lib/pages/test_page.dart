@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qlzbed/localization/localizations.dart';
 import 'package:qlzbed/qlzb/qlzb/qlzb.dart';
 import 'package:qlzbed/qlzb/qlzb/src/widgets/scaffold.dart';
+import 'package:qlzbed/service/fservice.dart';
 import 'package:quill_delta/quill_delta.dart';
 // import 'dart:js' as js;
 // import 'dart:html' as html;
@@ -110,19 +111,27 @@ class _TestPageState extends State<TestPage> {
                     ),
                   ),
                 ),
+                // ListTile(
+                //   title: Text('clear all'),
+                //   onLongPress: () async {
+                //     print('onLong press');
+
+                //     final documents = await Firestore.instance
+                //         .collection(
+                //             '/moderation/en/mainRoutes/1s0Bsu0MiikLdK5jK61c/moderationList')
+                //         .getDocuments();
+                //     documents.documents.forEach((element) {
+                //       print(element.data);
+                //       element.reference.delete();
+                //     });
+                //   },
+                // )
                 ListTile(
-                  title: Text('clear all'),
+                  title: Text('Test'),
                   onLongPress: () async {
                     print('onLong press');
 
-                    final documents = await Firestore.instance
-                        .collection(
-                            '/moderation/en/mainRoutes/1s0Bsu0MiikLdK5jK61c/moderationList')
-                        .getDocuments();
-                    documents.documents.forEach((element) {
-                      print(element.data);
-                      element.reference.delete();
-                    });
+                    FService.getLang(context);
                   },
                 )
               ],
