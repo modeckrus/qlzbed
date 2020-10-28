@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qlzbed/my_icons.dart';
-import '../widgets/list_widget.dart';
+import '../../widgets/list_widget.dart';
 
 class FListPage extends StatefulWidget {
   final DocumentSnapshot doc;
