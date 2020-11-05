@@ -2,45 +2,55 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:qlzbed/entities/article.dart';
-import 'package:qlzbed/entities/moderationArticle.dart';
+import 'package:qlzbed/entities/fstateMinimum.dart';
+import 'package:qlzbed/entities/lesson.dart';
+import 'package:qlzbed/entities/moderationLesson.dart';
+import 'package:qlzbed/entities/moderationState.dart';
 import 'package:qlzbed/entities/user.dart';
 import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/my_icons.dart';
 import 'package:qlzbed/service/dialog_sevice.dart';
 import 'package:qlzbed/service/fservice.dart';
+import 'package:qlzbed/widgets/add_lesson_widget.dart';
 import 'package:qlzbed/widgets/lang_drop_down_widget.dart';
 import 'package:qlzbed/widgets/tags_editor_widget.dart';
 import 'package:qlzbed/widgets/titleBloc/title_bloc.dart';
 import 'package:qlzbed/widgets/title_editor_widget.dart';
 
-class ModerateAddArticlePage extends StatefulWidget {
+class ModerateAddLessonPage extends StatefulWidget {
   final DocumentSnapshot doc;
-  final String filepath;
-  const ModerateAddArticlePage(
-      {Key key, @required this.doc, @required this.filepath})
-      : super(key: key);
+
+  const ModerateAddLessonPage({Key key, @required this.doc}) : super(key: key);
   @override
-  _ModerateAddArticlePageState createState() => _ModerateAddArticlePageState();
+  _ModerateAddLessonPageState createState() => _ModerateAddLessonPageState();
 }
 
-class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
+class _ModerateAddLessonPageState extends State<ModerateAddLessonPage> {
   Function onPressed;
-  ModerationArticle article;
+  List<FStateMinimum> states = List();
+  ModerationLesson moderationLesson;
   void onlangchange(String nlang) {
     lang = nlang;
     print(lang);
+  }
+
+  void onAddState(FStateMinimum state) {
+    states.add(state);
+  }
+
+  void onRemoveState(FStateMinimum state) {
+    states.remove(state);
   }
 
   List<String> tags = List<String>();
   @override
   void initState() {
     super.initState();
+    moderationLesson = ModerationLesson.fromJson(widget.doc.data);
     _titleController = TextEditingController();
-    article = ModerationArticle.fromJson(widget.doc.data);
-    _titleController.text = article.title;
-    lang = article.lang;
-    tags = article.tags;
+    _titleController.text = moderationLesson.title;
+    tags = moderationLesson.tags;
+    lang = moderationLesson.lang;
+    states = moderationLesson.states;
   }
 
   @override
@@ -66,12 +76,7 @@ class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
               },
             ),
           ],
-          title: Row(
-            children: [
-              MyIcons.moderation,
-              Text(AppLocalizations.of(context).titleModerateAddArticle),
-            ],
-          ),
+          title: Text(AppLocalizations.of(context).titleModerateAddLesson),
         ),
         body: BlocProvider(
           create: (context) =>
@@ -83,33 +88,27 @@ class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
               children: [
                 Text(
                   AppLocalizations.of(context).path +
-                      ': ' +
+                      ': \n' +
                       widget.doc.reference.path,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                   ),
                 ),
-                Divider(),
-                Text(
-                  AppLocalizations.of(context).storagePath +
-                      ': ' +
-                      widget.filepath,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                Divider(),
-                Text(
-                  AppLocalizations.of(context).humanPath +
-                      ': ' +
-                      article.humanPath,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+                moderationLesson != null
+                    ? moderationLesson.humanPath != null
+                        ? Text(
+                            AppLocalizations.of(context).humanPath +
+                                    ': \n' +
+                                    moderationLesson.humanPath ??
+                                '',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          )
+                        : Container()
+                    : Container(),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -121,11 +120,7 @@ class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
                     LangDropDownButton(
                       onlangchange: onlangchange,
                       onStart: () {
-                        if (article.lang == null) {
-                          return FService.getLang(context);
-                        } else {
-                          return article.lang;
-                        }
+                        return FService.getLang(context);
                       },
                     ),
                   ],
@@ -151,6 +146,13 @@ class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
                     },
                   ),
                 ),
+                AddLessonWidget(
+                  onAddState: onAddState,
+                  onRemoveState: onRemoveState,
+                  onStart: () {
+                    return states;
+                  },
+                ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -165,13 +167,13 @@ class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
                         padding:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                         onPressed: () {
-                          _addArticle();
+                          _addLesson();
                         },
                         child: Container(
                           // width: double.infinity,
                           alignment: Alignment.center,
                           child: Text(
-                            AppLocalizations.of(context).titleAddArticle,
+                            AppLocalizations.of(context).titleAddLesson,
                             style: TextStyle(
                               fontSize: 30,
                             ),
@@ -191,7 +193,7 @@ class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
                           // width: double.infinity,
                           alignment: Alignment.center,
                           child: Text(
-                            AppLocalizations.of(context).titleAddArticle,
+                            AppLocalizations.of(context).titleAddLesson,
                             style: TextStyle(
                               fontSize: 30,
                             ),
@@ -209,41 +211,45 @@ class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
     );
   }
 
-  Future<void> _addArticle() async {
+  Future<void> _addLesson() async {
     try {
+      final path = widget.doc.reference.path;
+      final pubpath = FService.getPubPath(path);
+      final docref = Firestore.instance.document(pubpath);
       final title = _titleController.text;
       String l = lang;
       if (l == null) {
         l = FService.getLang(context);
       }
       tags.addAll(FService.getTags(title));
-      // final humanPath = await FService.getHumanPath(widget.doc.reference);
-      final narticle = ModerationArticle(
-        path: widget.filepath,
-        uid: article.uid,
+      String humanPath = await FService.getHumanPath(widget.doc.reference);
+
+      print(humanPath);
+      print(tags);
+      final mlesson = ModerationLesson(
+        title: title,
         tags: tags,
         lang: l,
-        title: title,
+        uid: moderationLesson.uid,
         timestamp: Timestamp.now(),
-        humanPath: article.humanPath,
         isModerating: false,
+        humanPath: humanPath,
+        states: states,
         moderator: GetIt.I.get<User>().uid,
       );
-      print(narticle.toJson());
-      widget.doc.reference.setData(narticle.toJson(), merge: true);
-      final pubarticle = Article(
-          path: narticle.path,
-          uid: narticle.uid,
-          tags: narticle.tags,
-          title: narticle.title,
-          timestamp: article.timestamp,
-          lang: narticle.lang);
-      final pubpath = FService.getPubPath(widget.doc.reference.path);
-      print(pubpath);
-      final pubdocref = Firestore.instance.document(pubpath);
-      pubdocref.setData(pubarticle.toJson());
-      final pubdocsnap = await pubdocref.get();
-      Navigator.pushNamed(context, '/article', arguments: pubdocsnap);
+      print(mlesson.toJson());
+      await widget.doc.reference.setData(mlesson.toJson());
+      final publesson = Lesson(
+          lang: mlesson.lang,
+          title: mlesson.title,
+          tags: mlesson.tags,
+          uid: mlesson.uid,
+          timestamp: Timestamp.now(),
+          states: mlesson.states);
+      docref.setData(publesson.toJson());
+      // final docsnap = await ldocref.get();
+      // Navigator.pushNamed(context, '/moderationList', arguments: widget.doc);
+      Navigator.pushNamed(context, '/moderation');
     } catch (e) {
       DialogService.showErrorDialog(context, e.toString());
     }

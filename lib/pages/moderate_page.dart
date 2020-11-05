@@ -55,24 +55,9 @@ class _ModeratePageState extends State<ModeratePage> {
                     .orderBy('timestamp'),
                 itemBuilder: (context, snapshot, animation, index) {
                   final state = ModerationState.fromJson(snapshot.data);
-                  Widget icon = MyIcons.article;
-                  String route = '/';
-                  if (state.route == '/article') {
-                    icon = MyIcons.article;
-                    route = '/moderateArticle';
-                  }
-                  if (state.route == '/testText') {
-                    icon = MyIcons.textTest;
-                    route = '/moderateTestText';
-                  }
-                  if (state.route == '/checkTest') {
-                    icon = MyIcons.checkTest;
-                    route = '/moderateCheckTest';
-                  }
-                  if (state.route == '/list') {
-                    icon = MyIcons.group;
-                    route = '/moderateList';
-                  }
+                  Widget icon = FService.getIconByRoute(state.route);
+                  String route = FService.getModerationRoute(state.route);
+
                   return ListTile(
                     onLongPress: () {
                       Clipboard.setData(

@@ -6,6 +6,7 @@ import 'package:qlzbed/entities/article.dart';
 import 'package:qlzbed/entities/moderationArticle.dart';
 import 'package:qlzbed/entities/user.dart';
 import 'package:qlzbed/localization/localizations.dart';
+import 'package:qlzbed/service/dialog_sevice.dart';
 import 'package:qlzbed/service/fservice.dart';
 import 'package:qlzbed/widgets/lang_drop_down_widget.dart';
 import 'package:qlzbed/widgets/tags_editor_widget.dart';
@@ -209,25 +210,7 @@ class _AddArticlePageState extends State<AddArticlePage> {
       final ldocsnap = await ldocref.get();
       Navigator.pushNamed(context, '/article', arguments: ldocsnap);
     } catch (e) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Dialog(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.error),
-                  Text(e.toString()),
-                  RaisedButton(
-                    child: Text(AppLocalizations.of(context).ok),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            );
-          });
+      DialogService.showErrorDialog(context, e.toString());
     }
   }
 }

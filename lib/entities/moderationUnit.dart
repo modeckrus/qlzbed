@@ -6,10 +6,10 @@ import 'package:qlzbed/entities/fstateMinimum.dart';
 
 import 'lesson.dart';
 
-part 'unit.g.dart';
+part 'moderationUnit.g.dart';
 
 @JsonSerializable()
-class Unit extends Equatable {
+class ModerationUnit extends Equatable {
   final String uid;
   @JsonKey(fromJson: _timestamoFromJson, toJson: _timestampToJson)
   final Timestamp timestamp;
@@ -18,6 +18,10 @@ class Unit extends Equatable {
   final List<String> tags;
   @JsonKey(toJson: lessonsToJson, fromJson: lessonsFromJson)
   final List<FStateMinimum> lessons;
+  final bool isModerating;
+  @JsonKey(includeIfNull: false)
+  final String moderator;
+  final String humanPath;
   @JsonKey(
     toJson: _routeToJson,
     fromJson: _routeFromJson,
@@ -25,20 +29,24 @@ class Unit extends Equatable {
     includeIfNull: true,
   )
   final String route;
-  Unit(
+  ModerationUnit(
       {@required this.lang,
       @required this.title,
       @required this.tags,
       @required this.uid,
       @required this.timestamp,
+      @required this.humanPath,
+      @required this.isModerating,
       @required this.lessons,
+      this.moderator,
       this.route});
   @override
   List<Object> get props => [lang, title, tags, uid, timestamp];
 
-  Map<String, dynamic> toJson() => _$UnitToJson(this);
+  Map<String, dynamic> toJson() => _$ModerationUnitToJson(this);
 
-  factory Unit.fromJson(Map<String, dynamic> json) => _$UnitFromJson(json);
+  factory ModerationUnit.fromJson(Map<String, dynamic> json) =>
+      _$ModerationUnitFromJson(json);
 
   static Timestamp _timestamoFromJson(Timestamp json) {
     return json;
@@ -46,14 +54,6 @@ class Unit extends Equatable {
 
   static Timestamp _timestampToJson(Timestamp timestamp) {
     return timestamp;
-  }
-
-  static String _routeToJson(String route) {
-    return '/unit';
-  }
-
-  static String _routeFromJson(String json) {
-    return '/unit';
   }
 
   static lessonsToJson(List<FStateMinimum> states) {
@@ -70,5 +70,13 @@ class Unit extends Equatable {
             ? null
             : FStateMinimum.fromJson(e as Map<String, dynamic>))
         ?.toList();
+  }
+
+  static String _routeToJson(String route) {
+    return '/unit';
+  }
+
+  static String _routeFromJson(String json) {
+    return '/unit';
   }
 }

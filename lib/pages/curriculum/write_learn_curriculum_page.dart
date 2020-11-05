@@ -12,15 +12,15 @@ import 'package:qlzbed/service/dialog_sevice.dart';
 import 'package:qlzbed/service/random_string.dart';
 import 'package:quill_delta/quill_delta.dart';
 
-class WriteArticlePage extends StatefulWidget {
+class WriteCurriculumPage extends StatefulWidget {
   final DocumentSnapshot doc;
 
-  const WriteArticlePage({Key key, @required this.doc}) : super(key: key);
+  const WriteCurriculumPage({Key key, @required this.doc}) : super(key: key);
   @override
-  _WriteArticlePageState createState() => _WriteArticlePageState();
+  _WriteCurriculumPageState createState() => _WriteCurriculumPageState();
 }
 
-class _WriteArticlePageState extends State<WriteArticlePage> {
+class _WriteCurriculumPageState extends State<WriteCurriculumPage> {
   FocusNode focusNode;
   QlzbController _controller;
   @override
@@ -52,7 +52,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
               },
             )
           ],
-          title: Text(AppLocalizations.of(context).writeArticleTitle),
+          title: Text(AppLocalizations.of(context).writeCurriculumTitle),
         ),
         body: QlzbScaffold(
           child: QlzbEditor(controller: _controller, focusNode: focusNode),
@@ -78,7 +78,7 @@ class _WriteArticlePageState extends State<WriteArticlePage> {
       final fstor = FirebaseStorage.instance.ref().child(fpath);
       final ftask = fstor.putData(bytes);
       await ftask.onComplete;
-      Navigator.pushNamed(context, '/addArticle',
+      Navigator.pushNamed(context, '/addCurriculum',
           arguments: [widget.doc, fpath]);
     } catch (e) {
       DialogService.showErrorDialog(context, e.toString());

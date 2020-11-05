@@ -9,6 +9,7 @@ import 'package:qlzbed/entities/moderationArticle.dart';
 import 'package:qlzbed/entities/user.dart';
 import 'package:qlzbed/localization/localizations.dart';
 import 'package:qlzbed/qlzb/qlzb/qlzb.dart';
+import 'package:qlzbed/service/dialog_sevice.dart';
 import 'package:qlzbed/service/fstore_cahe_manager.dart';
 import 'package:qlzbed/service/random_string.dart';
 import 'package:qlzbed/widgets/error_widget.dart';
@@ -119,25 +120,7 @@ class _ModerateArticlePageState extends State<ModerateArticlePage> {
       Navigator.pushNamed(context, '/moderateAddArticle',
           arguments: [widget.doc, fpath]);
     } catch (e) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Dialog(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.error),
-                  Text(e.toString()),
-                  RaisedButton(
-                    child: Text(AppLocalizations.of(context).ok),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            );
-          });
+      DialogService.showErrorDialog(context, e.toString());
     }
   }
 }

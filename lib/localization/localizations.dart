@@ -29,6 +29,18 @@ class AppLocalizations {
     );
   }
 
+  String get titleAddCurriculum {
+    return Intl.message('Add Curriculum', name: 'titleAddCurriculum');
+  }
+
+  String get stateSelector {
+    return Intl.message('Select item', name: 'stateSelector');
+  }
+
+  String get titleAddUnit {
+    return Intl.message('Add Unit', name: 'titleAddUnit');
+  }
+
   String get humanPath {
     return Intl.message('Path readable', name: 'humanPath');
   }
@@ -41,8 +53,20 @@ class AppLocalizations {
     return Intl.message('Publish Article', name: 'titleModerateAddArticle');
   }
 
+  String get titleModerateAddLesson {
+    return Intl.message('Moderate Lesson', name: 'titleModerateAddLesson');
+  }
+
+  String get titleModerateAddUnit {
+    return Intl.message('Moderate Unit', name: 'titleModerateAddUnit');
+  }
+
   String get moderateGroupTitle {
     return Intl.message('Moderate Group', name: 'moderateGroupTitle');
+  }
+
+  String get titleAddLesson {
+    return Intl.message('Add Lesson', name: 'titleAddLesson');
   }
 
   String get moderateTextTestTitle {

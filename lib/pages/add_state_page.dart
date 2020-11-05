@@ -108,6 +108,30 @@ class _AddStatePageState extends State<AddStatePage> {
                             arguments: widget.doc);
                       },
                     ),
+                    ListTile(
+                      leading: MyIcons.lesson,
+                      title: Text(
+                        AppLocalizations.of(context).titleAddLesson,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      trailing: MyIcons.nextRoute,
+                      onTap: () {
+                        Navigator.pushNamed(context, '/addLesson',
+                            arguments: widget.doc);
+                      },
+                    ),
+                    ListTile(
+                      leading: MyIcons.unit,
+                      title: Text(
+                        AppLocalizations.of(context).titleAddUnit,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      trailing: MyIcons.nextRoute,
+                      onTap: () {
+                        Navigator.pushNamed(context, '/addUnit',
+                            arguments: widget.doc);
+                      },
+                    ),
                   ],
                 ),
               ),

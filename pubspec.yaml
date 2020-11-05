@@ -47,7 +47,6 @@ dependencies:
   path_provider: ^1.6.7
   appbar_textfield:
     path: ../appbar_textfield
-  route_transitions: ^1.0.2
   animations: ^1.1.2
   jiffy: ^3.0.1
   zefyr:

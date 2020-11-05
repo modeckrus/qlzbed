@@ -6,6 +6,7 @@ import 'package:qlzbed/entities/group.dart';
 import 'package:qlzbed/entities/moderationGroup.dart';
 import 'package:qlzbed/entities/user.dart';
 import 'package:qlzbed/localization/localizations.dart';
+import 'package:qlzbed/service/dialog_sevice.dart';
 import 'package:qlzbed/service/fservice.dart';
 import 'package:qlzbed/widgets/lang_drop_down_widget.dart';
 import 'package:qlzbed/widgets/tags_editor_widget.dart';
@@ -216,25 +217,7 @@ class _ModerateAddGroupPageState extends State<ModerateAddGroupPage> {
       await pubdocref.get();
       Navigator.pushNamed(context, '/moderation');
     } catch (e) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Dialog(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.error),
-                  Text(e.toString()),
-                  RaisedButton(
-                    child: Text(AppLocalizations.of(context).ok),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            );
-          });
+      DialogService.showErrorDialog(context, e.toString());
     }
   }
 }

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../my_icons.dart';
+
 class FService {
   static String getModerPath(String path) {
     if (path.contains('routes')) {
@@ -33,6 +35,67 @@ class FService {
     } else {
       return path;
     }
+  }
+
+  static String getStateSelectorPath(String path) {
+    final List<String> list = List();
+    path.split('list/').forEach((element) {
+      list.add(element);
+    });
+    final fpath = list.join('stateSelectorList/');
+    return fpath;
+  }
+
+  static String getLessonSelectorPath(String path) {
+    final List<String> list = List();
+    path.split('list/').forEach((element) {
+      list.add(element);
+    });
+    final fpath = list.join('lessonSelectorList/');
+    return fpath;
+  }
+
+  static Widget getIconByRoute(String route) {
+    Widget icon = MyIcons.article;
+    if (route == '/article') {
+      icon = MyIcons.article;
+    }
+    if (route == '/testText') {
+      icon = MyIcons.textTest;
+    }
+    if (route == '/checkTest') {
+      icon = MyIcons.checkTest;
+    }
+    if (route == '/lesson') {
+      icon = MyIcons.lesson;
+    }
+    if (route == '/unit') {
+      icon = MyIcons.unit;
+    }
+    return icon;
+  }
+
+  static getModerationRoute(String route) {
+    String mroute = '/';
+    if (route == '/article') {
+      mroute = '/moderateArticle';
+    }
+    if (route == '/testText') {
+      mroute = '/moderateTestText';
+    }
+    if (route == '/checkTest') {
+      mroute = '/moderateCheckTest';
+    }
+    if (route == '/list') {
+      mroute = '/moderateList';
+    }
+    if (route == '/lesson') {
+      mroute = '/moderateLesson';
+    }
+    if (route == '/unit') {
+      mroute = '/moderateUnit';
+    }
+    return mroute;
   }
 
   static Future<String> getHumanPath(DocumentReference reference) async {

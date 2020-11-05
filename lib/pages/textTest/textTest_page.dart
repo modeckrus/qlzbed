@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qlzbed/entities/fstateMinimum.dart';
 import 'package:qlzbed/widgets/text_test_widget.dart';
 
 class TextTestPage extends StatefulWidget {
@@ -12,6 +13,12 @@ class TextTestPage extends StatefulWidget {
 
 class _TextTestPageState extends State<TextTestPage> {
   DocumentSnapshot get doc => widget.doc;
+  FStateMinimum state;
+  @override
+  void initState() {
+    state = FStateMinimum.fromJson(doc.data);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +26,7 @@ class _TextTestPageState extends State<TextTestPage> {
       child: Scaffold(
         appBar: AppBar(),
         body: TextTestWidget(
-          doc: doc,
+          state: state,
         ),
       ),
     );

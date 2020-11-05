@@ -12,10 +12,16 @@ import 'package:qlzbed/pages/dialog_page.dart';
 import 'package:qlzbed/pages/grop/moderate_add_group_page.dart';
 import 'package:qlzbed/pages/article/moderate_article_page.dart';
 import 'package:qlzbed/pages/grop/moderate_group_page.dart';
+import 'package:qlzbed/pages/lesson/add_lesson_page.dart';
+import 'package:qlzbed/pages/lesson/lesson_page.dart';
+import 'package:qlzbed/pages/lesson/moderate_lesson_page.dart';
+import 'package:qlzbed/pages/lesson_selector_page.dart';
 import 'package:qlzbed/pages/moderate_page.dart';
+import 'package:qlzbed/pages/state_selector_page.dart';
 import 'package:qlzbed/pages/textTest/textTest_page.dart';
 import 'package:qlzbed/pages/article/wrtie_article_page.dart';
-import 'package:route_transitions/route_transitions.dart';
+import 'package:qlzbed/pages/unit/add_unit_page.dart';
+import 'package:qlzbed/pages/unit/unit_page.dart';
 
 import 'pages/error_page.dart';
 import 'pages/initial_page.dart';
@@ -23,6 +29,8 @@ import 'pages/grop/list_page.dart';
 import 'pages/article/moderate_add_article_page.dart';
 import 'pages/settings_page.dart';
 import 'pages/test_page.dart';
+import 'pages/unit/moderate_unit_page.dart';
+import 'service/route_transitions.dart';
 import 'user_repository.dart';
 
 class RouteGenerator {
@@ -41,6 +49,18 @@ class RouteGenerator {
         final DocumentSnapshot doc = args;
         return PageRouteTransition(
             builder: (_) => FListPage(doc: doc),
+            animationType: AnimationType.slide_right,
+            curves: Curves.easeInOut);
+      case '/stateSelectorList':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition<DocumentSnapshot>(
+            builder: (_) => StateSelectorList(doc: doc),
+            animationType: AnimationType.slide_right,
+            curves: Curves.easeInOut);
+      case '/lessonSelectorList':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition<DocumentSnapshot>(
+            builder: (_) => LessonSelectorList(doc: doc),
             animationType: AnimationType.slide_right,
             curves: Curves.easeInOut);
       case '/settings':
@@ -121,6 +141,24 @@ class RouteGenerator {
           curves: Curves.easeInOut,
           builder: (context) => AddFormulaPage(),
         );
+      case '/addLesson':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => AddLessonPage(
+            doc: doc,
+          ),
+        );
+      case '/addUnit':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => AddUnitPage(
+            doc: doc,
+          ),
+        );
       case '/textTest':
         final DocumentSnapshot doc = args;
         return PageRouteTransition(
@@ -142,6 +180,7 @@ class RouteGenerator {
         );
         break;
       case '/moderation':
+      case '/moderate':
         return PageRouteTransition(
           animationType: AnimationType.slide_right,
           curves: Curves.easeInOut,
@@ -187,6 +226,42 @@ class RouteGenerator {
             filepath: filepath,
           ),
         );
+      case '/moderateLesson':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ModerateAddLessonPage(
+            doc: doc,
+          ),
+        );
+      case '/moderateUnit':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ModerateAddUnitPage(
+            doc: doc,
+          ),
+        );
+      case '/lesson':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => LessonPage(
+            doc: doc,
+          ),
+        );
+      case '/unit':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => UnitPage(
+            doc: doc,
+          ),
+        );
       case '/dialogPage':
       case '/dialogRoom':
         final MDialog dialog = args;
@@ -197,6 +272,16 @@ class RouteGenerator {
             dialog: dialog,
           ),
         );
+      case '/selectState':
+        return PageRouteTransition<DocumentSnapshot>(
+            animationType: AnimationType.slide_right,
+            curves: Curves.easeInOut,
+            builder: (context) => StateSelectorPage());
+      case '/selectLesson':
+        return PageRouteTransition<DocumentSnapshot>(
+            animationType: AnimationType.slide_right,
+            curves: Curves.easeInOut,
+            builder: (context) => LessonSelectorPage());
       default:
         return PageRouteTransition(
             animationType: AnimationType.fade,
