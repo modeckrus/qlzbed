@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/qlzb/qlzb/qlzb.dart';
-import 'package:qlzbed/qlzb/qlzb/src/widgets/scaffold.dart';
-import 'package:qlzbed/service/fservice.dart';
 import 'package:quill_delta/quill_delta.dart';
+
+import '../qlzb/qlzb/qlzb.dart';
+import '../service/fservice.dart';
 // import 'dart:js' as js;
 // import 'dart:html' as html;
 

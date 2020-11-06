@@ -1,5 +1,6 @@
-import '../../localization/localizations.dart';
 import 'package:flutter/material.dart';
+
+import '../../localization/localizations.dart';
 
 class CreateAnAccountButton extends StatelessWidget {
   final VoidCallback _onPressed;

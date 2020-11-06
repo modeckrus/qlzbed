@@ -3,8 +3,8 @@
 // BSD-style license that can be found in the LICENSE file.
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import '../../qlzb.dart';
 
+import '../../qlzb.dart';
 import 'code.dart';
 import 'common.dart';
 import 'image.dart';

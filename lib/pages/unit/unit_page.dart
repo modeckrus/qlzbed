@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
-import 'package:qlzbed/entities/lesson.dart';
-import 'package:qlzbed/entities/unit.dart';
-import 'package:qlzbed/my_icons.dart';
-import 'package:qlzbed/service/dialog_sevice.dart';
+
+import '../../entities/fstateMinimum.dart';
+import '../../entities/unit.dart';
+import '../../my_icons.dart';
+import '../../service/dialog_sevice.dart';
 
 class UnitPage extends StatefulWidget {
   final DocumentSnapshot doc;

@@ -16,9 +16,10 @@ class Formula extends Equatable {
   final String title;
 
   @JsonKey(
-    ignore: false,
-    includeIfNull: true,
-  )
+      ignore: false,
+      includeIfNull: true,
+      toJson: _routeToJson,
+      fromJson: _routeFromJson)
   final String route;
   Formula(
       {@required this.path,

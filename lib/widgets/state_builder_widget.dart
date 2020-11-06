@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
-import 'package:qlzbed/widgets/text_test_widget.dart';
 
+import '../entities/fstateMinimum.dart';
 import 'article_widget.dart';
 import 'check_test_widget.dart';
+import 'text_test_widget.dart';
 
 class StateBuilderWidget extends StatefulWidget {
   final FStateMinimum state;

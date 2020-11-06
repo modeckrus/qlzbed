@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/widgets/moderate_sliver_listTile_widget.dart';
 
 import 'loading_widget.dart';
+import 'moderate_sliver_listTile_widget.dart';
 
 class FModerateListWidget extends StatefulWidget {
   final DocumentSnapshot doc;

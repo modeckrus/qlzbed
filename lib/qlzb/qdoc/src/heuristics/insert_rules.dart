@@ -2,8 +2,9 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import '../../qdoc.dart';
 import 'package:quill_delta/quill_delta.dart';
+
+import '../../qdoc.dart';
 
 /// A heuristic rule for insert operations.
 abstract class InsertRule {

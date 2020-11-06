@@ -2,20 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
-import 'package:qlzbed/entities/lesson.dart';
-import 'package:qlzbed/entities/moderationUnit.dart';
-import 'package:qlzbed/entities/moderationState.dart';
-import 'package:qlzbed/entities/user.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/service/dialog_sevice.dart';
-import 'package:qlzbed/service/fservice.dart';
-import 'package:qlzbed/widgets/add_lesson_widget.dart';
-import 'package:qlzbed/widgets/add_unit_widget.dart';
-import 'package:qlzbed/widgets/lang_drop_down_widget.dart';
-import 'package:qlzbed/widgets/tags_editor_widget.dart';
-import 'package:qlzbed/widgets/titleBloc/title_bloc.dart';
-import 'package:qlzbed/widgets/title_editor_widget.dart';
+
+import '../../entities/fstateMinimum.dart';
+import '../../entities/moderationState.dart';
+import '../../entities/moderationUnit.dart';
+import '../../entities/user.dart';
+import '../../localization/localizations.dart';
+import '../../service/dialog_sevice.dart';
+import '../../service/fservice.dart';
+import '../../widgets/add_unit_widget.dart';
+import '../../widgets/lang_drop_down_widget.dart';
+import '../../widgets/tags_editor_widget.dart';
+import '../../widgets/titleBloc/title_bloc.dart';
+import '../../widgets/title_editor_widget.dart';
 
 class AddUnitPage extends StatefulWidget {
   final DocumentSnapshot doc;

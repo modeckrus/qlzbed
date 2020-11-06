@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
+
+import '../entities/fstateMinimum.dart';
 
 class CheckTestWidget extends StatefulWidget {
   final FStateMinimum state;

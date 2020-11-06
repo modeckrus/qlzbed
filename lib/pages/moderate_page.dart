@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qlzbed/entities/moderationArticle.dart';
-import 'package:qlzbed/entities/moderationState.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/service/fservice.dart';
-import 'package:qlzbed/widgets/firestore_animated_list.dart';
-import 'package:qlzbed/widgets/moderate_library_widget.dart';
 
+import '../entities/moderationState.dart';
+import '../localization/localizations.dart';
 import '../my_icons.dart';
+import '../service/fservice.dart';
+import '../widgets/firestore_animated_list.dart';
+import '../widgets/moderate_library_widget.dart';
 
 class ModeratePage extends StatefulWidget {
   @override

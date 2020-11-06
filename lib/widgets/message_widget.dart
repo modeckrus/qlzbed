@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:qlzbed/l10n/messages_fr.dart';
-import 'package:qlzbed/widgets/my_image.dart';
 
 import '../entities/message.dart';
+import 'my_image.dart';
 
 class MessageWidget extends StatefulWidget {
   final Message message;

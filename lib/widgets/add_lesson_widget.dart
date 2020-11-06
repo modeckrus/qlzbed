@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/fstate.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
-import 'package:qlzbed/my_icons.dart';
-import 'package:qlzbed/service/fservice.dart';
 
+import '../entities/fstateMinimum.dart';
+import '../service/fservice.dart';
 import 'lessons_view_widget.dart';
 
 class AddLessonWidget extends StatefulWidget {

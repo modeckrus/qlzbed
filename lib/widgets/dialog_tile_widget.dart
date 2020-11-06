@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../entities/dialog.dart';
 import '../service/color_extention.dart';
-
 import 'my_image.dart';
 
 class DialogTileWidget extends StatefulWidget {

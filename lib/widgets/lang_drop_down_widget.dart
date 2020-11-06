@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qlzbed/localization/lang_codes.dart';
+
+import '../localization/lang_codes.dart';
 
 class LangDropDownButton extends StatefulWidget {
   final Function onlangchange;

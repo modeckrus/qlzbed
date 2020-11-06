@@ -5,8 +5,8 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import '../../qlzb.dart';
 
+import '../../qlzb.dart';
 import 'buttons.dart';
 import 'scope.dart';
 import 'theme.dart';

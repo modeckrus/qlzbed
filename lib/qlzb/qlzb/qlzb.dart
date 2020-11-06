@@ -8,7 +8,6 @@
 library zefyr;
 
 export '../qdoc/qdoc.dart';
-
 export 'src/widgets/buttons.dart' hide HeadingButton, LinkButton;
 export 'src/widgets/code.dart';
 export 'src/widgets/common.dart';

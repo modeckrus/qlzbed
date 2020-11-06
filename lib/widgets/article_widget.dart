@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
-import 'package:qlzbed/qlzb/qlzb/qlzb.dart';
-import 'package:qlzbed/service/fstore_cahe_manager.dart';
+import 'package:quill_delta/quill_delta.dart';
 
+import '../entities/fstateMinimum.dart';
+import '../qlzb/qlzb/qlzb.dart';
+import '../service/fstore_cahe_manager.dart';
 import 'error_widget.dart';
 import 'loading_widget.dart';
-import 'package:quill_delta/quill_delta.dart';
 
 class ArticleWidget extends StatefulWidget {
   final FStateMinimum state;

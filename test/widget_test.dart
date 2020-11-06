@@ -9,11 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:qlzbed/main.dart';
+import 'package:qlzbed/user_repository.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    final userRepo = UserRepository();
+    await tester.pumpWidget(MyApp(
+      userRepository: userRepo,
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

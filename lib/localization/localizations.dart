@@ -29,6 +29,10 @@ class AppLocalizations {
     );
   }
 
+  String get writeCurriculumTitle {
+    return Intl.message('Curriculum', name: 'writeCurriculumTitle');
+  }
+
   String get titleAddCurriculum {
     return Intl.message('Add Curriculum', name: 'titleAddCurriculum');
   }

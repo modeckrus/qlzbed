@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/my_icons.dart';
+
+import '../localization/localizations.dart';
+import '../my_icons.dart';
 
 class AddStatePage extends StatefulWidget {
   final DocumentSnapshot doc;

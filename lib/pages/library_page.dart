@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/service/fservice.dart';
 
 import '../localization/localizations.dart';
+import '../service/fservice.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/sliver_listTile_widget.dart';

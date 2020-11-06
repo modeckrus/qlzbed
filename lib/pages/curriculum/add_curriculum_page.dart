@@ -1,17 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:qlzbed/entities/article.dart';
-import 'package:qlzbed/entities/moderationCurriculum.dart';
-import 'package:qlzbed/entities/user.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/service/dialog_sevice.dart';
-import 'package:qlzbed/service/fservice.dart';
-import 'package:qlzbed/widgets/lang_drop_down_widget.dart';
-import 'package:qlzbed/widgets/tags_editor_widget.dart';
-import 'package:qlzbed/widgets/titleBloc/title_bloc.dart';
-import 'package:qlzbed/widgets/title_editor_widget.dart';
+
+import '../../entities/moderationCurriculum.dart';
+import '../../localization/localizations.dart';
+import '../../service/dialog_sevice.dart';
+import '../../service/fservice.dart';
+import '../../widgets/lang_drop_down_widget.dart';
+import '../../widgets/tags_editor_widget.dart';
+import '../../widgets/titleBloc/title_bloc.dart';
+import '../../widgets/title_editor_widget.dart';
 
 class AddCurriculumPage extends StatefulWidget {
   final DocumentSnapshot doc;
@@ -189,22 +187,23 @@ class _AddCurriculumPageState extends State<AddCurriculumPage> {
       tags.addAll(FService.getTags(title));
       // final moderationPath = FService.getModerPath(path);
       final humanPath = await FService.getHumanPath(widget.doc.reference);
-      final article = ModerationCurriculum(
-        path: widget.filepath,
-        uid: GetIt.I.get<User>().uid,
-        tags: tags,
-        lang: l,
-        title: title,
-        timestamp: Timestamp.now(),
-        humanPath: humanPath,
-        isModerating: true,
-      );
-      print(article.toJson());
+      // final article = ModerationCurriculum(
+      //   descPath: widget.descPath,
+      //   uid: GetIt.I.get<User>().uid,
+      //   tags: tags,
+      //   lang: l,
+      //   title: title,
+      //   timestamp: Timestamp.now(),
+      //   humanPath: humanPath,
+      //   isModerating: true,
+      // );
+      final ModerationCurriculum curriculum = null;
+      print(curriculum.toJson());
       print(mpath);
       final ldocref =
-          await mdocref.collection('moderationList').add(article.toJson());
+          await mdocref.collection('moderationList').add(curriculum.toJson());
       final ldocsnap = await ldocref.get();
-      Navigator.pushNamed(context, '/article', arguments: ldocsnap);
+      Navigator.pushNamed(context, '/curriculum', arguments: ldocsnap);
     } catch (e) {
       DialogService.showErrorDialog(context, e.toString());
     }

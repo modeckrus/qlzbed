@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
-import 'package:qlzbed/entities/lesson.dart';
-import 'package:qlzbed/service/dialog_sevice.dart';
-import 'package:qlzbed/widgets/state_builder_widget.dart';
 
+import '../../entities/fstateMinimum.dart';
+import '../../entities/lesson.dart';
 import '../../my_icons.dart';
+import '../../service/dialog_sevice.dart';
+import '../../widgets/state_builder_widget.dart';
 
 class LessonPage extends StatefulWidget {
   final DocumentSnapshot doc;

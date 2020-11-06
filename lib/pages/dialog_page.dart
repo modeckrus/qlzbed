@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:qlzbed/entities/message.dart';
-import 'package:qlzbed/entities/user.dart';
-import 'package:qlzbed/widgets/firestore_animated_list.dart';
-import 'package:qlzbed/widgets/message_widget.dart';
-import 'package:qlzbed/widgets/my_image.dart';
 
 import '../entities/dialog.dart';
+import '../entities/message.dart';
+import '../entities/user.dart';
+import '../widgets/firestore_animated_list.dart';
+import '../widgets/message_widget.dart';
+import '../widgets/my_image.dart';
 
 class DialogPage extends StatefulWidget {
   final MDialog dialog;

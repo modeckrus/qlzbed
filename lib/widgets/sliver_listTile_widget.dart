@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/my_icons.dart';
-import 'package:qlzbed/service/fservice.dart';
+
+import '../service/fservice.dart';
 
 class SliverListTile extends StatefulWidget {
   SliverListTile({Key key, @required this.doc}) : super(key: key);

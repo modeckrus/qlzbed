@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/widgets/titleBloc/title_bloc.dart';
+
+import '../localization/localizations.dart';
+import 'titleBloc/title_bloc.dart';
 
 class TitleEditor extends StatefulWidget {
   final TextEditingController controller;

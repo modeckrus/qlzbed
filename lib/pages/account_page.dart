@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:qlzbed/my_icons.dart';
-import 'package:qlzbed/settingUser/settinguserbloc/settinguser_bloc.dart';
-import 'package:qlzbed/widgets/settings_user_widget.dart';
 
 import '../authentication/bloc/authentication_bloc.dart';
 import '../localization/localizations.dart';
+import '../my_icons.dart';
+import '../settingUser/settinguserbloc/settinguser_bloc.dart';
 import '../widgets/add_avatar_widget.dart';
 import '../widgets/display_user_widget.dart';
+import '../widgets/settings_user_widget.dart';
 
 class AccountPage extends StatefulWidget {
   @override

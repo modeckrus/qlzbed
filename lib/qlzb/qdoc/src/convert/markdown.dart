@@ -4,8 +4,9 @@
 
 import 'dart:convert';
 
-import '../../qdoc.dart';
 import 'package:quill_delta/quill_delta.dart';
+
+import '../../qdoc.dart';
 
 class QDocMarkdownCodec extends Codec<Delta, String> {
   const QDocMarkdownCodec();

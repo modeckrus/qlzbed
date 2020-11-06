@@ -1,5 +1,6 @@
-import '../localization/localizations.dart';
 import 'package:flutter/material.dart';
+
+import '../localization/localizations.dart';
 
 class TagsEditor extends StatefulWidget {
   final Function onAddTag;

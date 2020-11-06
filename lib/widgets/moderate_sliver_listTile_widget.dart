@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/moderationState.dart';
-import 'package:qlzbed/my_icons.dart';
-import 'package:qlzbed/service/fservice.dart';
+
+import '../entities/moderationState.dart';
+import '../service/fservice.dart';
 
 class ModerateSliverListTile extends StatefulWidget {
   ModerateSliverListTile({Key key, @required this.doc}) : super(key: key);

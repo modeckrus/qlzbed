@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
-import 'package:qlzbed/widgets/text_test_widget.dart';
+
+import '../../entities/fstateMinimum.dart';
+import '../../widgets/text_test_widget.dart';
 
 class TextTestPage extends StatefulWidget {
   final DocumentSnapshot doc;

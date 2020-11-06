@@ -1,16 +1,16 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:qlzbed/entities/user.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/qlzb/qlzb/qlzb.dart';
-import 'package:qlzbed/service/dialog_sevice.dart';
-import 'package:qlzbed/service/random_string.dart';
 import 'package:quill_delta/quill_delta.dart';
+
+import '../../entities/user.dart';
+import '../../localization/localizations.dart';
+import '../../qlzb/qlzb/qlzb.dart';
+import '../../service/dialog_sevice.dart';
+import '../../service/random_string.dart';
 
 class WriteCurriculumPage extends StatefulWidget {
   final DocumentSnapshot doc;

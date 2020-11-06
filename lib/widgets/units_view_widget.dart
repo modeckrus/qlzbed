@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
-import 'package:qlzbed/entities/lesson.dart';
-import 'package:qlzbed/widgets/state_builder_widget.dart';
+
+import '../entities/fstateMinimum.dart';
 
 class UnitsViewWidget extends StatefulWidget {
   final List<FStateMinimum> lessons;

@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/fstateMinimum.dart';
+
+import '../entities/fstateMinimum.dart';
 
 class TextTestWidget extends StatefulWidget {
   final FStateMinimum state;

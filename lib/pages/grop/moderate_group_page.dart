@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/my_icons.dart';
-import 'package:qlzbed/widgets/flist_moderate_widget.dart';
+
+import '../../my_icons.dart';
+import '../../widgets/flist_moderate_widget.dart';
 
 class ModerateGroupPage extends StatefulWidget {
   final DocumentSnapshot doc;

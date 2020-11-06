@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import '../../qlzb.dart';
 
+import '../../qlzb.dart';
 import 'editable_box.dart';
 import 'horizontal_rule.dart';
 import 'image.dart';

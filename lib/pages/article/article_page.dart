@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/article.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/qlzb/qlzb/qlzb.dart';
-import 'package:qlzbed/service/fstore_cahe_manager.dart';
-import 'package:qlzbed/widgets/error_widget.dart';
-import 'package:qlzbed/widgets/loading_widget.dart';
 import 'package:quill_delta/quill_delta.dart';
+
+import '../../entities/article.dart';
+import '../../qlzb/qlzb/qlzb.dart';
+import '../../service/fstore_cahe_manager.dart';
+import '../../widgets/error_widget.dart';
+import '../../widgets/loading_widget.dart';
 
 class ArticlePage extends StatefulWidget {
   final DocumentSnapshot doc;

@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/my_icons.dart';
-import 'package:qlzbed/service/fservice.dart';
-import 'package:qlzbed/widgets/error_widget.dart';
-import 'package:qlzbed/widgets/loading_widget.dart';
+
+import '../localization/localizations.dart';
+import '../my_icons.dart';
+import '../service/fservice.dart';
+import '../widgets/error_widget.dart';
+import '../widgets/loading_widget.dart';
 
 class LessonSelectorPage extends StatefulWidget {
   @override

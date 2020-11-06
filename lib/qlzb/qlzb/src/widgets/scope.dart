@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../qlzb.dart';
 
+import '../../qlzb.dart';
 import 'controller.dart';
 import 'cursor_timer.dart';
 import 'editor.dart';

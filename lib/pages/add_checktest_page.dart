@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/localization/localizations.dart';
+
+import '../localization/localizations.dart';
 
 class AddCheckTestPage extends StatefulWidget {
   final DocumentSnapshot doc;

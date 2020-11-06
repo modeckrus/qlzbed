@@ -6,8 +6,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import '../../qlzb.dart';
 
+import '../../qlzb.dart';
 import 'editable_box.dart';
 
 class QlzbHorizontalRule extends LeafRenderObjectWidget {

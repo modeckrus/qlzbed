@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qlzbed/qlzb/qlzb/src/widgets/__theme.dart';
+
+import '__theme.dart';
 
 /// Applies a Qlzb editor theme to descendant widgets.
 ///
