@@ -1,28 +1,30 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:quill_delta/quill_delta.dart';
 
-import '../../entities/user.dart';
 import '../../localization/localizations.dart';
 import '../../qlzb/qlzb/qlzb.dart';
 import '../../service/dialog_sevice.dart';
-import '../../service/random_string.dart';
+import '../../widgets/error_widget.dart';
+import '../../widgets/loading_widget.dart';
 
-class WriteCurriculumPage extends StatefulWidget {
-  final DocumentSnapshot doc;
-  final String learnPath;
-  const WriteCurriculumPage(
-      {Key key, @required this.doc, @required this.learnPath})
-      : super(key: key);
+class WriteCurriculumDescPage extends StatefulWidget {
+  // final DocumentSnapshot doc;
+  // final String learnPath;
+  final String descPath;
+  const WriteCurriculumDescPage({
+    Key key,
+    //  @required this.doc, @required this.learnPath
+    @required this.descPath,
+  }) : super(key: key);
   @override
-  _WriteCurriculumPageState createState() => _WriteCurriculumPageState();
+  _WriteCurriculumDescPageState createState() =>
+      _WriteCurriculumDescPageState();
 }
 
-class _WriteCurriculumPageState extends State<WriteCurriculumPage> {
+class _WriteCurriculumDescPageState extends State<WriteCurriculumDescPage> {
   FocusNode focusNode;
   QlzbController _controller;
   @override
@@ -54,13 +56,49 @@ class _WriteCurriculumPageState extends State<WriteCurriculumPage> {
               },
             )
           ],
-          title: Text(AppLocalizations.of(context).writeCurriculumTitle),
+          title: Text(
+            AppLocalizations.of(context).writeCurriculumDescTitle,
+            softWrap: true,
+            overflow: TextOverflow.fade,
+          ),
         ),
-        body: QlzbScaffold(
-          child: QlzbEditor(controller: _controller, focusNode: focusNode),
+        body: FutureBuilder(
+          future: _loadDocument(),
+          builder: (context, snap) {
+            if (snap.hasError) {
+              return FErrorWidget(
+                error: snap.error,
+              );
+            }
+            if (!snap.hasData) {
+              return LoadingWidget();
+            }
+            _controller = QlzbController(snap.data);
+            return QlzbScaffold(
+              child: QlzbEditor(controller: _controller, focusNode: focusNode),
+            );
+          },
         ),
       ),
     );
+  }
+
+  Future<QDocDocument> _loadDocument() async {
+    final Delta delta = Delta()..insert("Something go wrong\n");
+    try {
+      final contents = await FirebaseStorage.instance
+          .ref()
+          .child(widget.descPath)
+          .getData(50 * 1024 * 1024);
+      if (contents == null) {
+        return QDocDocument.fromDelta(delta);
+      } // If ok
+      else {
+        return QDocDocument.fromJson(jsonDecode(utf8.decode(contents)));
+      }
+    } catch (e) {
+      return QDocDocument.fromDelta(delta);
+    }
   }
 
   Future<void> _saveDoc() async {
@@ -71,17 +109,22 @@ class _WriteCurriculumPageState extends State<WriteCurriculumPage> {
     final sdoc = QDocDocument.fromJson(decoded);
     print(sdoc);
     final bytes = Utf8Encoder().convert(jsonData);
-    final fpath = 'articles/' +
-        GetIt.I.get<User>().uid +
-        '/' +
-        Utils.CreateCryptoRandomString();
+    // final fpath = 'curriculumDesc/' +
+    //     GetIt.I.get<User>().uid +
+    //     '/' +
+    //     Utils.CreateCryptoRandomString();
     // print(decoded);
     try {
-      final fstor = FirebaseStorage.instance.ref().child(fpath);
+      final fstor = FirebaseStorage.instance.ref().child(widget.descPath);
       final ftask = fstor.putData(bytes);
       await ftask.onComplete;
-      Navigator.pushNamed(context, '/addCurriculum',
-          arguments: [widget.doc, fpath]);
+
+      Navigator.pop(context);
+      // Navigator.pushNamed(context, '/addCurriculum', arguments: [
+      //   widget.doc,
+      //   widget.learnPath,
+      //   fpath,
+      // ]);
     } catch (e) {
       DialogService.showErrorDialog(context, e.toString());
     }

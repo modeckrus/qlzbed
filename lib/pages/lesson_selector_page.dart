@@ -107,8 +107,8 @@ class LessonSelectorListTile extends StatefulWidget {
 
 class _LessonSelectorListTileState extends State<LessonSelectorListTile> {
   String get route => widget.doc.data['route'];
-  bool isOk() {
-    if (route == '/lesson') {
+  bool isOk(String r) {
+    if (r == '/lesson') {
       return true;
     }
     return false;
@@ -151,7 +151,7 @@ class _LessonSelectorListTileState extends State<LessonSelectorListTile> {
                   fontSize: 20,
                 ),
               ),
-              trailing: isOk()
+              trailing: isOk(route)
                   ? IconButton(
                       icon: Icon(Icons.check),
                       onPressed: () {

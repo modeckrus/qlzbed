@@ -70,6 +70,16 @@ class _ModerateAddLessonPageState extends State<ModerateAddLessonPage> {
         appBar: AppBar(
           actions: [
             IconButton(
+              icon: Icon(Icons.remove),
+              onPressed: () {
+                DialogService.showLoadingDialog(
+                    context, AppLocalizations.of(context).removing, () async {
+                  await widget.doc.reference.delete();
+                  print('delete complete');
+                });
+              },
+            ),
+            IconButton(
               icon: Icon(Icons.home),
               onPressed: () {
                 Navigator.pushNamed(context, '/');

@@ -3,23 +3,17 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'fstateMinimum.dart';
-
-part 'moderationLesson.g.dart';
+part 'base_curriculum.g.dart';
 
 @JsonSerializable()
-class ModerationLesson extends Equatable {
+class BaseCurriculum extends Equatable {
   final String uid;
   @JsonKey(fromJson: _timestamoFromJson, toJson: _timestampToJson)
   final Timestamp timestamp;
   final String lang;
   final String title;
   final List<String> tags;
-  @JsonKey(toJson: statesToJson, fromJson: statesFromJson)
-  final List<FStateMinimum> states;
-  final bool isModerating;
-  @JsonKey(includeIfNull: false)
-  final String moderator;
+  final int time;
   final String humanPath;
   @JsonKey(
     toJson: _routeToJson,
@@ -28,24 +22,22 @@ class ModerationLesson extends Equatable {
     includeIfNull: true,
   )
   final String route;
-  ModerationLesson(
+  BaseCurriculum(
       {@required this.lang,
       @required this.title,
       @required this.tags,
       @required this.uid,
       @required this.timestamp,
+      @required this.time,
       @required this.humanPath,
-      @required this.isModerating,
-      @required this.states,
-      this.moderator,
       this.route});
   @override
   List<Object> get props => [lang, title, tags, uid, timestamp];
 
-  Map<String, dynamic> toJson() => _$ModerationLessonToJson(this);
+  Map<String, dynamic> toJson() => _$BaseCurriculumToJson(this);
 
-  factory ModerationLesson.fromJson(Map<String, dynamic> json) =>
-      _$ModerationLessonFromJson(json);
+  factory BaseCurriculum.fromJson(Map<String, dynamic> json) =>
+      _$BaseCurriculumFromJson(json);
 
   static Timestamp _timestamoFromJson(Timestamp json) {
     return json;
@@ -55,27 +47,15 @@ class ModerationLesson extends Equatable {
     return timestamp;
   }
 
-  static statesToJson(List<FStateMinimum> states) {
-    final json = List<Map<String, dynamic>>();
-    states.forEach((element) {
-      json.add(element.toJson());
-    });
-    return json;
-  }
-
-  static List<FStateMinimum> statesFromJson(List<dynamic> json) {
-    return json
-        ?.map((e) => e == null
-            ? null
-            : FStateMinimum.fromJson(e as Map<String, dynamic>))
-        ?.toList();
-  }
-
   static String _routeToJson(String route) {
-    return '/lesson';
+    return '/curriculum';
   }
 
   static String _routeFromJson(String json) {
-    return '/lesson';
+    return '/curriculum';
+  }
+
+  int size() {
+    return this.toString().length * 8;
   }
 }

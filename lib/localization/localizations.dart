@@ -29,6 +29,53 @@ class AppLocalizations {
     );
   }
 
+  String get removing {
+    return Intl.message('Removing...', name: 'removing');
+  }
+
+  String get howmuchtime {
+    return Intl.message('How much time this will take in minutes',
+        name: 'howmuchtime');
+  }
+
+  String get shortDesc {
+    return Intl.message('Write Short Description on top', name: 'shortDesc');
+  }
+
+  String get requirements {
+    return Intl.message('Requirements', name: 'requirements');
+  }
+
+  String get deploy {
+    return Intl.message('Deploy', name: 'deploy');
+  }
+
+  String get rollUp {
+    return Intl.message('Roll Up', name: 'rollUp');
+  }
+
+  String get doesNotExist {
+    return Intl.message('File does not Exist', name: 'doesNotExist');
+  }
+
+  String get learnPath {
+    return Intl.message('Learn Path', name: 'learnPath');
+  }
+
+  String get descPath {
+    return Intl.message('Description Path', name: 'descPath');
+  }
+
+  String get writeCurriculumDescTitle {
+    return Intl.message('Write Description for ur curriculum',
+        name: 'writeCurriculumDescTitle');
+  }
+
+  String get writeCurriculumLearnTitle {
+    return Intl.message('Describe what people will learn during your program',
+        name: 'writeCurriculumDescTitle');
+  }
+
   String get writeCurriculumTitle {
     return Intl.message('Curriculum', name: 'writeCurriculumTitle');
   }

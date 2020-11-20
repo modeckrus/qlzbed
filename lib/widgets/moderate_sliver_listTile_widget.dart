@@ -14,7 +14,7 @@ class ModerateSliverListTile extends StatefulWidget {
 class _ModerateSliverListTileState extends State<ModerateSliverListTile> {
   @override
   Widget build(BuildContext context) {
-    final state = ModerationState.fromJson(widget.doc.data);
+    var state = ModerationState.fromJson(widget.doc.data);
     Widget icon = FService.getIconByRoute(state.route);
     String route = FService.getModerationRoute(state.route);
 
@@ -22,11 +22,17 @@ class _ModerateSliverListTileState extends State<ModerateSliverListTile> {
     if (isModerating == null) {
       isModerating = true;
     }
+
     return GestureDetector(
       onTap: () async {
         print('tapped');
-        Navigator.pushNamed(context, isModerating ? route : state.route,
-            arguments: widget.doc);
+        if (!isModerating && route == '/list' || route == '/moderateList') {
+          Navigator.pushNamed(context, '/specmoderateList',
+              arguments: widget.doc);
+        } else {
+          Navigator.pushNamed(context, isModerating ? route : state.route,
+              arguments: widget.doc);
+        }
       },
       child: Container(
         height: 80,

@@ -8,6 +8,10 @@ import '../widgets/error_widget.dart';
 import '../widgets/loading_widget.dart';
 
 class StateSelectorPage extends StatefulWidget {
+  final List<String> routesAllowed;
+
+  const StateSelectorPage({Key key, @required this.routesAllowed})
+      : super(key: key);
   @override
   _StateSelectorPageState createState() => _StateSelectorPageState();
 }
@@ -44,7 +48,10 @@ class _StateSelectorPageState extends State<StateSelectorPage> {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         final doc = snap.data.documents[index];
-                        return StateSelectorListTile(doc: doc);
+                        return StateSelectorListTile(
+                          doc: doc,
+                          routesAllowed: widget.routesAllowed,
+                        );
                       },
                       childCount: snap.data.documents.length,
                     ),
@@ -57,8 +64,10 @@ class _StateSelectorPageState extends State<StateSelectorPage> {
 
 class StateSelectorList extends StatefulWidget {
   final DocumentSnapshot doc;
-
-  const StateSelectorList({Key key, @required this.doc}) : super(key: key);
+  final List<String> routesAllowed;
+  const StateSelectorList(
+      {Key key, @required this.doc, @required this.routesAllowed})
+      : super(key: key);
   @override
   _StateSelectorListState createState() => _StateSelectorListState();
 }
@@ -87,7 +96,10 @@ class _StateSelectorListState extends State<StateSelectorList> {
             return ListView.builder(
                 itemCount: data.documents.length,
                 itemBuilder: (context, index) {
-                  return StateSelectorListTile(doc: data.documents[index]);
+                  return StateSelectorListTile(
+                    doc: data.documents[index],
+                    routesAllowed: widget.routesAllowed,
+                  );
                 });
           },
         ),
@@ -98,8 +110,10 @@ class _StateSelectorListState extends State<StateSelectorList> {
 
 class StateSelectorListTile extends StatefulWidget {
   final DocumentSnapshot doc;
-
-  const StateSelectorListTile({Key key, @required this.doc}) : super(key: key);
+  final List<String> routesAllowed;
+  const StateSelectorListTile(
+      {Key key, @required this.doc, @required this.routesAllowed})
+      : super(key: key);
 
   @override
   _StateSelectorListTileState createState() => _StateSelectorListTileState();
@@ -108,13 +122,7 @@ class StateSelectorListTile extends StatefulWidget {
 class _StateSelectorListTileState extends State<StateSelectorListTile> {
   String get route => widget.doc.data['route'];
   bool isOk() {
-    if (route == '/article') {
-      return true;
-    }
-    if (route == '/textTest') {
-      return true;
-    }
-    if (route == '/checkTest') {
+    if (widget.routesAllowed.contains(route)) {
       return true;
     }
     return false;
@@ -131,7 +139,7 @@ class _StateSelectorListTileState extends State<StateSelectorListTile> {
         print(stateroute);
         final DocumentSnapshot result = await Navigator.pushNamed(
             context, '/stateSelectorList',
-            arguments: widget.doc);
+            arguments: [widget.doc, widget.routesAllowed]);
         if (result != null) {
           Navigator.pop(context, result);
         }

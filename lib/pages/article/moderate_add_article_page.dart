@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -60,6 +61,21 @@ class _ModerateAddArticlePageState extends State<ModerateAddArticlePage> {
       child: Scaffold(
         appBar: AppBar(
           actions: [
+            IconButton(
+              icon: Icon(Icons.remove),
+              onPressed: () {
+                DialogService.showLoadingDialog(
+                    context, AppLocalizations.of(context).removing, () async {
+                  await FirebaseStorage.instance
+                      .ref()
+                      .child(article.path)
+                      .delete();
+
+                  await widget.doc.reference.delete();
+                  print('delete complete');
+                });
+              },
+            ),
             IconButton(
               icon: Icon(Icons.home),
               onPressed: () {

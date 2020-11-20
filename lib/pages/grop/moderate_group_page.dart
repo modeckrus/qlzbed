@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../localization/localizations.dart';
 import '../../my_icons.dart';
+import '../../service/dialog_sevice.dart';
 import '../../widgets/flist_moderate_widget.dart';
 
 class ModerateGroupPage extends StatefulWidget {
@@ -24,6 +26,16 @@ class _ModerateGroupPageState extends State<ModerateGroupPage> {
           ],
         ),
         actions: [
+          IconButton(
+            icon: Icon(Icons.remove),
+            onPressed: () {
+              DialogService.showLoadingDialog(
+                  context, AppLocalizations.of(context).removing, () async {
+                await widget.doc.reference.delete();
+                print('delete complete');
+              });
+            },
+          ),
           IconButton(
               icon: Icon(Icons.home),
               onPressed: () {

@@ -57,6 +57,9 @@ class FService {
 
   static Widget getIconByRoute(String route) {
     Widget icon = MyIcons.article;
+    if (route == '/list') {
+      icon = MyIcons.group;
+    }
     if (route == '/article') {
       icon = MyIcons.article;
     }
@@ -71,6 +74,9 @@ class FService {
     }
     if (route == '/unit') {
       icon = MyIcons.unit;
+    }
+    if (route == '/curriculum') {
+      icon = MyIcons.curriculum;
     }
     return icon;
   }
@@ -94,6 +100,9 @@ class FService {
     }
     if (route == '/unit') {
       mroute = '/moderateUnit';
+    }
+    if (route == '/curriculum') {
+      mroute = '/moderateCurriculum';
     }
     return mroute;
   }

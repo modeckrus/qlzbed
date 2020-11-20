@@ -341,7 +341,7 @@ class ColorTheme {
       color9: Colors.lightBlue,
       color10: Colors.orange,
       color11: Colors.green,
-      color12: Colors.lightGreen,
+      color12: Colors.red,
       mainColor: defaultStyle.style.color,
     );
   }

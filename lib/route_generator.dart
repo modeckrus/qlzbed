@@ -11,6 +11,10 @@ import 'pages/article/article_page.dart';
 import 'pages/article/moderate_add_article_page.dart';
 import 'pages/article/moderate_article_page.dart';
 import 'pages/article/wrtie_article_page.dart';
+import 'pages/curriculum/add_curriculum_page.dart';
+import 'pages/curriculum/moderate_add_curriculum_page.dart';
+import 'pages/curriculum/moderate_desc_curriculum_page.dart';
+import 'pages/curriculum/write_desc_curriculum_page.dart';
 import 'pages/dialog_page.dart';
 import 'pages/error_page.dart';
 import 'pages/grop/add_group_page.dart';
@@ -24,6 +28,7 @@ import 'pages/lesson/moderate_lesson_page.dart';
 import 'pages/lesson_selector_page.dart';
 import 'pages/moderate_page.dart';
 import 'pages/settings_page.dart';
+import 'pages/spec_moderate_list_page.dart';
 import 'pages/state_selector_page.dart';
 import 'pages/test_page.dart';
 import 'pages/textTest/textTest_page.dart';
@@ -51,10 +56,21 @@ class RouteGenerator {
             builder: (_) => FListPage(doc: doc),
             animationType: AnimationType.slide_right,
             curves: Curves.easeInOut);
-      case '/stateSelectorList':
+      case '/specmoderateList':
         final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+            builder: (_) => FSpecModerateListPage(doc: doc),
+            animationType: AnimationType.slide_right,
+            curves: Curves.easeInOut);
+      case '/stateSelectorList':
+        final List<dynamic> ars = args as List<dynamic>;
+        final DocumentSnapshot doc = ars[0];
+        final List<String> routesAllowed = ars[1];
         return PageRouteTransition<DocumentSnapshot>(
-            builder: (_) => StateSelectorList(doc: doc),
+            builder: (_) => StateSelectorList(
+                  doc: doc,
+                  routesAllowed: routesAllowed,
+                ),
             animationType: AnimationType.slide_right,
             curves: Curves.easeInOut);
       case '/lessonSelectorList':
@@ -262,6 +278,56 @@ class RouteGenerator {
             doc: doc,
           ),
         );
+      case '/writeDescCurriculum':
+        // List<dynamic> ars = args;
+        // final DocumentSnapshot doc = ars[0];
+        // final String learnPath = ars[1];
+        final String descPath = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => WriteCurriculumDescPage(
+            descPath: descPath,
+            // doc: doc,
+            // learnPath: learnPath,
+          ),
+        );
+      case '/addCurriculum':
+        // List<dynamic> ars = args;
+        // final DocumentSnapshot doc = ars[0];
+        // final String learnPath = ars[1];
+        // final String descPath = ars[2];
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => AddCurriculumPage(
+            doc: doc,
+            // learnPath: learnPath,
+            // descPath: descPath,
+          ),
+        );
+      case '/moderateDescCurriculum':
+        List<dynamic> ars = args;
+        final DocumentSnapshot doc = ars[0];
+        final String learnPath = ars[1];
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ModerateDescCurriculumPage(
+            doc: doc,
+            learnPath: learnPath,
+          ),
+        );
+      case '/moderateCurriculum':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => ModerateAddCurriculumPage(
+            doc: doc,
+          ),
+        );
       case '/dialogPage':
       case '/dialogRoom':
         final MDialog dialog = args;
@@ -273,10 +339,13 @@ class RouteGenerator {
           ),
         );
       case '/selectState':
+        final List<String> routesAllowed = args;
         return PageRouteTransition<DocumentSnapshot>(
             animationType: AnimationType.slide_right,
             curves: Curves.easeInOut,
-            builder: (context) => StateSelectorPage());
+            builder: (context) => StateSelectorPage(
+                  routesAllowed: routesAllowed,
+                ));
       case '/selectLesson':
         return PageRouteTransition<DocumentSnapshot>(
             animationType: AnimationType.slide_right,

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../localization/localizations.dart';
 
+typedef Future<void> VoidAsyncCallBack();
+
 class DialogService {
   static showErrorDialog(BuildContext context, String error) {
     showDialog(
@@ -39,5 +41,22 @@ class DialogService {
             ),
           );
         });
+  }
+
+  static Future<void> showLoadingDialog(
+      BuildContext context, String text, VoidAsyncCallBack function) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [CircularProgressIndicator(), Text(text ?? '')],
+            ),
+          );
+        }).then((value) => {Navigator.pop(context)});
+    function().then((_) {
+      Navigator.pop(context);
+    });
   }
 }

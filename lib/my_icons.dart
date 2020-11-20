@@ -12,4 +12,6 @@ class MyIcons {
   static Widget get share => Icon(Icons.share);
   static Widget get lesson => Icon(Icons.album);
   static Widget get unit => Icon(Icons.all_inbox);
+  static Widget get curriculum => Icon(Icons.ac_unit);
+  static Widget get add => Icon(Icons.add);
 }
