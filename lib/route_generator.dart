@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:qlzbed/pages/curriculum/curriculum_page.dart';
 
 import 'entities/dialog.dart';
 import 'pages/add_checktest_page.dart';
@@ -50,10 +51,17 @@ class RouteGenerator {
             animationType: AnimationType.fade,
             curves: Curves.easeInOut);
         break;
+
       case '/list':
         final DocumentSnapshot doc = args;
         return PageRouteTransition(
             builder: (_) => FListPage(doc: doc),
+            animationType: AnimationType.slide_right,
+            curves: Curves.easeInOut);
+      case '/curriculum':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+            builder: (_) => CurriculumPage(doc: doc),
             animationType: AnimationType.slide_right,
             curves: Curves.easeInOut);
       case '/specmoderateList':

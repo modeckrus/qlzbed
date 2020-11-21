@@ -29,6 +29,22 @@ class AppLocalizations {
     );
   }
 
+  String get total {
+    return Intl.message('Total', name: 'total');
+  }
+
+  String get lectures {
+    return Intl.message('Lectures', name: 'lectures');
+  }
+
+  String get curriculum {
+    return Intl.message('Curriculum', name: 'curriculum');
+  }
+
+  String get whatYouWillLearn {
+    return Intl.message('What I Will Learn?', name: 'whatYouWillLearn');
+  }
+
   String get removing {
     return Intl.message('Removing...', name: 'removing');
   }
