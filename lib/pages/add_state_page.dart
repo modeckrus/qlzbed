@@ -74,18 +74,6 @@ class _AddStatePageState extends State<AddStatePage> {
                       },
                     ),
                     ListTile(
-                      leading: MyIcons.textTest,
-                      title: Text(
-                        AppLocalizations.of(context).titleTextTest,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      trailing: MyIcons.nextRoute,
-                      onTap: () {
-                        Navigator.pushNamed(context, '/addTextTest',
-                            arguments: widget.doc);
-                      },
-                    ),
-                    ListTile(
                       leading: MyIcons.checkTest,
                       title: Text(
                         AppLocalizations.of(context).titleCheckTest,
@@ -93,7 +81,7 @@ class _AddStatePageState extends State<AddStatePage> {
                       ),
                       trailing: MyIcons.nextRoute,
                       onTap: () {
-                        Navigator.pushNamed(context, '/addCheckTest',
+                        Navigator.pushNamed(context, '/addTests',
                             arguments: widget.doc);
                       },
                     ),

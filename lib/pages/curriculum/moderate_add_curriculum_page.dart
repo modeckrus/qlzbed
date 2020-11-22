@@ -447,7 +447,7 @@ class _ModerateAddCurriculumPageState extends State<ModerateAddCurriculumPage> {
                           DescriptionWidget(descPath: descPath),
                           Divider(),
                           //Lessons picker
-                          LessonsPickerWidget(
+                          UnitsPickerWidget(
                             onAddState: (state) {
                               lessons.add(state);
                               _createCurriculum();

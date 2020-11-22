@@ -29,6 +29,10 @@ class AppLocalizations {
     );
   }
 
+  String get titleAddTests {
+    return Intl.message('Test', name: 'titleAddTests');
+  }
+
   String get total {
     return Intl.message('Total', name: 'total');
   }
@@ -116,8 +120,16 @@ class AppLocalizations {
     return Intl.message('Moderate Article', name: 'moderateArticleTitle');
   }
 
+  String get moderateTestsTitle {
+    return Intl.message('Moderate Test', name: 'moderateTestsTitle');
+  }
+
   String get titleModerateAddArticle {
     return Intl.message('Publish Article', name: 'titleModerateAddArticle');
+  }
+
+  String get titleModerateAddTests {
+    return Intl.message('Publish Test', name: 'titleModerateAddTests');
   }
 
   String get titleModerateAddLesson {
@@ -158,6 +170,10 @@ class AppLocalizations {
 
   String get writeArticleTitle {
     return Intl.message('Write Article', name: 'writeArticleTitle');
+  }
+
+  String get writeTestsTitle {
+    return Intl.message('Write Test', name: 'writeTestsTitle');
   }
 
   String get path {

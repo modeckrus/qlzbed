@@ -5,11 +5,11 @@ import '../../entities/fstateMinimum.dart';
 import '../../localization/localizations.dart';
 import '../../service/fservice.dart';
 
-class LessonsPickerWidget extends StatefulWidget {
+class UnitsPickerWidget extends StatefulWidget {
   final Function onAddState;
   final Function onRemoveState;
   final Function onStart;
-  const LessonsPickerWidget(
+  const UnitsPickerWidget(
       {Key key,
       @required this.onAddState,
       @required this.onRemoveState,
@@ -19,7 +19,7 @@ class LessonsPickerWidget extends StatefulWidget {
   _AddLessonWidgetState createState() => _AddLessonWidgetState();
 }
 
-class _AddLessonWidgetState extends State<LessonsPickerWidget> {
+class _AddLessonWidgetState extends State<UnitsPickerWidget> {
   List<FStateMinimum> states = List();
   Function get onAddState => widget.onAddState;
   Function get onRemoveState => widget.onRemoveState;
@@ -51,7 +51,7 @@ class _AddLessonWidgetState extends State<LessonsPickerWidget> {
   }
 
   bool isOk(String r) {
-    if (r == '/lesson') {
+    if (r == '/unit') {
       return true;
     }
     return false;
@@ -74,7 +74,7 @@ class _AddLessonWidgetState extends State<LessonsPickerWidget> {
       onTap: () async {
         final DocumentSnapshot docsnap = await Navigator.pushNamed(
             context, '/selectState',
-            arguments: ['/lesson']);
+            arguments: ['/unit']);
         if (docsnap != null) {
           final state = FStateMinimum.fromJson(docsnap.data);
           setState(() {

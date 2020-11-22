@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'texttest.dart';
+part of 'test_base.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-TextTest _$TextTestFromJson(Map<String, dynamic> json) {
-  return TextTest(
+TestBase _$TestBaseFromJson(Map<String, dynamic> json) {
+  return TestBase(
     question: json['question'] as String,
-    answers: (json['answers'] as List)?.map((e) => e as String)?.toList(),
+    type: json['type'] as String,
   );
 }
 
-Map<String, dynamic> _$TextTestToJson(TextTest instance) => <String, dynamic>{
+Map<String, dynamic> _$TestBaseToJson(TestBase instance) => <String, dynamic>{
       'question': instance.question,
-      'answers': instance.answers,
+      'type': instance.type,
     };

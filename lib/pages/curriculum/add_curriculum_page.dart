@@ -345,7 +345,7 @@ class _AddCurriculumPageState extends State<AddCurriculumPage> {
                     DescriptionWidget(descPath: descPath),
                     Divider(),
                     //Lessons picker
-                    LessonsPickerWidget(
+                    UnitsPickerWidget(
                       onAddState: (state) {
                         lessons.add(state);
                         _createCurriculum();

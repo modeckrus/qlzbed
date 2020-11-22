@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qlzbed/pages/curriculum/curriculum_page.dart';
+import 'package:qlzbed/pages/tests/write_tests_page.dart';
 
 import 'entities/dialog.dart';
 import 'pages/add_checktest_page.dart';
@@ -32,7 +33,6 @@ import 'pages/settings_page.dart';
 import 'pages/spec_moderate_list_page.dart';
 import 'pages/state_selector_page.dart';
 import 'pages/test_page.dart';
-import 'pages/textTest/textTest_page.dart';
 import 'pages/unit/add_unit_page.dart';
 import 'pages/unit/moderate_unit_page.dart';
 import 'pages/unit/unit_page.dart';
@@ -183,15 +183,6 @@ class RouteGenerator {
             doc: doc,
           ),
         );
-      case '/textTest':
-        final DocumentSnapshot doc = args;
-        return PageRouteTransition(
-          animationType: AnimationType.slide_right,
-          curves: Curves.easeInOut,
-          builder: (context) => TextTestPage(
-            doc: doc,
-          ),
-        );
       case '/readingPage':
       case '/article':
         final DocumentSnapshot doc = args;
@@ -216,6 +207,15 @@ class RouteGenerator {
           animationType: AnimationType.slide_right,
           curves: Curves.easeInOut,
           builder: (context) => ModerateArticlePage(
+            doc: doc,
+          ),
+        );
+      case '/addTests':
+        final DocumentSnapshot doc = args;
+        return PageRouteTransition(
+          animationType: AnimationType.slide_right,
+          curves: Curves.easeInOut,
+          builder: (context) => WriteTestsPage(
             doc: doc,
           ),
         );
