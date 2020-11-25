@@ -1,16 +1,15 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quill_delta/quill_delta.dart';
 
-import '../../entities/user.dart';
 import '../../entities/test_base.dart';
+import '../../entities/user.dart';
 import '../../localization/localizations.dart';
 import '../../qlzb/qlzb/qlzb.dart';
 import '../../service/dialog_sevice.dart';
+import '../../service/firebase_service.dart';
 import '../../service/random_string.dart';
 
 class WriteTestsPage extends StatefulWidget {
@@ -64,7 +63,8 @@ class _WriteTestsPageState extends State<WriteTestsPage> {
                   constraints: BoxConstraints(
                     maxHeight: 400,
                   ),
-                  child: ,
+                  //TODO
+                  child: Container(),
                 ),
               );
             }),
@@ -89,9 +89,8 @@ class _WriteTestsPageState extends State<WriteTestsPage> {
         Utils.CreateCryptoRandomString();
     // print(decoded);
     try {
-      final fstor = FirebaseStorage.instance.ref().child(fpath);
-      final ftask = fstor.putData(bytes);
-      await ftask.onComplete;
+      final fstor = FirebaseService.storage().child(fpath);
+      await fstor.putData(bytes);
       Navigator.pushNamed(context, '/addTests',
           arguments: [widget.doc, fpath, tests]);
     } catch (e) {

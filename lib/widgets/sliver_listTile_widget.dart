@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../service/firebase_service.dart';
 import '../service/fservice.dart';
 
 class SliverListTile extends StatefulWidget {

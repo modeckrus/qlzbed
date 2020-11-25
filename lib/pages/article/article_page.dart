@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../entities/timestamp.dart';
 import 'package:flutter/material.dart';
+import '../../service/firebase_service.dart';
 import 'package:quill_delta/quill_delta.dart';
 
 import '../../entities/article.dart';

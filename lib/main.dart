@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,8 +16,8 @@ import 'user_repository.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
-  final UserRepository userRepository =
-      UserRepository(firebaseAuth: FirebaseAuth.instance);
+  final UserRepository userRepository = UserRepository();
+  // UserRepository(firebaseAuth: FirebaseAuth.instance);
   runApp(BlocProvider(
       create: (context) =>
           AuthenticationBloc(userRepository: userRepository)..add(AppStarted()),

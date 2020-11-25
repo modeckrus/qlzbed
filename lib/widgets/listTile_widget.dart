@@ -1,5 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import '../service/firebase_service.dart';
 
 class FListTile extends StatefulWidget {
   final DocumentSnapshot doc;

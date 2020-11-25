@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../localization/localizations.dart';
 import '../my_icons.dart';
+import '../service/firebase_service.dart';
 
 class AddStatePage extends StatefulWidget {
   final DocumentSnapshot doc;

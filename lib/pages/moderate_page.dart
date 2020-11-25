@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../entities/moderationState.dart';
 import '../localization/localizations.dart';
 import '../my_icons.dart';
+import '../service/firebase_service.dart';
 import '../service/fservice.dart';
 import '../widgets/firestore_animated_list.dart';
 import '../widgets/moderate_library_widget.dart';
@@ -47,8 +47,7 @@ class _ModeratePageState extends State<ModeratePage> {
         ),
         body: viewMode
             ? FirestoreAnimatedList(
-                query: Firestore.instance
-                    .collectionGroup('moderationList')
+                query: FirebaseService.collectionGroup('moderationList')
                     .where('lang', isEqualTo: FService.getLang(context))
                     .where('isModerating', isEqualTo: true)
                     .orderBy('timestamp'),

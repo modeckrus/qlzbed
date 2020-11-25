@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../entities/user.dart';
+import '../../service/firebase_service.dart';
 
 part 'settinguser_event.dart';
 part 'settinguser_state.dart';
@@ -40,9 +39,8 @@ class SettinguserBloc extends Bloc<SettinguserEvent, SettinguserState> {
     if (event is SettinguserSave) {
       yield SettinguserLoading();
       try {
-        final userDoc = await Firestore.instance
-            .collection('user')
-            .document(GetIt.I.get<FirebaseUser>().uid)
+        final userDoc = await FirebaseService.collection('user')
+            .document(GetIt.I.get<User>().uid)
             .get();
         if (userDoc.exists) {
           await userDoc.reference.updateData(user.toJson());

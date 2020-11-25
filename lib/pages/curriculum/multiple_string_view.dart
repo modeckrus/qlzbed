@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qlzbed/localization/localizations.dart';
+
+import '../../localization/localizations.dart';
 
 class MultipleStringView extends StatefulWidget {
   final List<String> strings;

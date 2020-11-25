@@ -1,8 +1,6 @@
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import '../../service/firebase_service.dart';
 import 'package:quill_delta/quill_delta.dart';
 
 import '../../entities/moderationArticle.dart';
@@ -111,9 +109,8 @@ class _ModerateArticlePageState extends State<ModerateArticlePage> {
     });
     // print(decoded);
     try {
-      final fstor = FirebaseStorage.instance.ref().child(fpath);
-      final ftask = fstor.putData(bytes);
-      await ftask.onComplete;
+      final fstor = FirebaseService.storage().child(fpath);
+      await fstor.putData(bytes);
       Navigator.pushNamed(context, '/moderateAddArticle',
           arguments: [widget.doc, fpath]);
     } catch (e) {

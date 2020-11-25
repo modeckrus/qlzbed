@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:qlzbed/service/firebase_service.dart';
 
 class FStoreCacheManager extends BaseCacheManager {
   static const key = "customCache";
@@ -31,8 +32,11 @@ class FStoreCacheManager extends BaseCacheManager {
     print(fileinfo);
     if (fileinfo == null) {
       try {
-        final data = await FirebaseStorage.instance
-            .ref()
+        // final data = await FirebaseStorage.instance
+        //     .ref()
+        //     .child(childpath)
+        //     .getData(50 * 1024 * 1024);
+        final data = await FirebaseService.storage()
             .child(childpath)
             .getData(50 * 1024 * 1024);
 

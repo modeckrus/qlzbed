@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../entities/timestamp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import '../../service/firebase_service.dart';
 
 import '../../entities/fstateMinimum.dart';
 import '../../entities/lesson.dart';
@@ -225,7 +226,7 @@ class _ModerateAddLessonPageState extends State<ModerateAddLessonPage> {
     try {
       final path = widget.doc.reference.path;
       final pubpath = FService.getPubPath(path);
-      final docref = Firestore.instance.document(pubpath);
+      final docref = FirebaseService.document(pubpath);
       final title = _titleController.text;
       String l = lang;
       if (l == null) {

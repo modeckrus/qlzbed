@@ -1,9 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../entities/timestamp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:qlzbed/widgets/error_widget.dart';
-import 'package:qlzbed/widgets/loading_widget.dart';
+import '../../service/firebase_service.dart';
+import '../../widgets/error_widget.dart';
+import '../../widgets/loading_widget.dart';
 
 import '../../entities/base_curriculum.dart';
 import '../../entities/curriculum.dart';
@@ -177,7 +178,7 @@ class _ModerateAddCurriculumPageState extends State<ModerateAddCurriculumPage> {
       tags.addAll(FService.getTags(title));
       humanPath = await FService.getHumanPath(widget.doc.reference);
       final pubPath = FService.getPubPath(path);
-      final pubDocref = Firestore.instance.document(pubPath);
+      final pubDocref = FirebaseService.document(pubPath);
       final pubCurriculum = Curriculum(
           lessons: moderationCurriculum.lessons,
           descPath: moderationCurriculum.descPath,

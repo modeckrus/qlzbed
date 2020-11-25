@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../localization/localizations.dart';
+import '../service/firebase_service.dart';
 import '../service/fservice.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/loading_widget.dart';
@@ -20,8 +20,7 @@ class _LibraryPageState extends State<LibraryPage> {
           title: Text(AppLocalizations.of(context).library),
         ),
         body: StreamBuilder(
-            stream: Firestore.instance
-                .collection('routes')
+            stream: FirebaseService.collection('routes')
                 .document(FService.getLang(context))
                 .collection('mainRoutes')
                 .snapshots(),

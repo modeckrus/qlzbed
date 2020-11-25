@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../entities/user.dart';
+import '../../service/firebase_service.dart';
 import '../../user_repository.dart';
 
 part 'authentication_event.dart';
@@ -52,14 +51,12 @@ class AuthenticationBloc
       final isSignedIn = await userRepository.isSignedIn();
       if (isSignedIn) {
         final user = await userRepository.getUser();
-        if (GetIt.I.isRegistered<FirebaseUser>()) {
-          GetIt.I.unregister<FirebaseUser>();
+        if (GetIt.I.isRegistered<User>()) {
+          GetIt.I.unregister<User>();
         }
-        GetIt.I.registerSingleton<FirebaseUser>(user);
-        final userSnap = await Firestore.instance
-            .collection('user')
-            .document(user.uid)
-            .get();
+        GetIt.I.registerSingleton<User>(user);
+        final userSnap =
+            await FirebaseService.collection('user').document(user.uid).get();
         if (userSnap.exists) {
           final userData =
               User.fromJson(userSnap.data ?? Map<String, dynamic>());
@@ -78,10 +75,10 @@ class AuthenticationBloc
         }
       } else {
         // final user = await userRepository.anonAuth();
-        // if (GetIt.I.isRegistered<FirebaseUser>()) {
-        //   GetIt.I.unregister<FirebaseUser>();
+        // if (GetIt.I.isRegistered<User>()) {
+        //   GetIt.I.unregister<User>();
         // }
-        // GetIt.I.registerSingleton<FirebaseUser>(user);
+        // GetIt.I.registerSingleton<User>(user);
         // yield Authenticated(user);
         yield Unauthenticated();
       }
@@ -94,12 +91,12 @@ class AuthenticationBloc
   Stream<AuthenticationState> _mapLoggedInToState() async* {
     try {
       final user = await userRepository.getUser();
-      if (GetIt.I.isRegistered<FirebaseUser>()) {
-        GetIt.I.unregister<FirebaseUser>();
+      if (GetIt.I.isRegistered<User>()) {
+        GetIt.I.unregister<User>();
       }
-      GetIt.I.registerSingleton<FirebaseUser>(user);
+      GetIt.I.registerSingleton<User>(user);
       final userSnap =
-          await Firestore.instance.collection('user').document(user.uid).get();
+          await FirebaseService.collection('user').document(user.uid).get();
       if (userSnap.exists) {
         final userData = User.fromJson(userSnap.data ?? Map<String, dynamic>());
         if (userData != null && userData.isSetted) {

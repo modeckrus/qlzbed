@@ -1,10 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qlzbed/entities/user.dart';
+import 'package:qlzbed/pages/error_page.dart';
+import 'package:qlzbed/service/firebase_service.dart';
 
 import '../entities/msize.dart';
-import 'image_capture.dart';
 import 'my_image.dart';
 
 class AddAvatarWidget extends StatefulWidget {
@@ -30,9 +31,8 @@ class _AddAvatarWidgetState extends State<AddAvatarWidget> {
   }
 
   void getData() async {
-    final docsnap = await Firestore.instance
-        .collection('user')
-        .document(GetIt.I.get<FirebaseUser>().uid)
+    final docsnap = await FirebaseService.collection('user')
+        .document(GetIt.I.get<User>().uid)
         .get();
     if (docsnap.exists && docsnap.data != null) {
       final avatarPath = docsnap.data['Avatar'];
@@ -50,15 +50,15 @@ class _AddAvatarWidgetState extends State<AddAvatarWidget> {
     ));
     sizes.add(MSize(width: 20, height: 20));
     print(sizes);
-    final user = GetIt.I.get<FirebaseUser>();
+    final user = GetIt.I.get<User>();
     final resultf = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ImageCapture(
-            path: 'avatar',
-            uid: user.uid,
-          ),
-        ));
+            // builder: (context) => ImageCapture(
+            //   path: 'avatar',
+            //   uid: user.uid,
+            // ),
+            builder: (context) => ErrorPage(error: 'Page not implemented')));
     if (resultf != null) {
       final result = resultf;
       print('Result = ' + result.toString());

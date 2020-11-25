@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 import '../../authentication/bloc/authentication_bloc.dart';
+import '../../service/firebase_service.dart';
 import '../../user_repository.dart';
 
 part 'login_event.dart';
@@ -49,7 +49,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       //await Future.delayed(Duration(seconds: 10));
       final user = await userRepository.getUser();
       final documnet =
-          await Firestore.instance.collection('user').document(user.uid).get();
+          await FirebaseService.collection('user').document(user.uid).get();
       final isSetted = documnet.data['IsSetted'] as bool;
       for (var i = 0; i < 10; i++) {
         print('    \n');
@@ -77,10 +77,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LSettingS();
         await Future.delayed(Duration(seconds: 10));
         final user = await userRepository.getUser();
-        final documnet = await Firestore.instance
-            .collection('user')
-            .document(user.uid)
-            .get();
+        final documnet =
+            await FirebaseService.collection('user').document(user.uid).get();
         final isSetted = documnet.data['IsSetted'] as bool;
         for (var i = 0; i < 10; i++) {
           print('    \n');

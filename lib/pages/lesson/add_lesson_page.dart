@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../entities/timestamp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import '../../service/firebase_service.dart';
 
 import '../../entities/fstateMinimum.dart';
 import '../../entities/moderationLesson.dart';
@@ -203,7 +204,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
     try {
       final path = widget.doc.reference.path;
       final mpath = FService.getModerPath(path);
-      final docref = Firestore.instance.document(mpath);
+      final docref = FirebaseService.document(mpath);
       final title = _titleController.text;
       String l = lang;
       if (l == null) {

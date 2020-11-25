@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../service/firebase_service.dart';
 import 'loading_widget.dart';
 import 'moderate_sliver_listTile_widget.dart';
 
@@ -16,8 +16,8 @@ class _FModerateListWidgetState extends State<FModerateListWidget> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance
-          .collection(widget.doc.reference.path + '/moderationList')
+      stream: FirebaseService.collection(
+              widget.doc.reference.path + '/moderationList')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!(snapshot.hasData)) {

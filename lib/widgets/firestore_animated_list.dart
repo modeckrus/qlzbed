@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../service/firebase_service.dart';
 
 typedef Widget FirestoreAnimatedListItemBuilder(
   BuildContext context,
@@ -34,7 +35,7 @@ class FirestoreAnimatedList extends StatefulWidget {
   }
 
   /// A Firebase query to use to populate the animated list
-  final Query query;
+  final QueryReference query;
 
   /// A widget to display while the query is loading. Defaults to an empty
   /// Container().
@@ -227,7 +228,7 @@ class FirestoreList extends ListBase<DocumentSnapshot> {
       this.onError,
       this.onData});
 
-  final Query query;
+  final QueryReference query;
 
   final FirestoreListOnInit onInitialData;
   final FirestoreListOnChild onChildAdded;
@@ -268,31 +269,31 @@ class FirestoreList extends ListBase<DocumentSnapshot> {
       return;
     }
 
-    for (final change in snapshot.documentChanges) {
-      switch (change.type) {
-        case DocumentChangeType.added:
-          _snapshots.insert(change.newIndex, change.document);
-          onChildAdded?.call(change.newIndex, change.document);
-          break;
-        case DocumentChangeType.modified:
-          //print('modified ${change.oldIndex} ${change.newIndex}');
-          if (change.oldIndex == change.newIndex) {
-            _snapshots.removeAt(change.oldIndex);
-            _snapshots.insert(change.newIndex, change.document);
-            onChildChanged?.call(change.newIndex, change.document);
-          } else {
-            final oldDoc = _snapshots.removeAt(change.oldIndex);
-            onChildRemoved.call(change.oldIndex, oldDoc);
-            _snapshots.insert(change.newIndex, change.document);
-            onChildAdded?.call(change.newIndex, change.document);
-          }
-          break;
-        case DocumentChangeType.removed:
-          _snapshots.removeAt(change.oldIndex);
-          onChildRemoved.call(change.oldIndex, change.document);
-          break;
-      }
-    }
+    // for (final change in snapshot.documentChanges) {
+    //   switch (change.type) {
+    //     case DocumentChangeType.added:
+    //       _snapshots.insert(change.newIndex, change.document);
+    //       onChildAdded?.call(change.newIndex, change.document);
+    //       break;
+    //     case DocumentChangeType.modified:
+    //       //print('modified ${change.oldIndex} ${change.newIndex}');
+    //       if (change.oldIndex == change.newIndex) {
+    //         _snapshots.removeAt(change.oldIndex);
+    //         _snapshots.insert(change.newIndex, change.document);
+    //         onChildChanged?.call(change.newIndex, change.document);
+    //       } else {
+    //         final oldDoc = _snapshots.removeAt(change.oldIndex);
+    //         onChildRemoved.call(change.oldIndex, oldDoc);
+    //         _snapshots.insert(change.newIndex, change.document);
+    //         onChildAdded?.call(change.newIndex, change.document);
+    //       }
+    //       break;
+    //     case DocumentChangeType.removed:
+    //       _snapshots.removeAt(change.oldIndex);
+    //       onChildRemoved.call(change.oldIndex, change.document);
+    //       break;
+    //   }
+    // }
   }
 
   void _onError(error, StackTrace stackTrace) {

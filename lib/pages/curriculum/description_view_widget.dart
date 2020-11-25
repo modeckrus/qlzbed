@@ -1,14 +1,12 @@
 import 'dart:convert';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../localization/localizations.dart';
 import '../../qlzb/qlzb/qlzb.dart';
 import '../../qlzb/qlzb/src/widgets/view.dart';
-import 'bloc/curriculum_bloc.dart';
+import '../../service/firebase_service.dart';
 
 class DescriptionViewWidget extends StatefulWidget {
   final String descPath;
@@ -45,8 +43,7 @@ class _DescriptionViewWidgetState extends State<DescriptionViewWidget> {
 
   Future<void> loadDocument() async {
     try {
-      final data = await FirebaseStorage.instance
-          .ref()
+      final data = await FirebaseService.storage()
           .child(widget.descPath)
           .getData(50 * 1024 * 1024);
       if (data != null && data.isNotEmpty) {

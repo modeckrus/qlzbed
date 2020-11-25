@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../entities/timestamp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import '../../service/firebase_service.dart';
 
 import '../../entities/moderationTests.dart';
 import '../../entities/test_base.dart';
@@ -190,7 +191,7 @@ class _AddTestsPageState extends State<AddTestsPage> {
     try {
       final path = widget.doc.reference.path;
       final mpath = FService.getModerPath(path);
-      final mdocref = Firestore.instance.document(mpath);
+      final mdocref = FirebaseService.document(mpath);
       final title = _titleController.text;
       String l = lang;
       if (l == null) {

@@ -1,6 +1,7 @@
 //FSpecModerateListPage;
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qlzbed/entities/timestamp.dart';
 import 'package:flutter/material.dart';
+import 'package:qlzbed/service/firebase_service.dart';
 import 'package:qlzbed/widgets/flist_moderate_widget.dart';
 
 import '../my_icons.dart';

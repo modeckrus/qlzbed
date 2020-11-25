@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../entities/timestamp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import '../../service/firebase_service.dart';
 
 import '../../entities/group.dart';
 import '../../entities/moderationGroup.dart';
@@ -223,7 +224,7 @@ class _ModerateAddGroupPageState extends State<ModerateAddGroupPage> {
       await widget.doc.reference.setData(moderateGroup.toJson(), merge: true);
       final pubpath = FService.getPubPath(widget.doc.reference.path);
       print(pubpath);
-      final pubdocref = Firestore.instance.document(pubpath);
+      final pubdocref = FirebaseService.document(pubpath);
       pubdocref.setData(pubGroup.toJson());
       await pubdocref.get();
       Navigator.pushNamed(context, '/moderation');

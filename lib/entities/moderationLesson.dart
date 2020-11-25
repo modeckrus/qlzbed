@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'fstateMinimum.dart';
+import 'timestamp.dart';
 
 part 'moderationLesson.g.dart';
 

@@ -11,7 +11,7 @@ class Uninitialized extends AuthenticationState {}
 class SettingUser extends AuthenticationState {}
 
 class Authenticated extends AuthenticationState {
-  final FirebaseUser user;
+  final User user;
   const Authenticated(this.user);
 
   @override

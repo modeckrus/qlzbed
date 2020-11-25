@@ -1,16 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:qlzbed/entities/tests.dart';
 
-import '../../entities/test_base.dart';
 import '../../entities/moderationTests.dart';
+import '../../entities/test_base.dart';
+import '../../entities/tests.dart';
+import '../../entities/timestamp.dart';
 import '../../entities/user.dart';
 import '../../localization/localizations.dart';
 import '../../my_icons.dart';
 import '../../service/dialog_sevice.dart';
+import '../../service/firebase_service.dart';
 import '../../service/fservice.dart';
 import '../../widgets/lang_drop_down_widget.dart';
 import '../../widgets/tags_editor_widget.dart';
@@ -71,10 +71,7 @@ class _ModerateAddTestsPageState extends State<ModerateAddTestsPage> {
               onPressed: () {
                 DialogService.showLoadingDialog(
                     context, AppLocalizations.of(context).removing, () async {
-                  await FirebaseStorage.instance
-                      .ref()
-                      .child(article.path)
-                      .delete();
+                  await FirebaseService.storage().child(article.path).delete();
 
                   await widget.doc.reference.delete();
                   print('delete complete');
@@ -264,7 +261,7 @@ class _ModerateAddTestsPageState extends State<ModerateAddTestsPage> {
           lang: narticle.lang);
       final pubpath = FService.getPubPath(widget.doc.reference.path);
       print(pubpath);
-      final pubdocref = Firestore.instance.document(pubpath);
+      final pubdocref = FirebaseService.document(pubpath);
       pubdocref.setData(pubarticle.toJson());
       final pubdocsnap = await pubdocref.get();
       Navigator.pushNamed(context, '/article', arguments: pubdocsnap);

@@ -1,12 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../entities/moderationArticle.dart';
+import '../../entities/timestamp.dart';
 import '../../entities/user.dart';
 import '../../localization/localizations.dart';
 import '../../service/dialog_sevice.dart';
+import '../../service/firebase_service.dart';
 import '../../service/fservice.dart';
 import '../../widgets/lang_drop_down_widget.dart';
 import '../../widgets/tags_editor_widget.dart';
@@ -184,7 +185,7 @@ class _AddArticlePageState extends State<AddArticlePage> {
     try {
       final path = widget.doc.reference.path;
       final mpath = FService.getModerPath(path);
-      final mdocref = Firestore.instance.document(mpath);
+      final mdocref = FirebaseService.document(mpath);
       final title = _titleController.text;
       String l = lang;
       if (l == null) {

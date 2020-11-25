@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../localization/localizations.dart';
 import '../my_icons.dart';
+import '../service/firebase_service.dart';
 import '../service/fservice.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/loading_widget.dart';
@@ -20,8 +20,7 @@ class _LessonSelectorPageState extends State<LessonSelectorPage> {
           title: Text(AppLocalizations.of(context).stateSelector),
         ),
         body: StreamBuilder(
-            stream: Firestore.instance
-                .collection('routes')
+            stream: FirebaseService.collection('routes')
                 .document(FService.getLang(context))
                 .collection('mainRoutes')
                 .snapshots(),
@@ -72,9 +71,9 @@ class _LessonSelectorListState extends State<LessonSelectorList> {
           title: Text(widget.doc.data['title']),
         ),
         body: StreamBuilder(
-          stream: Firestore.instance
-              .collection(widget.doc.reference.path + '/list')
-              .snapshots(),
+          stream:
+              FirebaseService.collection(widget.doc.reference.path + '/list')
+                  .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!(snapshot.hasData)) {
               return LoadingWidget();

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 import '../setting.dart';
 
@@ -12,14 +12,13 @@ part 'perferences_state.dart';
 
 class PerferencesBloc extends Bloc<PerferencesEvent, PerferencesState> {
   PerferencesBloc() : super(PerferencesLoading());
-  SharedPreferences preferences;
+  var preferences = Hive.box('perference');
   Setting setting;
   @override
   Stream<PerferencesState> mapEventToState(
     PerferencesEvent event,
   ) async* {
     if (event is PerferencesAppStarted) {
-      preferences = await SharedPreferences.getInstance();
       final initsetting = Setting(
           lang: preferences.get('lang'),
           themeMode: themeModeFromString(preferences.get('themeMode')));
@@ -28,20 +27,15 @@ class PerferencesBloc extends Bloc<PerferencesEvent, PerferencesState> {
     }
     if (event is PerferencesSettingChanged) {
       if (event.lang != null) {
-        final isOkLang = await preferences.setString('lang', event.lang);
-        if (isOkLang) {
-          final ThemeMode themeMode =
-              setting.themeMode == null ? ThemeMode.system : setting.themeMode;
-          setting = Setting(lang: event.lang, themeMode: themeMode);
-        }
+        await preferences.put('lang', event.lang);
+        final ThemeMode themeMode =
+            setting.themeMode == null ? ThemeMode.system : setting.themeMode;
+        setting = Setting(lang: event.lang, themeMode: themeMode);
       }
       if (event.themeMode != null) {
-        final isOkThemeMode = await preferences.setString(
-            'themeMode', themeModeToString(event.themeMode));
-        if (isOkThemeMode) {
-          final lang = setting.lang == null ? 'ru' : setting.lang;
-          setting = Setting(lang: lang, themeMode: event.themeMode);
-        }
+        await preferences.put('themeMode', themeModeToString(event.themeMode));
+        final lang = setting.lang == null ? 'ru' : setting.lang;
+        setting = Setting(lang: lang, themeMode: event.themeMode);
       }
       yield PerferencesLoaded(setting);
     }

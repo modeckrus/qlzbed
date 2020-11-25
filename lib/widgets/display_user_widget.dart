@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qlzbed/service/firebase_service.dart';
 
 import '../entities/user.dart';
 import '../localization/localizations.dart';
@@ -60,9 +60,8 @@ class _DisplayUserWidgetState extends State<DisplayUserWidget> {
     // User user = GetIt.I.get<User>();
     // if (user != null) {
     // } else {
-    final docsnap = await Firestore.instance
-        .collection('user')
-        .document(GetIt.I.get<FirebaseUser>().uid)
+    final docsnap = await FirebaseService.collection('user')
+        .document(GetIt.I.get<User>().uid)
         .get();
     User user = User.fromJson(docsnap.data);
     // GetIt.I.registerSingleton(user);

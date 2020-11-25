@@ -1,7 +1,6 @@
 import 'dart:convert';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import '../../service/firebase_service.dart';
 import 'package:quill_delta/quill_delta.dart';
 
 import '../../localization/localizations.dart';
@@ -86,8 +85,7 @@ class _WriteCurriculumDescPageState extends State<WriteCurriculumDescPage> {
   Future<QDocDocument> _loadDocument() async {
     final Delta delta = Delta()..insert("Something go wrong\n");
     try {
-      final contents = await FirebaseStorage.instance
-          .ref()
+      final contents = await FirebaseService.storage()
           .child(widget.descPath)
           .getData(50 * 1024 * 1024);
       if (contents == null) {
@@ -115,9 +113,8 @@ class _WriteCurriculumDescPageState extends State<WriteCurriculumDescPage> {
     //     Utils.CreateCryptoRandomString();
     // print(decoded);
     try {
-      final fstor = FirebaseStorage.instance.ref().child(widget.descPath);
-      final ftask = fstor.putData(bytes);
-      await ftask.onComplete;
+      final fstor = FirebaseService.storage().child(widget.descPath);
+      await fstor.putData(bytes);
 
       Navigator.pop(context);
       // Navigator.pushNamed(context, '/addCurriculum', arguments: [

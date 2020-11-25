@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../localization/localizations.dart';
+import 'firebase_service.dart';
 
 typedef Future<void> VoidAsyncCallBack();
 

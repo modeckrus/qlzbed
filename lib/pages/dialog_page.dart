@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../entities/dialog.dart';
 import '../entities/message.dart';
+import '../entities/timestamp.dart';
 import '../entities/user.dart';
+import '../service/firebase_service.dart';
 import '../widgets/firestore_animated_list.dart';
 import '../widgets/message_widget.dart';
 import '../widgets/my_image.dart';
@@ -88,15 +88,13 @@ class _DialogPageState extends State<DialogPage> {
                 controller: scrollController,
                 onDataLoaded: (List<DocumentSnapshot> list) {
                   print('onDataLoaded');
-                  Firestore.instance
-                      .collection('user')
-                      .document(GetIt.I.get<FirebaseUser>().uid)
+                  FirebaseService.collection('user')
+                      .document(GetIt.I.get<User>().uid)
                       .collection('dialogs')
                       .document(dialog.uid)
                       .updateData({'missedMessages': 0});
                 },
-                query: Firestore.instance
-                    .collection('chats')
+                query: FirebaseService.collection('chats')
                     .document(widget.dialog.uid)
                     .collection('messages')
                     .orderBy('timestamp', descending: true),
@@ -141,8 +139,7 @@ class _DialogPageState extends State<DialogPage> {
                     icon: Icon(Icons.send),
                     onPressed: () {
                       final User user = GetIt.I.get<User>();
-                      final dialogsnap = Firestore.instance
-                          .collection('chats')
+                      final dialogsnap = FirebaseService.collection('chats')
                           .document(widget.dialog.uid);
                       dialogsnap.collection('messages').add(Message(
                               timestamp: Timestamp.now(),
@@ -171,7 +168,7 @@ class _DialogPageState extends State<DialogPage> {
   }
 
   Widget _buildMessage(Message message, DocumentSnapshot docsnap) {
-    if (message.from.uid != GetIt.I.get<FirebaseUser>().uid) {
+    if (message.from.uid != GetIt.I.get<User>().uid) {
       docsnap.reference.updateData({'readed': true});
     }
     return MessageWidget(

@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/pages/curriculum/curriculum_page.dart';
-import 'package:qlzbed/pages/tests/write_tests_page.dart';
 
 import 'entities/dialog.dart';
 import 'pages/add_checktest_page.dart';
@@ -14,6 +11,7 @@ import 'pages/article/moderate_add_article_page.dart';
 import 'pages/article/moderate_article_page.dart';
 import 'pages/article/wrtie_article_page.dart';
 import 'pages/curriculum/add_curriculum_page.dart';
+import 'pages/curriculum/curriculum_page.dart';
 import 'pages/curriculum/moderate_add_curriculum_page.dart';
 import 'pages/curriculum/moderate_desc_curriculum_page.dart';
 import 'pages/curriculum/write_desc_curriculum_page.dart';
@@ -33,9 +31,11 @@ import 'pages/settings_page.dart';
 import 'pages/spec_moderate_list_page.dart';
 import 'pages/state_selector_page.dart';
 import 'pages/test_page.dart';
+import 'pages/tests/write_tests_page.dart';
 import 'pages/unit/add_unit_page.dart';
 import 'pages/unit/moderate_unit_page.dart';
 import 'pages/unit/unit_page.dart';
+import 'service/firebase_service.dart';
 import 'service/route_transitions.dart';
 import 'user_repository.dart';
 

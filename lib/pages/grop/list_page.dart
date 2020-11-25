@@ -1,5 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../entities/timestamp.dart';
 import 'package:flutter/material.dart';
+import '../../service/firebase_service.dart';
 
 import '../../my_icons.dart';
 import '../../widgets/list_widget.dart';

@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../entities/fstateMinimum.dart';
+import '../service/firebase_service.dart';
 import '../service/fservice.dart';
 import 'units_view_widget.dart';
 

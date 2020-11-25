@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qlzbed/entities/user.dart';
+import 'package:qlzbed/service/firebase_service.dart';
 
 import '../authentication/bloc/authentication_bloc.dart';
 import '../widgets/add_avatar_widget.dart';
@@ -96,9 +97,8 @@ class _SettingUserPageState extends State<SettingUserPage> {
               child: Center(child: Builder(
                 builder: (context) {
                   return AddAvatarWidget(onAddImage: (String path) async {
-                    Firestore.instance
-                        .collection('user')
-                        .document(GetIt.I.get<FirebaseUser>().uid)
+                    FirebaseService.collection('user')
+                        .document(GetIt.I.get<User>().uid)
                         .updateData({'Avatar': path}).then((value) {
                       Scaffold.of(context).showSnackBar(
                           SnackBar(content: Text('Avatar Setted')));

@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../entities/timestamp.dart';
 import 'package:flutter/material.dart';
 
 import '../my_icons.dart';
+import 'firebase_service.dart';
 
 class FService {
   static String getModerPath(String path) {
@@ -13,8 +14,7 @@ class FService {
         list.add(element);
       });
       final fpath = list.join('moderationList/');
-      final docref =
-          Firestore.instance.collection('moderation').document(fpath);
+      final docref = FirebaseService.collection('moderation').document(fpath);
       return docref.path;
     } else {
       return path;
@@ -30,7 +30,7 @@ class FService {
         list.add(element);
       });
       final fpath = list.join('list/');
-      final docref = Firestore.instance.collection('routes').document(fpath);
+      final docref = FirebaseService.collection('routes').document(fpath);
       return docref.path;
     } else {
       return path;
@@ -116,8 +116,7 @@ class FService {
     for (var i = 0; i < listStrings.length; i++) {
       final sstring = listStrings.getRange(0, i + 1).join('moderationList');
       humanString +=
-          (await Firestore.instance.document(sstring).get()).data['title'] +
-              '/';
+          (await FirebaseService.document(sstring).get()).data['title'] + '/';
       print(sstring);
     }
     print(humanString);

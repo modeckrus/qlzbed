@@ -26,29 +26,35 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.16.1
-  shared_preferences: ^0.5.12
-  firebase_core: ^0.4.5
-  firebase_auth: ^0.16.1
-  google_sign_in: ^4.5.4
-  cloud_firestore: ^0.13.6
+  # shared_preferences: ^0.5.12
+  # firebase_core: ^0.4.5
+  # firebase_auth: ^0.16.1
+  # google_sign_in: ^4.5.4
+  # cloud_firestore: ^0.13.6
   # cloud_functions: ^0.5.0
-  firebase_storage: ^3.1.6
+  # firebase_storage: ^3.1.6
   flutter_bloc: ^6.1.0
   equatable: ^1.2.5
   flutter_cache_manager: ^1.4.2
   # firebase_messaging: ^6.0.13
   flutter_svg: ^0.18.0
-  image_picker: ^0.6.7+2
+  # image_picker: ^0.6.7+2
   flare_flutter: ^2.0.4
   uuid: ^2.2.0
   get_it: ^4.0.2
   json_annotation: ^3.0.0
-  image_cropper: ^1.2.3
+  # image_cropper: ^1.2.3
   path_provider: ^1.6.7
   appbar_textfield:
     path: ../appbar_textfield
   animations: ^1.1.2
   jiffy: ^3.0.1
+  http: ^0.12.2
+  firedart: ^0.8.3
+  hive: ^1.4.4+1
+  flutter_local_notifications: ^3.0.1+5
+  device_info: ^0.4.2+4
+  rxdart: ^0.24.0
   zefyr:
     git:
       url: https://github.com/memspace/zefyr.git

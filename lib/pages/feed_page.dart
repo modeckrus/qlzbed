@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
+import '../entities/user.dart';
 import '../localization/localizations.dart';
+import '../service/firebase_service.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/listTile_widget.dart';
 import '../widgets/loading_widget.dart';
@@ -27,9 +27,8 @@ class _FeedPageState extends State<FeedPage> {
               return Container();
             }
             return StreamBuilder(
-              stream: Firestore.instance
-                  .collection('user')
-                  .document(GetIt.I.get<FirebaseUser>().uid)
+              stream: FirebaseService.collection('user')
+                  .document(GetIt.I.get<User>().uid)
                   .collection('feed')
                   .snapshots(),
               builder: (context, snapshot) {

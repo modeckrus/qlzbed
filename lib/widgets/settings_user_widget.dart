@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import '../entities/user.dart';
 import '../localization/localizations.dart';
+import '../service/firebase_service.dart';
 import '../settingUser/settinguserbloc/settinguser_bloc.dart';
 
 class SettingsUserWidget extends StatefulWidget {
@@ -50,15 +49,14 @@ class _SettingsUserWidgetState extends State<SettingsUserWidget> {
     User user = User(
       name: _name ?? '',
       surname: _surname ?? '',
-      uid: GetIt.I.get<FirebaseUser>().uid ?? '',
+      uid: GetIt.I.get<User>().uid ?? '',
     );
     return user;
   }
 
   void getInformation() async {
-    final docsnap = await Firestore.instance
-        .collection('user')
-        .document(GetIt.I.get<FirebaseUser>().uid)
+    final docsnap = await FirebaseService.collection('user')
+        .document(GetIt.I.get<User>().uid)
         .get();
     User user = User.fromJson(docsnap.data);
     _nameController.text = user.name ?? '';

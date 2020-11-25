@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:jiffy/jiffy.dart';
 
 import '../entities/message.dart';
+import '../entities/user.dart';
 import 'my_image.dart';
 
 class MessageWidget extends StatefulWidget {
@@ -18,12 +18,12 @@ class _MessageWidgetState extends State<MessageWidget> {
   @override
   Widget build(BuildContext context) {
     bool isMine = true;
-    isMine = GetIt.I.get<FirebaseUser>().uid == widget.message.from.uid;
+    isMine = GetIt.I.get<User>().uid == widget.message.from.uid;
     bool readed = false;
     if (widget.message.readed != null) {
       readed = widget.message.readed;
     }
-    final jiff = Jiffy(widget.message.timestamp.toDate());
+    final jiff = Jiffy(widget.message.timestamp);
     return ListTile(
       // isThreeLine: true,
       leading: ClipRRect(

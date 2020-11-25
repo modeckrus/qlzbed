@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../service/firebase_service.dart';
 import 'loading_widget.dart';
 import 'sliver_listTile_widget.dart';
 
@@ -16,8 +16,7 @@ class _FListWidgetState extends State<FListWidget> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance
-          .collection(widget.doc.reference.path + '/list')
+      stream: FirebaseService.collection(widget.doc.reference.path + '/list')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!(snapshot.hasData)) {

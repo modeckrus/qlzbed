@@ -1,14 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../entities/timestamp.dart';
 import 'package:flutter/material.dart';
-import 'package:qlzbed/entities/base_curriculum.dart';
-import 'package:qlzbed/entities/curriculum.dart';
-import 'package:qlzbed/localization/localizations.dart';
-import 'package:qlzbed/pages/curriculum/descprition_widget.dart';
-import 'package:qlzbed/pages/curriculum/lessons_view.dart';
-import 'package:qlzbed/pages/curriculum/multiple_string_view.dart';
-import 'package:qlzbed/widgets/error_widget.dart';
-import 'package:qlzbed/widgets/loading_widget.dart';
-import 'package:qlzbed/widgets/tags_view_widget.dart';
+import '../../entities/base_curriculum.dart';
+import '../../entities/curriculum.dart';
+import '../../localization/localizations.dart';
+import 'descprition_widget.dart';
+import 'lessons_view.dart';
+import 'multiple_string_view.dart';
+import '../../service/firebase_service.dart';
+import '../../widgets/error_widget.dart';
+import '../../widgets/loading_widget.dart';
+import '../../widgets/tags_view_widget.dart';
 
 import 'description_view_widget.dart';
 

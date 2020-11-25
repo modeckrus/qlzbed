@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -6,9 +5,11 @@ import 'package:get_it/get_it.dart';
 import '../../entities/fstateMinimum.dart';
 import '../../entities/moderate_base_curriculum.dart';
 import '../../entities/moderationCurriculum.dart';
+import '../../entities/timestamp.dart';
 import '../../entities/user.dart';
 import '../../localization/localizations.dart';
 import '../../service/dialog_sevice.dart';
+import '../../service/firebase_service.dart';
 import '../../service/fservice.dart';
 import '../../service/random_string.dart';
 import '../../widgets/how_much_time_widget.dart';
@@ -131,7 +132,7 @@ class _AddCurriculumPageState extends State<AddCurriculumPage> {
       tags.addAll(FService.getTags(title));
       humanPath = await FService.getHumanPath(widget.doc.reference);
       print(mbasepath);
-      final mdocref = Firestore.instance.document(path);
+      final mdocref = FirebaseService.document(path);
       final ldocref = await mdocref
           .collection('moderationList')
           .add(moderateBaseCurriculum.toJson());

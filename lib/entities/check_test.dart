@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:qlzbed/entities/test_base.dart';
 
 import 'answer.dart';
+import 'test_base.dart';
 
 part 'check_test.g.dart';
 

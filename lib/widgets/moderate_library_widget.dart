@@ -1,5 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../entities/timestamp.dart';
 import 'package:flutter/material.dart';
+import '../service/firebase_service.dart';
 
 import '../service/fservice.dart';
 import '../widgets/error_widget.dart';
@@ -15,8 +16,7 @@ class _ModerateLibraryWidgetState extends State<ModerateLibraryWidget> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: Firestore.instance
-            .collection('moderation')
+        stream: FirebaseService.collection('moderation')
             .document(FService.getLang(context))
             .collection('mainRoutes')
             .snapshots(),
