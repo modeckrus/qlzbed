@@ -27,11 +27,11 @@ class _FModerateListWidgetState extends State<FModerateListWidget> {
           return ErrorWidget(snapshot.error);
         }
 
-        QuerySnapshot data = snapshot.data;
+        List<DocumentSnapshot> data = snapshot.data;
         return ListView.builder(
-            itemCount: data.documents.length,
+            itemCount: data.length,
             itemBuilder: (context, index) {
-              return ModerateSliverListTile(doc: data.documents[index]);
+              return ModerateSliverListTile(doc: data[index]);
             });
       },
     );

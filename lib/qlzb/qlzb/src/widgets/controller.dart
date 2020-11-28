@@ -5,9 +5,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 import 'package:quill_delta/quill_delta.dart';
-import 'package:zefyr/util.dart';
 
 import '../../qlzb.dart';
+import '../../util.dart';
 
 const TextSelection _kZeroSelection = TextSelection.collapsed(
   offset: 0,

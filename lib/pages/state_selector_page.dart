@@ -91,12 +91,12 @@ class _StateSelectorListState extends State<StateSelectorList> {
               return ErrorWidget(snapshot.error);
             }
 
-            QuerySnapshot data = snapshot.data;
+            List<DocumentSnapshot> documents = snapshot.data;
             return ListView.builder(
-                itemCount: data.documents.length,
+                itemCount: documents.length,
                 itemBuilder: (context, index) {
                   return StateSelectorListTile(
-                    doc: data.documents[index],
+                    doc: documents[index],
                     routesAllowed: widget.routesAllowed,
                   );
                 });

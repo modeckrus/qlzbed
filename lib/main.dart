@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive/hive.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:qlzbed/service/firebase_service.dart';
+import 'package:qlzbed/service/notification_sevice.dart';
 
 import 'authentication/bloc/authentication_bloc.dart';
 import 'bloc_observer.dart';
@@ -13,8 +16,11 @@ import 'perferences/setting.dart';
 import 'route_generator.dart';
 import 'user_repository.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FirebaseService.init();
+  await NotificationService.init();
+  await Hive.openBox('perference');
   Bloc.observer = MyBlocObserver();
   final UserRepository userRepository = UserRepository();
   // UserRepository(firebaseAuth: FirebaseAuth.instance);

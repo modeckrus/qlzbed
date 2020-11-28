@@ -225,7 +225,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(top: 0, bottom: 0, left: 30, right: 30),
+                  const EdgeInsets.only(top: 8, bottom: 0, left: 30, right: 30),
               child: Container(
                 width: double.infinity,
                 child: GoogleLoginButton(),

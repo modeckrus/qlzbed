@@ -39,11 +39,11 @@ class _FeedPageState extends State<FeedPage> {
                   return LoadingWidget();
                 }
 
-                QuerySnapshot data = snapshot.data;
+                List<DocumentSnapshot> data = snapshot.data;
                 return ListView.builder(
-                    itemCount: data.documents.length,
+                    itemCount: data.length,
                     itemBuilder: (context, index) {
-                      return FListTile(doc: data.documents[index]);
+                      return FListTile(doc: data[index]);
                     });
               },
             );

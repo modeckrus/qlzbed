@@ -1,4 +1,6 @@
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
+import 'package:qlzbed/service/firebase_service.dart';
 import 'package:quill_delta/quill_delta.dart';
 
 import '../qlzb/qlzb/qlzb.dart';
@@ -18,49 +20,6 @@ class _TestPageState extends State<TestPage> {
   @override
   void initState() {
     final Delta delta = Delta()..insert('hey\n')..insert("""
-    ef
-    fe
-    few
-    few
-    f
-
-    f
-    wf
-    we
-    fe
-    f
-    fw
-    f
-    we
-    f
-    ewf
-    ew
-    f
-    ewf
-    we
-    fw
-    f
-    e
-    few
-    fe
-    few
-    fe
-    fwe
-    fe
-    few
-    f
-    ew
-    few
-    ewf
-    efw
-    efw
-    efw
-    ef
-    efw
-    efw
-    ewf
-    efw
-    ewf
     fwe
 
     \n""");
@@ -108,6 +67,18 @@ class _TestPageState extends State<TestPage> {
                       document: doc,
                     ),
                   ),
+                ),
+                ListTile(
+                  title: Text('Test document'),
+                  onTap: () async {
+                    final bucket = await FirebaseStorage.getBucket(
+                        FirebaseService.projectId,
+                        FirebaseService.bucketId,
+                        FirebaseService.auth);
+                      
+                    // bucket.info('avatar.jpg');
+                    bucket.info('avatar.jpg');
+                  },
                 ),
                 // ListTile(
                 //   title: Text('clear all'),

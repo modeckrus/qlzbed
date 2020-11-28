@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'dart:io';
+
+import 'package:get_it/get_it.dart';
 
 import 'entities/user.dart';
+import 'package:firedart/firedart.dart' as fd;
 
 class UserRepository {
   // final FirebaseAuth _firebaseAuth;
@@ -26,11 +30,20 @@ class UserRepository {
     // }
   }
 
-  Future<void> signInWithCredentials(String email, String password) {
+  Future<void> signInWithCredentials(String email, String password) async {
     // return _firebaseAuth.signInWithEmailAndPassword(
     //   email: email,
     //   password: password,
     // );
+    if (Platform.isAndroid || Platform.isIOS) {
+    } else {
+      final fduser = await fd.FirebaseAuth.instance.signIn(email, password);
+      final user = User.fromFd(fduser);
+      if (GetIt.I.isRegistered<User>()) {
+        GetIt.I.unregister<User>();
+      }
+      GetIt.I.registerSingleton<User>(user);
+    }
   }
 
   Future<void> signUp({String email, String password}) async {
@@ -38,6 +51,15 @@ class UserRepository {
     //   email: email,
     //   password: password,
     // );
+    if (Platform.isAndroid || Platform.isIOS) {
+    } else {
+      final fduser = await fd.FirebaseAuth.instance.signUp(email, password);
+      final user = User.fromFd(fduser);
+      if (GetIt.I.isRegistered<User>()) {
+        GetIt.I.unregister<User>();
+      }
+      GetIt.I.registerSingleton<User>(user);
+    }
   }
 
   Future<void> signOut() async {
@@ -46,19 +68,34 @@ class UserRepository {
     //   _firebaseAuth.signOut(),
     //   _googleSignIn.signOut(),
     // ]);
+    if (Platform.isAndroid || Platform.isIOS) {
+    } else {
+      fd.FirebaseAuth.instance.signOut();
+    }
   }
 
   Future<bool> isSignedIn() async {
     // final currentUser = await _firebaseAuth.currentUser();
     // return currentUser != null;
+    if (Platform.isAndroid || Platform.isIOS) {
+    } else {
+      return fd.FirebaseAuth.instance.isSignedIn;
+    }
   }
 
   Future<User> getUser() async {
     // return (await _firebaseAuth.currentUser());
+    return User.fromFd(await fd.FirebaseAuth.instance.getUser());
   }
 
   Future<User> anonAuth() async {
     // final result = await _firebaseAuth.signInAnonymously();
     // return result.user;
+    // final fduser = await fd.FirebaseAuth.instance.signInAnonymously();
+    // final user = User.fromFd(fduser);
+    // if (GetIt.I.isRegistered<User>()) {
+    //   GetIt.I.unregister<User>();
+    // }
+    // GetIt.I.registerSingleton<User>(user);
   }
 }

@@ -239,28 +239,28 @@ class FirestoreList extends ListBase<DocumentSnapshot> {
 
   final List<DocumentSnapshot> _snapshots = <DocumentSnapshot>[];
 
-  StreamSubscription<QuerySnapshot> _sub;
+  // StreamSubscription<List<DocumentSnapshot>> _sub;
   bool _loaded = false;
 
   void listen() {
     _loaded = false;
-    _sub = query.snapshots().listen(_onData, onError: _onError);
+    // _sub = query.get().listen(_onData, onError: _onError);
   }
 
   void dispose() {
-    _sub?.cancel();
+    // _sub?.cancel();
   }
 
-  void _onData(QuerySnapshot snapshot) {
+  void _onData(List<DocumentSnapshot> snapshot) {
     if (_loaded == false) {
-      if (_snapshots.length == snapshot.documents.length) {
-        _snapshots.setAll(0, snapshot.documents);
+      if (_snapshots.length == snapshot.length) {
+        _snapshots.setAll(0, snapshot);
       } else {
         _snapshots.clear();
-        _snapshots.addAll(snapshot.documents);
+        _snapshots.addAll(snapshot);
       }
       if (onData != null) {
-        onData(snapshot.documents);
+        onData(snapshot);
       }
 
       _loaded = true;

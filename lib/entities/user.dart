@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:firedart/auth/user_gateway.dart' as fd;
 
 part 'user.g.dart';
 
@@ -33,6 +34,11 @@ class User extends Equatable {
     } else {
       return User(name: '', surname: '', uid: '');
     }
+  }
+
+  factory User.fromFd(fd.User fduser) {
+    return User(
+        name: fduser.displayName, surname: fduser.email, uid: fduser.id);
   }
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }

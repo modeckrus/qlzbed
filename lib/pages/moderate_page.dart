@@ -46,35 +46,38 @@ class _ModeratePageState extends State<ModeratePage> {
           ],
         ),
         body: viewMode
-            ? FirestoreAnimatedList(
-                query: FirebaseService.collectionGroup('moderationList')
-                    .where('lang', isEqualTo: FService.getLang(context))
-                    .where('isModerating', isEqualTo: true)
-                    .orderBy('timestamp'),
-                itemBuilder: (context, snapshot, animation, index) {
-                  final state = ModerationState.fromJson(snapshot.data);
-                  Widget icon = FService.getIconByRoute(state.route);
-                  String route = FService.getModerationRoute(state.route);
+            // ? FirestoreAnimatedList(
+            //     query: FirebaseService.collectionGroup('moderationList')
+            //         .where('lang', isEqualTo: FService.getLang(context))
+            //         .where('isModerating', isEqualTo: true)
+            //         .orderBy('timestamp'),
+            //     itemBuilder: (context, snapshot, animation, index) {
+            //       final state = ModerationState.fromJson(snapshot.data);
+            //       Widget icon = FService.getIconByRoute(state.route);
+            //       String route = FService.getModerationRoute(state.route);
 
-                  return ListTile(
-                    onLongPress: () {
-                      Clipboard.setData(
-                          ClipboardData(text: snapshot.reference.path));
-                      print('copyed');
-                      print(snapshot.reference.path);
-                    },
-                    leading: icon,
-                    title: Text(
-                      state.title,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    subtitle: Text(state.humanPath ?? snapshot.reference.path),
-                    trailing: MyIcons.nextRoute,
-                    onTap: () {
-                      Navigator.pushNamed(context, route, arguments: snapshot);
-                    },
-                  );
-                },
+            //       return ListTile(
+            //         onLongPress: () {
+            //           Clipboard.setData(
+            //               ClipboardData(text: snapshot.reference.path));
+            //           print('copyed');
+            //           print(snapshot.reference.path);
+            //         },
+            //         leading: icon,
+            //         title: Text(
+            //           state.title,
+            //           style: TextStyle(fontSize: 20),
+            //         ),
+            //         subtitle: Text(state.humanPath ?? snapshot.reference.path),
+            //         trailing: MyIcons.nextRoute,
+            //         onTap: () {
+            //           Navigator.pushNamed(context, route, arguments: snapshot);
+            //         },
+            //       );
+            //     },
+            //   )
+            ? Container(
+                child: Text('yazza'),
               )
             : ModerateLibraryWidget(),
       ),

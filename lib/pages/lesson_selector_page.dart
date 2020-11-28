@@ -82,11 +82,11 @@ class _LessonSelectorListState extends State<LessonSelectorList> {
               return ErrorWidget(snapshot.error);
             }
 
-            QuerySnapshot data = snapshot.data;
+            List<DocumentSnapshot> documents = snapshot.data;
             return ListView.builder(
-                itemCount: data.documents.length,
+                itemCount: documents.length,
                 itemBuilder: (context, index) {
-                  return LessonSelectorListTile(doc: data.documents[index]);
+                  return LessonSelectorListTile(doc: documents[index]);
                 });
           },
         ),

@@ -42,11 +42,7 @@ class SettinguserBloc extends Bloc<SettinguserEvent, SettinguserState> {
         final userDoc = await FirebaseService.collection('user')
             .document(GetIt.I.get<User>().uid)
             .get();
-        if (userDoc.exists) {
-          await userDoc.reference.updateData(user.toJson());
-        } else {
-          await userDoc.reference.setData(user.toJson());
-        }
+        await userDoc.reference.updateData(user.toJson());
 
         yield SettinguserSucces();
         if (GetIt.I.isRegistered<User>() && GetIt.I.get<User>() != null) {

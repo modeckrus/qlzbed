@@ -19,12 +19,12 @@ class _LibraryPageState extends State<LibraryPage> {
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).library),
         ),
-        body: StreamBuilder(
-            stream: FirebaseService.collection('routes')
+        body: FutureBuilder(
+            future: FirebaseService.collection('routes')
                 .document(FService.getLang(context))
                 .collection('mainRoutes')
-                .snapshots(),
-            builder: (context, snap) {
+                .get(),
+            builder: (context, AsyncSnapshot<List<DocumentSnapshot>> snap) {
               if (!snap.hasData) {
                 return LoadingWidget();
               }
@@ -42,10 +42,10 @@ class _LibraryPageState extends State<LibraryPage> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        final doc = snap.data.documents[index];
+                        final doc = snap.data[index];
                         return SliverListTile(doc: doc);
                       },
-                      childCount: snap.data.documents.length,
+                      childCount: snap.data.length,
                     ),
                   ),
                 ],
